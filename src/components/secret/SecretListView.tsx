@@ -73,10 +73,11 @@ export function SecretListView() {
   return (
     <>
       <div>
-        {codes.map((code) => (
+        {codes.map((code, index) => (
           <SecretAccordionItem
             key={code.id}
             code={code}
+            index={index}
             isOpen={openId === code.id}
             onToggle={() => handleToggle(code.id)}
             onDelete={() => deleteCode(code.id)}

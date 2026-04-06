@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import { useDiaryList } from '@/hooks/useDiaryList'
 import { BookPreview } from '@/components/publish/BookPreview'
 import { PublishOrderForm } from '@/components/publish/PublishOrderForm'
+import { PublishSelectStep } from '@/components/publish/PublishSelectStep'
 
 type Step = 'select' | 'preview' | 'order'
 type PublishType = 'diary' | 'dear' | 'album'
@@ -28,7 +29,7 @@ export default function PublishPage() {
 
   const sourceEntries = publishType === 'dear' ? dearEntries : diaryEntries
   const selectedEntries = sourceEntries.filter((e) => selectedIds.includes(e.id))
-  const pageCount = Math.max(selectedEntries.length * 2, 20) // 최소 20페이지
+  const pageCount = Math.max(selectedEntries.length * 2, 20)
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) =>
@@ -43,6 +44,8 @@ export default function PublishPage() {
       setSelectedIds(sourceEntries.map((e) => e.id))
     }
   }
+
+  const STEPS: Step[] = ['select', 'preview', 'order']
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
@@ -65,13 +68,12 @@ export default function PublishPage() {
               {step === 'order' && '배송 및 결제'}
             </p>
           </div>
-          {/* 진행 단계 표시 */}
           <div className="ml-auto flex gap-1.5">
-            {(['select', 'preview', 'order'] as Step[]).map((s, i) => (
+            {STEPS.map((s, i) => (
               <div
                 key={s}
                 className={`w-2 h-2 rounded-full transition-colors ${
-                  step === s ? 'bg-[#4A90D9]' : i < ['select', 'preview', 'order'].indexOf(step) ? 'bg-[#4A90D9]/40' : 'bg-[#e0e0e0]'
+                  step === s ? 'bg-[#4A90D9]' : i < STEPS.indexOf(step) ? 'bg-[#4A90D9]/40' : 'bg-[#e0e0e0]'
                 }`}
               />
             ))}
@@ -80,9 +82,8 @@ export default function PublishPage() {
       </div>
 
       <div className="px-4 py-4">
-        {/* Step 1: 선택 */}
         {step === 'select' && (
-          <SelectStep
+          <PublishSelectStep
             publishType={publishType}
             setPublishType={setPublishType}
             entries={sourceEntries}
@@ -99,7 +100,6 @@ export default function PublishPage() {
           />
         )}
 
-        {/* Step 2: 미리보기 */}
         {step === 'preview' && (
           <div className="space-y-6">
             <BookPreview
@@ -118,7 +118,6 @@ export default function PublishPage() {
           </div>
         )}
 
-        {/* Step 3: 주문 */}
         {step === 'order' && (
           <PublishOrderForm
             selectedEntryIds={selectedIds}
@@ -128,117 +127,6 @@ export default function PublishPage() {
           />
         )}
       </div>
-    </div>
-  )
-}
-
-// Step 1 — 타입 선택 + 글 목록 선택
-function SelectStep({
-  publishType,
-  setPublishType,
-  entries,
-  selectedIds,
-  onToggle,
-  onSelectAll,
-  onNext,
-}: {
-  publishType: PublishType
-  setPublishType: (t: PublishType) => void
-  entries: ReturnType<typeof useDiaryList>['entries']
-  selectedIds: string[]
-  onToggle: (id: string) => void
-  onSelectAll: () => void
-  onNext: () => void
-}) {
-  const types: { value: PublishType; label: string; icon: string; desc: string }[] = [
-    { value: 'diary', label: '일기 단행본', icon: '📓', desc: '일기를 모아 한 권의 책으로' },
-    { value: 'dear', label: '편지 모음집', icon: '✉️', desc: '소중한 편지를 책으로 엮어' },
-    { value: 'album', label: '포토앨범', icon: '📸', desc: '사진 중심의 추억 앨범' },
-  ]
-
-  return (
-    <div className="space-y-5">
-      {/* 출판 유형 선택 */}
-      <div>
-        <p className="text-xs text-[#888] mb-2">출판 유형</p>
-        <div className="space-y-2">
-          {types.map((t) => (
-            <button
-              key={t.value}
-              onClick={() => setPublishType(t.value)}
-              className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors ${
-                publishType === t.value
-                  ? 'border-[#4A90D9] bg-[#f0f7ff]'
-                  : 'border-[#f0f0f0] bg-white'
-              }`}
-            >
-              <span className="text-2xl">{t.icon}</span>
-              <div>
-                <p className={`text-sm font-semibold ${publishType === t.value ? 'text-[#4A90D9]' : 'text-[#1A1A1A]'}`}>
-                  {t.label}
-                </p>
-                <p className="text-xs text-[#888]">{t.desc}</p>
-              </div>
-              {publishType === t.value && <span className="ml-auto text-[#4A90D9]">✓</span>}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 글 목록 선택 */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-xs text-[#888]">
-            글 선택 <span className="text-[#4A90D9]">({selectedIds.length}/{entries.length})</span>
-          </p>
-          <button onClick={onSelectAll} className="text-xs text-[#4A90D9]">
-            {selectedIds.length === entries.length ? '전체 해제' : '전체 선택'}
-          </button>
-        </div>
-
-        {entries.length === 0 ? (
-          <p className="text-sm text-[#888] text-center py-6">
-            출판할 글이 없습니다
-          </p>
-        ) : (
-          <div className="space-y-2">
-            {entries.map((entry) => {
-              const selected = selectedIds.includes(entry.id)
-              return (
-                <button
-                  key={entry.id}
-                  onClick={() => onToggle(entry.id)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors ${
-                    selected ? 'border-[#4A90D9] bg-[#f0f7ff]' : 'border-[#f0f0f0] bg-white'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center text-xs ${
-                      selected ? 'border-[#4A90D9] bg-[#4A90D9] text-white' : 'border-[#e0e0e0]'
-                    }`}
-                  >
-                    {selected && '✓'}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#1A1A1A] truncate">
-                      {entry.title || '제목 없음'}
-                    </p>
-                    <p className="text-xs text-[#888] truncate">{entry.content_text}</p>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        )}
-      </div>
-
-      <button
-        onClick={onNext}
-        disabled={selectedIds.length === 0}
-        className="w-full py-3 bg-[#4A90D9] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
-      >
-        미리보기 →
-      </button>
     </div>
   )
 }

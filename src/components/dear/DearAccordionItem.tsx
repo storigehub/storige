@@ -31,8 +31,8 @@ export function DearAccordionItem({
 
   return (
     <div
-      className={`bg-white border-b border-[#f5f5f5] transition-all ${
-        isOpen ? 'border-l-4 border-l-[#00C9B7]' : ''
+      className={`border-b border-[#f5f5f5] transition-all ${
+        isOpen ? 'bg-[#fafff9] border-l-4 border-l-[#00C9B7]' : 'bg-white'
       }`}
       id={`dear-${entry.id}`}
     >

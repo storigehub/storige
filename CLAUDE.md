@@ -205,14 +205,22 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 ```
 최종 업데이트: 2026-04-06
 현재 Phase: 3
-현재 Sprint: 3-1 시작 예정
+현재 Sprint: 3-7 대기 중 (오너 Go 확인 후 시작)
 완료 이슈:
-  Phase 1: Sprint 1-1~1-4 전체 완료 (프로젝트 초기화, DB 스키마+RLS, Auth, 레이아웃)
-  Phase 2: Sprint 2-1~2-4 완료 (Tiptap 에디터, 5개 뷰, 커스텀 훅, 카카오맵)
-           - Supabase v2.101 Generics 오류 수정 완료 (Relationships:[] 추가)
-           - Tailwind/Tiptap 의존성 충돌 해결 완료
-진행 중: Phase 3 시작 — Sprint 3-1 (Dear My Son 편지) 착수
-블로커: 없음
+  Phase 1: Sprint 1-1~1-4 전체 완료
+  Phase 2: Sprint 2-1~2-4 완료 (Tiptap 에디터, 5개 뷰, 훅, 카카오맵)
+  Phase 3: Sprint 3-1~3-6 완료
+    - DearEditor (수신자 선택 + recipient_id 저장)
+    - SecretCode E2EE (AES-256-GCM + SSS)
+    - 암호화 테스트 23개 Green
+    - 가족 구성원 CRUD + 원형 뱃지 UI
+    - 출판 미리보기 + 주문 폼
+  QC P0 수정: DearEditor recipient_id 저장 버그
+  QC P1 수정: SecretListView index prop / 파일 분리(SecretCodeForm, publish/page) / 가족 UI 원형화
+  QC P2 수정: Dear 열림 배경 #fafff9 / SSS 복구 키 배분 (useSSSKeyManager + SSSKeySetup)
+  총 테스트: 40개 통과
+다음: Sprint 3-7 (포트원 결제 + 파파스 POD API)
+블로커: 포트원 API 키 + 파파스 POD API 계약 필요 (오너 확인)
 Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 ```
 

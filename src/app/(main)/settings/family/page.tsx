@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react'
 import { useFamilyMembers } from '@/hooks/useFamilyMembers'
 import { FamilyMemberCard } from '@/components/family/FamilyMemberCard'
 import { FamilyMemberForm } from '@/components/family/FamilyMemberForm'
+import { SSSKeySetup } from '@/components/family/SSSKeySetup'
 import { createClient } from '@/lib/supabase/client'
 import type { FamilyRole } from '@/types/database'
 
@@ -116,19 +117,22 @@ export default function FamilyPage() {
           <p className="text-sm text-[#888]">등록된 가족 구성원이 없습니다</p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {members.map((member) => (
-            <FamilyMemberCard
-              key={member.id}
-              member={member}
-              onEdit={() => {
-                setEditingId(member.id)
-                setFormMode('edit')
-              }}
-              onDelete={() => handleDelete(member.id)}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-3 gap-6 py-2">
+            {members.map((member) => (
+              <FamilyMemberCard
+                key={member.id}
+                member={member}
+                onEdit={() => {
+                  setEditingId(member.id)
+                  setFormMode('edit')
+                }}
+                onDelete={() => handleDelete(member.id)}
+              />
+            ))}
+          </div>
+          <SSSKeySetup members={members} onDistributed={refetch} />
+        </>
       )}
     </div>
   )
