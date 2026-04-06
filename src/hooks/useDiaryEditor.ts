@@ -22,31 +22,36 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const supabase = useMemo(() => createClient(), [])
 
-  // 실제 저장 로직
-  const save = useCallback(async (titleVal: string, contentVal: JSONContent | null) => {
+  // 실제 저장 로직 — 저장된 entry ID 반환
+  const save = useCallback(async (
+    titleVal: string,
+    contentVal: JSONContent | null
+  ): Promise<string | undefined> => {
     // 빈 내용은 저장 안 함
-    if (!titleVal.trim() && !contentVal) return
+    if (!titleVal.trim() && !contentVal) return undefined
 
     setIsSaving(true)
     setError(null)
 
     try {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
+      if (!user) return undefined
 
       // content에서 평문 추출 (검색용)
       const contentText = extractText(contentVal)
 
       if (id) {
-        // 수정
+        // 수정 — 기존 ID 반환
         await supabase.from('entries').update({
           title: titleVal,
           content: contentVal as unknown as Json,
           content_text: contentText,
           updated_at: new Date().toISOString(),
         }).eq('id', id)
+        setLastSaved(new Date())
+        return id
       } else {
-        // 신규 생성
+        // 신규 생성 — 새 ID 반환
         const { data } = await supabase.from('entries').insert({
           user_id: user.id,
           journal_type: journalType,
@@ -55,12 +60,16 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
           content_text: contentText,
         }).select('id').single()
 
-        if (data) setId(data.id)
+        if (data) {
+          setId(data.id)
+          setLastSaved(new Date())
+          return data.id
+        }
+        return undefined
       }
-
-      setLastSaved(new Date())
     } catch {
       setError('저장 중 오류가 발생했습니다.')
+      return undefined
     } finally {
       setIsSaving(false)
     }
@@ -79,10 +88,10 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
     }
   }, [title, content, save])
 
-  // 수동 즉시 저장
-  const saveNow = useCallback(async () => {
+  // 수동 즉시 저장 — 저장된 entry ID 반환
+  const saveNow = useCallback(async (): Promise<string | undefined> => {
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
-    await save(title, content)
+    return save(title, content)
   }, [title, content, save])
 
   // 에디터 내용 변경 핸들러

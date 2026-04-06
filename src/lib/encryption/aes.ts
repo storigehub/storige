@@ -48,7 +48,8 @@ export async function encrypt(plaintext: string, passphrase: string): Promise<st
   combined.set(iv, salt.byteLength)
   combined.set(new Uint8Array(ciphertext), salt.byteLength + iv.byteLength)
 
-  return btoa(String.fromCharCode(...combined))
+  // 대용량 배열도 처리 가능한 청크 방식 Base64 인코딩
+  return uint8ToBase64(combined)
 }
 
 // Base64 암호문 → 복호화
@@ -69,6 +70,16 @@ export async function decrypt(encoded: string, passphrase: string): Promise<stri
   )
 
   return dec.decode(plaintext)
+}
+
+// Uint8Array → Base64 (대용량 배열 스택 오버플로우 방지)
+function uint8ToBase64(bytes: Uint8Array): string {
+  const CHUNK = 8192
+  let binary = ''
+  for (let i = 0; i < bytes.byteLength; i += CHUNK) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK))
+  }
+  return btoa(binary)
 }
 
 // 암호화 검증 — 복호화 성공 여부만 확인

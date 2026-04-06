@@ -11,6 +11,7 @@ import { RichTextEditor } from '@/components/editor/RichTextEditor'
 import { EditorToolbar } from '@/components/editor/EditorToolbar'
 import { formatDate } from '@/lib/utils/date'
 import { createClient } from '@/lib/supabase/client'
+// createClient는 handleDone에서 recipient_id 저장 시 사용
 
 // Dear My Son 편지 에디터 — 수신자 선택 + 리치 텍스트
 export function DearEditor() {
@@ -33,23 +34,20 @@ export function DearEditor() {
     immediatelyRender: false,
   })
 
-  // 수신자 변경 시 entries.recipient_id 업데이트
-  const handleSelectRecipient = useCallback(async (memberId: string) => {
+  // 수신자 선택 — 실제 DB 저장은 완료(handleDone) 시점에 처리
+  const handleSelectRecipient = useCallback((memberId: string) => {
     setSelectedRecipientId(memberId)
     setShowRecipientPicker(false)
-    // 이미 생성된 entry가 있으면 recipient_id 업데이트
-    if (id) {
-      const supabase = createClient()
-      await supabase.from('entries').update({ recipient_id: memberId }).eq('id', id)
-    }
-  }, [id])
+  }, [])
 
   const handleDone = async () => {
-    await saveNow()
-    // 수신자가 선택되어 있고 entry가 방금 생성되었다면 recipient_id 저장
-    if (id && selectedRecipientId) {
+    // saveNow()가 저장 완료 후 확정된 ID를 반환
+    const savedId = await saveNow()
+
+    // 수신자가 선택되어 있으면 recipient_id 업데이트
+    if (savedId && selectedRecipientId) {
       const supabase = createClient()
-      await supabase.from('entries').update({ recipient_id: selectedRecipientId }).eq('id', id)
+      await supabase.from('entries').update({ recipient_id: selectedRecipientId }).eq('id', savedId)
     }
     router.push('/dear')
   }
