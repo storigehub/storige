@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary-fixed": "#001c37",
+                        "surface-dim": "#dadada",
+                        "surface-tint": "#0061A5",
+                        "on-error": "#ffffff",
+                        surface: "#f9f9f9",
+                        "on-secondary-container": "#004375",
+                        "surface-container-low": "#f3f3f3",
+                        "secondary-container": "#d2e4ff",
+                        primary: "#0061A5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "error-container": "#ffdad6",
+                        secondary: "#0061A5",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#a0caff",
+                        "on-surface-variant": "#444748",
+                        "on-tertiary-container": "#009487",
+                        "on-surface": "#1a1c1c",
+                        error: "#ba1a1a",
+                        tertiary: "#006B5F",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container": "#eeeeee",
+                        outline: "#747878",
+                        "secondary-fixed": "#d2e4ff",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#37ddca",
+                        "primary-container": "#d2e4ff",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3131",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed": "#00201c",
+                        "on-background": "#1a1c1c",
+                        "tertiary-container": "#b4f2e9",
+                        "on-secondary-fixed-variant": "#00497e",
+                        "surface-bright": "#f9f9f9",
+                        "inverse-on-surface": "#f0f1f1",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-high": "#e8e8e8",
+                        "on-primary-container": "#001d36",
+                        background: "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "tertiary-fixed": "#5ffae6",
+                        "primary-fixed-dim": "#c8c6c5"
+                    },
+                    fontFamily: {
+                        headline: ["'Pretendard Variable'", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
+                        body: ["'Pretendard Variable'", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
+                        label: ["'Pretendard Variable'", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
+                        display: ["'Pretendard Variable'", "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        lg: "1rem",
+                        xl: "1.25rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Pretendard Variable', -apple-system, blinkmacsystemfont, system-ui, roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            min-height: 100dvh;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-5 py-4 border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface hover:opacity-70 transition-opacity cursor-pointer">menu</span>
+<h1 class="text-xl font-headline font-extrabold tracking-tight text-on-surface">Storige</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface hover:opacity-70 transition-opacity cursor-pointer">search</span>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container border border-outline-variant/20">
+<img alt="Profile" data-alt="a minimalist profile avatar of a young person with glasses and a friendly expression, vector art style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrTRA1CVK0PGf4ndk1-9YnqIOoCqXjm-rDs23FDU2M5o-p3zHm_DX01uIOZEt6gLubz8PlN3mgnoBgpXLHakDyVBvMZ0W5zjkJ6xt1w8LjpdvCiiGN_G6o41_YAMF_eS-X-J8aPTfkPNsgLhMMvABdQ-mmiv9TQ9xWq0DjLlB4vJIM3X5LGsOXJHdON8MdOraXLLlY79rCRTGb4TeIHyX4SJYRRvJWQ2LDcUoVmks_4I3vNpbdIathMnTzXfs4rHHn2VCd8KEgjVaV"/>
+</div>
+</div>
+</header>
+<main class="pb-32">
+<!-- Tabs -->
+<nav class="flex overflow-x-auto gap-6 px-5 py-3 scroll-smooth border-b border-outline-variant/10">
+<button class="flex-shrink-0 text-primary font-bold border-b-2 border-primary pb-2 px-1 text-sm">요약</button>
+<button class="flex-shrink-0 text-outline hover:text-on-surface transition-colors pb-2 px-1 text-sm">목록</button>
+<button class="flex-shrink-0 text-outline hover:text-on-surface transition-colors pb-2 px-1 text-sm">캘린더</button>
+<button class="flex-shrink-0 text-outline hover:text-on-surface transition-colors pb-2 px-1 text-sm">미디어</button>
+<button class="flex-shrink-0 text-outline hover:text-on-surface transition-colors pb-2 px-1 text-sm">지도</button>
+</nav>
+<!-- View Toggle & Sort -->
+<div class="px-5 py-4 flex justify-between items-center">
+<span class="text-[11px] text-outline font-bold tracking-widest uppercase">September 2024</span>
+<div class="flex bg-surface-container-low rounded-xl p-1 gap-1">
+<button class="p-1.5 bg-surface-container-lowest rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-sm">view_list</span>
+</button>
+<button class="p-1.5 text-outline">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+</button>
+</div>
+</div>
+<!-- Integrated Diary List Content -->
+<div class="px-5 space-y-6">
+<!-- Diary Entry 1: Card Layout -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-outline-variant/20">
+<div class="relative h-44 w-full">
+<img class="w-full h-full object-cover" data-alt="serene morning landscape with a mirror-like lake reflecting pine trees and soft mist under a pale blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVVQ3yhU60zYe4espkZ30fSUHSsvUD6d10hxkZocuFaCFx_J62THd4XsBkqdWz1OzhAooBQxcrrCVw7gWRf50zoNOOx-LD9K4k77B8PZyKTGD-Bvcr51Ro0gTW0tTy6ae4COCwBAqrlHaGLpZSme7bk5S5_KVoCDvkYedP32teNaOuF0ZfXpPOwKoHYYTYMJVIr_jm3TuRAedsklr1Astks4IBD9dQeZm3--XKFOTlard8H_IrCtGFskFGmussM8XQfThBJLk28PuA"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[14px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="text-[10px] font-bold text-on-surface uppercase tracking-tight">Lake Louise</span>
+</div>
+</div>
+<div class="p-5 flex gap-5">
+<div class="flex flex-col items-center min-w-[2.5rem]">
+<span class="text-2xl font-headline font-extrabold text-on-surface leading-none">24</span>
+<span class="text-[9px] font-bold text-outline uppercase tracking-widest mt-1">SEP</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-headline font-bold text-on-surface">고요한 아침의 사색</h3>
+<span class="material-symbols-outlined text-outline text-sm">wb_sunny</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+                            물안개가 피어오르는 호숫가에서 보낸 시간. 자연의 침묵 속에서 나 자신과 대화하며 진정한 평화를 느낄 수 있었다.
+                        </p>
+<div class="pt-2 flex items-center gap-3">
+<span class="text-[10px] text-outline font-medium">10:30 AM</span>
+<div class="w-0.5 h-0.5 rounded-full bg-outline-variant"></div>
+<span class="text-[10px] text-outline font-medium italic">Archive #42</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Diary Entry 2: Minimalist Capsule -->
+<article class="bg-primary-container/30 rounded-xl p-5 border-l-4 border-primary flex gap-5">
+<div class="flex flex-col items-center min-w-[2.5rem]">
+<span class="text-2xl font-headline font-extrabold text-on-surface leading-none">22</span>
+<span class="text-[9px] font-bold text-outline uppercase tracking-widest mt-1">SEP</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<h3 class="text-base font-headline font-bold text-on-surface">사랑하는 아들에게 남기는 편지</h3>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-2 leading-relaxed italic">
+                        "인생은 결과가 아니라 과정이란다. 네가 걷는 모든 발걸음이 너만의 소중한 역사가 될 거야."
+                    </p>
+<div class="flex items-center gap-2 pt-1">
+<span class="px-2 py-0.5 bg-primary text-[9px] font-bold text-on-primary rounded uppercase tracking-wider">Dear My Son</span>
+</div>
+</div>
+</article>
+<!-- Diary Entry 3: List Layout -->
+<article class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex gap-5">
+<div class="flex flex-col items-center min-w-[2.5rem]">
+<span class="text-2xl font-headline font-extrabold text-on-surface leading-none">19</span>
+<span class="text-[9px] font-bold text-outline uppercase tracking-widest mt-1">SEP</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex justify-between items-start">
+<h3 class="text-base font-headline font-bold text-on-surface">도심 속의 작은 쉼표</h3>
+<span class="material-symbols-outlined text-outline text-sm">cloud</span>
+</div>
+<div class="flex gap-3">
+<div class="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant/10">
+<img class="w-full h-full object-cover" data-alt="busy city street corner with classic architecture and pedestrians under a soft overcast sky, cinematic urban atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXo98hnWOMQhBmw9Mvq26E8qpnvalwTQL4Pj3diREI-mgbGxGUOkLD9ndXs48NnZMmY5-_vf6kUpVNHtTwXzcRBeEmkK9J_gGKvmJ_QXz-87Mop4XlBjX73Sb2-bFDHyDaEwtITFbFvL5RmUGFKxX68ZpZXaxdaPlUyHegn2Tl9bEJrI_ceRLPp2VjE1A8IWvSc7y7OC4NNnhzL4j8fKKDcfrmiDCCs8AcTb8qFOI-y8cX4ZgKgwB4elQCUnMuYi9pETH9isTlN_0E"/>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
+                            복잡한 도심 한복판, 우연히 발견한 작은 서점. 오래된 종이 냄새와 클래식 음악이 어우러진 그곳에서 잠시 숨을 골랐다.
+                        </p>
+</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="material-symbols-outlined text-outline text-[14px]">location_on</span>
+<span class="text-[10px] text-outline font-medium">Seoul, South Korea</span>
+</div>
+</div>
+</article>
+<!-- Diary Entry 4: Locked -->
+<article class="bg-surface-container-low rounded-xl p-5 flex items-center justify-between border border-outline-variant/10">
+<div class="flex gap-5 items-center">
+<div class="flex flex-col items-center min-w-[2.5rem]">
+<span class="text-2xl font-headline font-extrabold text-outline/50 leading-none">15</span>
+<span class="text-[9px] font-bold text-outline/50 uppercase tracking-widest mt-1">SEP</span>
+</div>
+<div>
+<h3 class="text-base font-headline font-bold text-outline">비공개 일기</h3>
+<p class="text-[11px] text-outline italic">탭하여 잠금 해제</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-xl">lock</span>
+</article>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-5 w-14 h-14 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg z-50 hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'wght' 600;">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-8 bg-surface/90 backdrop-blur-lg z-50 rounded-t-xl border-t border-outline-variant/20 shadow-[0_-4px_24px_rgba(0,0,0,0.03)]">
+<div class="flex flex-col items-center justify-center text-primary transition-all duration-200">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="text-[9px] font-bold uppercase tracking-wider">Diary</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined mb-1 text-[24px]">favorite</span>
+<span class="text-[9px] font-bold uppercase tracking-wider">Letters</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined mb-1 text-[24px]">lock</span>
+<span class="text-[9px] font-bold uppercase tracking-wider">Secret</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined mb-1 text-[24px]">settings</span>
+<span class="text-[9px] font-bold uppercase tracking-wider">Settings</span>
+</div>
+</nav>
+</body></html>

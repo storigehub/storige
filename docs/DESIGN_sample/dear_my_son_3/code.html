@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600&amp;family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#00201c",
+              "on-surface-variant": "#444748",
+              "on-secondary-fixed-variant": "#00497e",
+              "tertiary-fixed": "#5ffae6",
+              "on-surface": "#1a1c1c",
+              "surface-container": "#eeeeee",
+              "secondary": "#0061a5",
+              "tertiary-fixed-dim": "#37ddca",
+              "surface-dim": "#dadada",
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#005048",
+              "background": "#f9f9f9",
+              "inverse-surface": "#2f3131",
+              "on-primary-fixed": "#1c1b1b",
+              "on-error": "#ffffff",
+              "on-secondary-fixed": "#001c37",
+              "on-secondary": "#ffffff",
+              "surface": "#f9f9f9",
+              "error-container": "#ffdad6",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#a0caff",
+              "on-background": "#1a1c1c",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d2e4ff",
+              "surface-container-high": "#e8e8e8",
+              "tertiary": "#000000",
+              "on-primary": "#ffffff",
+              "outline": "#747878",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d2e4ff",
+              "on-secondary-container": "#004375",
+              "on-tertiary-container": "#009487",
+              "inverse-on-surface": "#f0f1f1",
+              "surface-bright": "#f9f9f9",
+              "primary-fixed": "#e5e2e1",
+              "primary-container": "#1c1b1b",
+              "surface-tint": "#5f5e5e",
+              "primary": "#000000",
+              "on-primary-container": "#858383",
+              "on-primary-fixed-variant": "#474746",
+              "outline-variant": "#c4c7c7",
+              "tertiary-container": "#00201c",
+              "inverse-primary": "#c8c6c5",
+              "surface-container-low": "#f3f3f3",
+              "primary-fixed-dim": "#c8c6c5",
+              "mint-accent": "#E0F2F1",
+              "mint-text": "#00897B"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans", "Noto Sans KR"],
+              "body": ["Inter", "Noto Sans KR"],
+              "label": ["Inter", "Noto Sans KR"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: #f9f9f9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .archive-gradient { background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(249,249,249,1) 100%); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-white/80 dark:bg-stone-950/80 backdrop-blur-md text-stone-900 dark:text-stone-50 font-['Inter'] font-medium fixed top-0 w-full z-50 border-b border-stone-200 dark:border-stone-800">
+<div class="flex justify-between items-center h-16 px-6 max-w-full">
+<h1 class="text-xl font-bold tracking-tight text-stone-900 dark:text-stone-50">Storige</h1>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer active:opacity-70">notifications</span>
+<span class="material-symbols-outlined cursor-pointer active:opacity-70">settings</span>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-24 px-4 max-w-lg mx-auto">
+<!-- Screen Title & Hero Section -->
+<section class="mb-8 mt-4">
+<div class="flex items-baseline justify-between mb-2">
+<h2 class="text-3xl font-extrabold tracking-tight font-headline">Letters</h2>
+<span class="text-[10px] tracking-widest uppercase font-label text-outline">Shared Archives</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed text-sm">아들에게 남기는 진심 어린 기록들의 보관소입니다.</p>
+</section>
+<!-- Search / Filter (Subtle "No-Line" Rule) -->
+<div class="bg-surface-container-low rounded-lg p-3 mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full font-body placeholder:text-outline-variant" placeholder="날짜 또는 키워드로 검색" type="text"/>
+</div>
+<!-- Letter List (Asymmetric Editorial Layout) -->
+<div class="space-y-6">
+<!-- Accordion Item 1 (Opened - Active Focus) -->
+<div class="relative">
+<div class="flex items-start gap-4 mb-3">
+<div class="pt-1">
+<span class="block text-[10px] font-bold tracking-tighter text-outline-variant uppercase">OCT</span>
+<span class="block text-2xl font-extrabold font-headline leading-none">24</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest shadow-lg p-5 border-l-4 border-secondary rounded-r-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-mint-accent text-mint-text text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tight">UNREAD</span>
+<span class="material-symbols-outlined text-sm text-outline">expand_less</span>
+</div>
+<h3 class="text-lg font-bold mb-3 leading-tight">사랑하는 아들에게, 첫 독립을 축하하며</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed font-body">
+                            오늘 네가 짐을 챙겨 떠나는 뒷모습을 보며 참 많은 생각이 들더구나. 비록 몸은 떨어져 있지만 아빠의 마음은 늘 너와 함께 있다는 걸 잊지 말아라...
+                        </p>
+<div class="mt-4 pt-4 border-t border-surface-container-high flex justify-between items-center">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close up portrait of a kind middle-aged man with gentle eyes and soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8M7T3tTGMWrzHvjAieCbNgaA9VpmDLAoz14Q7x5wcdkdlrFPakorlJrLqL2F_a8qGMHaImVN2ECITHyyH15vsD8ZEjAYNbv4ad7eDdrYYQ8Y1-dXfFfjVxNM-MTF92-4pc-dxZJII1YmZH9BMm1RUheEFnAl5onIPj0Vf8bjsOqqe310Ql848bGRq_71hq8nerLLCQqpk_IkWuA6whfcIM56c3SeeIzoGHT5NQLpH5ueswweAq54DutS3Oclv3bY8HbztPRsOquJR"/>
+</div>
+</div>
+<button class="text-secondary text-xs font-bold tracking-tight flex items-center gap-1">
+                                전체 읽기 <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Accordion Item 2 (Closed) -->
+<div class="relative">
+<div class="flex items-start gap-4 mb-3">
+<div class="pt-1 opacity-40">
+<span class="block text-[10px] font-bold tracking-tighter text-outline-variant uppercase">SEP</span>
+<span class="block text-2xl font-extrabold font-headline leading-none">12</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-5 rounded-lg border border-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tight">READ</span>
+<span class="material-symbols-outlined text-sm text-outline">expand_more</span>
+</div>
+<h3 class="text-base font-bold text-on-surface-variant">어느덧 가을이 성큼 다가왔구나</h3>
+</div>
+</div>
+</div>
+<!-- Accordion Item 3 (Closed) -->
+<div class="relative">
+<div class="flex items-start gap-4 mb-3">
+<div class="pt-1 opacity-40">
+<span class="block text-[10px] font-bold tracking-tighter text-outline-variant uppercase">AUG</span>
+<span class="block text-2xl font-extrabold font-headline leading-none">05</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-5 rounded-lg border border-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tight">READ</span>
+<span class="material-symbols-outlined text-sm text-outline">expand_more</span>
+</div>
+<h3 class="text-base font-bold text-on-surface-variant">네가 어릴 적 좋아하던 바다 여행을 기억하니?</h3>
+</div>
+</div>
+</div>
+<!-- Accordion Item 4 (Closed) -->
+<div class="relative">
+<div class="flex items-start gap-4 mb-3">
+<div class="pt-1 opacity-40">
+<span class="block text-[10px] font-bold tracking-tighter text-outline-variant uppercase">JUL</span>
+<span class="block text-2xl font-extrabold font-headline leading-none">29</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-5 rounded-lg border border-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tight">READ</span>
+<span class="material-symbols-outlined text-sm text-outline">expand_more</span>
+</div>
+<h3 class="text-base font-bold text-on-surface-variant">생일 축하한다, 나의 자랑스러운 아들</h3>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty Space / Scroll Buffer -->
+<div class="h-12"></div>
+</main>
+<!-- FAB (The Archival Centerpiece) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-2xl z-40 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">edit</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg text-stone-900 dark:text-stone-50 border-t border-stone-100 dark:border-stone-900 shadow-[0_-1px_10px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 hover:text-stone-600 dark:hover:text-stone-300 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1">menu_book</span>
+<span class="font-['Inter'] text-[11px] font-medium tracking-wide">Diary</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-900 dark:text-stone-50 scale-105 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">mail</span>
+<span class="font-['Inter'] text-[11px] font-medium tracking-wide font-semibold">Letters</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 hover:text-stone-600 dark:hover:text-stone-300 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1">lock</span>
+<span class="font-['Inter'] text-[11px] font-medium tracking-wide">Secret</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 hover:text-stone-600 dark:hover:text-stone-300 transition-all duration-150" href="#">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-['Inter'] text-[11px] font-medium tracking-wide">Manage</span>
+</a>
+</nav>
+</body></html>

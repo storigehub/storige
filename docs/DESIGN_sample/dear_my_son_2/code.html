@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Storige - Dear My Son</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#00201c",
+              "on-surface-variant": "#444748",
+              "on-secondary-fixed-variant": "#00497e",
+              "tertiary-fixed": "#5ffae6",
+              "on-surface": "#1a1c1c",
+              "surface-container": "#eeeeee",
+              "secondary": "#0061a5",
+              "tertiary-fixed-dim": "#37ddca",
+              "surface-dim": "#dadada",
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#005048",
+              "background": "#f9f9f9",
+              "inverse-surface": "#2f3131",
+              "on-primary-fixed": "#1c1b1b",
+              "on-error": "#ffffff",
+              "on-secondary-fixed": "#001c37",
+              "on-secondary": "#ffffff",
+              "surface": "#f9f9f9",
+              "error-container": "#ffdad6",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#a0caff",
+              "on-background": "#1a1c1c",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d2e4ff",
+              "surface-container-high": "#e8e8e8",
+              "tertiary": "#000000",
+              "on-primary": "#ffffff",
+              "outline": "#747878",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d2e4ff",
+              "on-secondary-container": "#004375",
+              "on-tertiary-container": "#009487",
+              "inverse-on-surface": "#f0f1f1",
+              "surface-bright": "#f9f9f9",
+              "primary-fixed": "#e5e2e1",
+              "primary-container": "#1c1b1b",
+              "surface-tint": "#5f5e5e",
+              "primary": "#000000",
+              "on-primary-container": "#858383",
+              "on-primary-fixed-variant": "#474746",
+              "outline-variant": "#c4c7c7",
+              "tertiary-container": "#00201c",
+              "inverse-primary": "#c8c6c5",
+              "surface-container-low": "#f3f3f3",
+              "primary-fixed-dim": "#c8c6c5",
+              "brand-mint": "#2DD4BF"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Pretendard", "Inter"],
+              "label": ["Pretendard", "Inter"],
+              "archive": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Pretendard', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .letter-texture {
+            background-image: linear-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 100% 2.5rem;
+            line-height: 2.5rem;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-brand-mint/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800">
+<div class="flex justify-between items-center h-16 px-6 max-w-full">
+<div class="text-xl font-bold tracking-tight text-stone-900 dark:text-stone-50 font-archive">Storige</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-stone-500 dark:text-stone-400 hover:text-stone-900 font-medium transition-colors font-archive" href="#">Diary</a>
+<a class="text-stone-900 dark:text-stone-50 font-semibold transition-colors font-archive" href="#">Letters</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-stone-900 font-medium transition-colors font-archive" href="#">Secret</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-stone-900 font-medium transition-colors font-archive" href="#">Manage</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-stone-500 hover:text-stone-900 transition-colors">notifications</button>
+<button class="material-symbols-outlined text-stone-500 hover:text-stone-900 transition-colors">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="close up professional headshot of a middle aged man with friendly expression against neutral studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtHvk9ZAajJOfyALF3F9J00J9O0rkRRUjVHJUjfDDLYDOg3gCFEKqAZ_lCW-haFFen9KYFujsSbzdg0kzvkRhWpxVC1-Q8HnlUTTPNMNMGtH4m-4nR2RbUa-N0Dz4rAN4i7xz0ltl9qwDB2v0_ZbxkuvewU5PmXEpQMqXdlQF6evfQaOZvD1qqBeE5kWEqda65v3h_LBD0NVL-JTuVUqLSEl9mGvUrPbfCXe9sIC6sL8-BSkMbRyeE6KSUKymcIbL2yBLYMfN3n-51"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-6xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12 flex justify-between items-end">
+<div>
+<span class="text-[10px] font-bold tracking-[0.2em] text-outline uppercase block mb-2">Private Archive</span>
+<h1 class="text-4xl font-extrabold tracking-tight font-headline text-primary mb-4">Dear My Son</h1>
+<p class="text-on-surface-variant max-w-lg leading-relaxed">사랑하는 아이들에게 전하고 싶은 마음을 기록하는 공간입니다. 이곳의 편지들은 훗날 한 권의 책으로 엮일 수 있습니다.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 flex items-center gap-2 hover:opacity-90 transition-all shadow-lg active:scale-95">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-semibold tracking-tight">출판 미리보기</span>
+</button>
+</header>
+<!-- Recipients Filter -->
+<div class="flex gap-4 mb-8">
+<button class="px-5 py-2 border-b-2 border-brand-mint text-primary font-bold transition-all">전체</button>
+<button class="px-5 py-2 border-b-2 border-transparent text-outline hover:text-primary transition-all">아들에게 (12)</button>
+<button class="px-5 py-2 border-b-2 border-transparent text-outline hover:text-primary transition-all">딸에게 (8)</button>
+</div>
+<!-- Bento Grid / Letter List -->
+<div class="grid grid-cols-1 gap-6">
+<!-- Accordion Item 1 (Opened State) -->
+<div class="group bg-surface-container-lowest border-l-4 border-brand-mint shadow-sm overflow-hidden transition-all duration-300">
+<div class="flex items-center justify-between p-6 cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-6">
+<div class="text-center">
+<span class="block text-[10px] font-bold text-outline tracking-widest uppercase">Oct</span>
+<span class="text-2xl font-extrabold font-headline">24</span>
+</div>
+<div class="h-10 w-px bg-surface-variant"></div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-bold px-2 py-0.5 bg-brand-mint/10 text-brand-mint rounded-sm">아들에게</span>
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Sentimental</span>
+</div>
+<h3 class="text-xl font-bold text-primary tracking-tight">첫 자전거를 배우던 너에게</h3>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-300 rotate-180">expand_more</span>
+</div>
+<!-- Expanded Content -->
+<div class="px-12 pb-10">
+<div class="relative bg-[#fdfcf8] p-10 border border-stone-100 shadow-inner">
+<div class="absolute top-0 left-0 w-full h-1 bg-brand-mint/20"></div>
+<div class="letter-texture text-stone-700 font-medium whitespace-pre-line text-lg mb-8">
+                            사랑하는 아들아,
+                            오늘 네가 처음으로 보조 바퀴 없는 자전거를 탔을 때, 
+                            뒤에서 잡아주던 아빠의 손을 놓으며 달려나가던 너의 뒷모습이 
+                            아직도 눈에 선하구나.
+
+                            두려움에 떨던 눈빛이 금세 환희로 바뀌는 순간, 
+                            아빠는 네가 세상을 향해 한 걸음 더 나아갔음을 느꼈단다.
+                            앞으로 너의 앞길에 수많은 언덕과 내리막이 있겠지만, 
+                            오늘의 용기를 잊지 말고 당당하게 나아가길 바란다.
+
+                            언제나 너를 믿고 응원하는 아빠가.
+                        </div>
+<div class="flex justify-end gap-4 mt-12 pt-6 border-t border-stone-100">
+<button class="text-sm font-bold text-outline hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-base">edit</span> 수정하기
+                            </button>
+<button class="text-sm font-bold text-outline hover:text-error transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delete</span> 삭제
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Accordion Item 2 (Closed State) -->
+<div class="group bg-surface-container-lowest border-l-4 border-transparent hover:border-brand-mint/30 shadow-sm transition-all duration-300">
+<div class="flex items-center justify-between p-6 cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-6">
+<div class="text-center">
+<span class="block text-[10px] font-bold text-outline tracking-widest uppercase">Sep</span>
+<span class="text-2xl font-extrabold font-headline text-outline group-hover:text-primary">12</span>
+</div>
+<div class="h-10 w-px bg-surface-variant"></div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-bold px-2 py-0.5 bg-secondary-container text-secondary rounded-sm">딸에게</span>
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Growth</span>
+</div>
+<h3 class="text-xl font-bold text-primary/60 group-hover:text-primary tracking-tight">유치원 졸업을 축하하며</h3>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Accordion Item 3 (Closed State) -->
+<div class="group bg-surface-container-lowest border-l-4 border-transparent hover:border-brand-mint/30 shadow-sm transition-all duration-300">
+<div class="flex items-center justify-between p-6 cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-6">
+<div class="text-center">
+<span class="block text-[10px] font-bold text-outline tracking-widest uppercase">Aug</span>
+<span class="text-2xl font-extrabold font-headline text-outline group-hover:text-primary">28</span>
+</div>
+<div class="h-10 w-px bg-surface-variant"></div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-bold px-2 py-0.5 bg-brand-mint/10 text-brand-mint rounded-sm">아들에게</span>
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Advice</span>
+</div>
+<h3 class="text-xl font-bold text-primary/60 group-hover:text-primary tracking-tight">실패가 두려운 너에게 들려주고 싶은 말</h3>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Quick Action Sidebar / Floating Elements -->
+<aside class="fixed right-12 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-6 shadow-lg border border-stone-100 flex flex-col gap-4">
+<p class="text-[10px] font-bold tracking-widest uppercase text-outline">Writing Progress</p>
+<div class="w-48 h-1 bg-surface-variant overflow-hidden">
+<div class="w-2/3 h-full bg-brand-mint"></div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-outline font-medium">총 20통</span>
+<span class="text-primary font-bold">목표: 30통</span>
+</div>
+</div>
+<div class="bg-brand-mint p-6 shadow-2xl flex flex-col gap-2 cursor-pointer hover:-translate-y-1 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">edit_square</span>
+<p class="text-on-primary font-bold tracking-tight">새 편지 쓰기</p>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg border-t border-stone-100 dark:border-stone-900 shadow-[0_-1px_10px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-archive text-[11px] font-medium tracking-wide">Diary</span>
+</button>
+<button class="flex flex-col items-center justify-center text-stone-900 dark:text-stone-50 scale-105 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mail</span>
+<span class="font-archive text-[11px] font-medium tracking-wide">Letters</span>
+</button>
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-archive text-[11px] font-medium tracking-wide">Secret</span>
+</button>
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600">
+<span class="material-symbols-outlined">group</span>
+<span class="font-archive text-[11px] font-medium tracking-wide">Manage</span>
+</button>
+</nav>
+</body></html>

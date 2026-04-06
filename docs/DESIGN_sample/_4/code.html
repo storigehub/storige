@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Storige - Secret Code</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Pretendard', 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .secret-gradient {
+            background: linear-gradient(135deg, #0061A5 0%, #00201c 100%);
+        }
+        .pink-accent-border {
+            border: 1.5px solid #FF80AB;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#00201c",
+              "on-surface-variant": "#444748",
+              "on-secondary-fixed-variant": "#00497e",
+              "tertiary-fixed": "#5ffae6",
+              "on-surface": "#1a1c1c",
+              "surface-container": "#eeeeee",
+              "secondary": "#0061a5",
+              "tertiary-fixed-dim": "#37ddca",
+              "surface-dim": "#dadada",
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#005048",
+              "background": "#f9f9f9",
+              "inverse-surface": "#2f3131",
+              "on-primary-fixed": "#1c1b1b",
+              "on-error": "#ffffff",
+              "on-secondary-fixed": "#001c37",
+              "on-secondary": "#ffffff",
+              "surface": "#f9f9f9",
+              "error-container": "#ffdad6",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#a0caff",
+              "on-background": "#1a1c1c",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d2e4ff",
+              "surface-container-high": "#e8e8e8",
+              "tertiary": "#000000",
+              "on-primary": "#ffffff",
+              "outline": "#747878",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d2e4ff",
+              "on-secondary-container": "#004375",
+              "on-tertiary-container": "#009487",
+              "inverse-on-surface": "#f0f1f1",
+              "surface-bright": "#f9f9f9",
+              "primary-fixed": "#e5e2e1",
+              "primary-container": "#1c1b1b",
+              "surface-tint": "#5f5e5e",
+              "primary": "#000000",
+              "on-primary-container": "#858383",
+              "on-primary-fixed-variant": "#474746",
+              "outline-variant": "#c4c7c7",
+              "tertiary-container": "#00201c",
+              "inverse-primary": "#c8c6c5",
+              "surface-container-low": "#f3f3f3",
+              "primary-fixed-dim": "#c8c6c5"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- Top Navigation Bar -->
+<header class="bg-white/80 dark:bg-stone-950/80 backdrop-blur-md text-stone-900 dark:text-stone-50 font-['Manrope'] font-medium fixed top-0 w-full z-50 border-b border-stone-200 dark:border-stone-800">
+<div class="flex justify-between items-center h-16 px-6 max-w-full">
+<h1 class="text-xl font-bold tracking-tight text-stone-900 dark:text-stone-50">Storige</h1>
+<div class="flex items-center gap-4">
+<button class="cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+<button class="cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-20 px-4 max-w-lg mx-auto">
+<!-- Hero Section / Title -->
+<div class="mt-4 mb-8">
+<span class="text-[10px] tracking-[0.2em] font-bold text-secondary uppercase mb-2 block">Archive Section 08</span>
+<h2 class="text-3xl font-extrabold tracking-tight text-primary leading-tight">Secret Code</h2>
+<p class="text-on-surface-variant text-sm mt-2 leading-relaxed">Your encrypted memories, locked behind the veil of time.</p>
+</div>
+<!-- Featured Encrypted Vault (Bento Style) -->
+<div class="mb-8 grid grid-cols-1 gap-4">
+<div class="relative overflow-hidden rounded-xl bg-primary h-48 flex items-end p-6 shadow-2xl">
+<img alt="Encrypted Data Visual" class="absolute inset-0 w-full h-full object-cover opacity-40" data-alt="Abstract digital encryption theme with glowing blue data lines and dark metallic surfaces in a cinematic style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCledeGvnJV4EAO_wBiGdcHkwNAzUA_-0Cw8mZDiOaZ4lIlKl2lVLPP0qS9LezVMjjh7EBuQhJLbfUssoS4pW0uk1ie9GjY8_vUcaRGyRt-02bHDLSXcFEyEsam6TP7ze3t4sozJY_vwlBvN4ekM3vnvSrmYpmD-vct_Q8jxumVjDEiWivCAbuh7Psehywi09TqHNZpDeYv3LTnNV5pmDC4zASPYTHvDC1pDiim-x-qfUcTUogQNMP5cS0INhMN8Q-dOgXW80EviSZx"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+<div class="relative z-10 w-full flex justify-between items-end">
+<div>
+<p class="text-[10px] tracking-widest text-secondary font-bold uppercase mb-1">Status: Protected</p>
+<h3 class="text-white text-xl font-bold">Midnight Protocol</h3>
+</div>
+<button class="bg-secondary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined">lock</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Encrypted Accordion List -->
+<div class="space-y-4">
+<p class="text-[10px] tracking-widest font-bold text-outline uppercase px-2 mb-2">Encrypted Records</p>
+<!-- Accordion Item 1 (Active/Expanded) -->
+<div class="bg-surface-container-lowest rounded-lg pink-accent-border shadow-sm overflow-hidden transition-all duration-300">
+<div class="p-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">2024_APR_CONFIDENTIAL</h4>
+<p class="text-[10px] text-outline">Last encrypted: 2 hours ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">keyboard_arrow_up</span>
+</div>
+<div class="px-4 pb-4 border-t border-stone-100 mt-1">
+<div class="py-4 space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-outline">Algorithm</span>
+<span class="font-mono text-secondary">AES-256-GCM</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-outline">Access Key</span>
+<span class="font-mono">****-****-9821</span>
+</div>
+<div class="mt-4">
+<button class="w-full bg-primary text-white py-3 text-xs font-bold tracking-widest uppercase rounded active:opacity-90 transition-opacity">
+                                Decrypt Record
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Accordion Item 2 -->
+<div class="bg-surface-container-low rounded-lg shadow-sm overflow-hidden border border-transparent">
+<div class="p-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-3 opacity-60">
+<div class="w-10 h-10 rounded bg-stone-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-stone-500">lock_reset</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">ARCHIVE_PRIVATE_01</h4>
+<p class="text-[10px] text-outline">Stored: Oct 12, 2023</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Accordion Item 3 -->
+<div class="bg-surface-container-low rounded-lg shadow-sm overflow-hidden border border-transparent">
+<div class="p-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-3 opacity-60">
+<div class="w-10 h-10 rounded bg-stone-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-stone-500">key</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">PERSONAL_VAULT_B</h4>
+<p class="text-[10px] text-outline">Stored: Jan 05, 2024</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Accordion Item 4 -->
+<div class="bg-surface-container-low rounded-lg shadow-sm overflow-hidden border border-transparent">
+<div class="p-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-3 opacity-60">
+<div class="w-10 h-10 rounded bg-stone-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-stone-500">vpn_key</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">LEGACY_STORAGE_X</h4>
+<p class="text-[10px] text-outline">Stored: Mar 21, 2024</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">keyboard_arrow_down</span>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="mt-12 p-6 rounded-xl bg-surface-container-high text-center">
+<span class="material-symbols-outlined text-4xl text-outline-variant mb-3">fingerprint</span>
+<h5 class="font-bold text-sm mb-1">Biometric Lock Active</h5>
+<p class="text-xs text-outline mb-6">Your data is secured by system-level encryption and biometric authentication.</p>
+<button class="text-secondary text-xs font-bold underline underline-offset-4 tracking-tight uppercase">Update Security Policy</button>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-16 h-16 rounded-full bg-secondary text-white shadow-2xl flex items-center justify-center z-40 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-white/90 dark:bg-stone-950/90 backdrop-blur-lg border-t border-stone-100 dark:border-stone-900 shadow-[0_-1px_10px_rgba(0,0,0,0.05)]">
+<!-- Diary Tab -->
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 active:scale-95 transition-all duration-150 cursor-pointer">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-['Manrope'] text-[11px] font-medium tracking-wide">Diary</span>
+</div>
+<!-- Letters Tab -->
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 active:scale-95 transition-all duration-150 cursor-pointer">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-['Manrope'] text-[11px] font-medium tracking-wide">Letters</span>
+</div>
+<!-- Secret Tab (ACTIVE) -->
+<div class="flex flex-col items-center justify-center text-stone-900 dark:text-stone-50 scale-105 transition-transform active:scale-95 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="font-['Manrope'] text-[11px] font-medium tracking-wide">Secret</span>
+<div class="w-1 h-1 rounded-full bg-secondary mt-1"></div>
+</div>
+<!-- Manage Tab -->
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-600 active:scale-95 transition-all duration-150 cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Manrope'] text-[11px] font-medium tracking-wide">Manage</span>
+</div>
+</nav>
+</body></html>

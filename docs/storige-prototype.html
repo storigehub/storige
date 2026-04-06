@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storige 앱 프로토타입 — 개발 참조용</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #FAFAFA; --surface: #FFFFFF; --text: #1A1A1A; --sub: #888; --hint: #B0B0B0;
+  --blue: #4A90D9; --mint: #00C9B7; --pink: #FF6B9D; --yellow: #FFD93D; --green: #2ED573;
+  --danger: #FF4757; --border: #E8E8E8;
+}
+body { font-family: 'Pretendard Variable', -apple-system, sans-serif; background: #f0f0f0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+h1.page-heading { font-size: 18px; color: #333; margin-bottom: 8px; }
+p.page-sub { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+.phone { width: 375px; height: 780px; background: var(--bg); border-radius: 40px; overflow: hidden; position: relative; border: 0.5px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
+.phone-inner { height: 100%; overflow-y: auto; overflow-x: hidden; padding-bottom: 80px; }
+.phone-inner::-webkit-scrollbar { display: none; }
+
+.header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px 8px; background: var(--surface); position: sticky; top: 0; z-index: 10; }
+.logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.logo span { color: var(--hint); }
+.hamburger { width: 24px; height: 18px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+.hamburger div { height: 2px; background: var(--text); border-radius: 1px; }
+
+.page-title { padding: 4px 20px 2px; background: var(--surface); }
+.page-title h1 { font-size: 22px; font-weight: 700; }
+.page-title .sub { font-size: 13px; color: var(--sub); margin-top: 2px; }
+
+.tabs { display: flex; gap: 0; padding: 12px 20px 0; background: var(--surface); border-bottom: 0.5px solid var(--border); }
+.tab { padding: 8px 16px; font-size: 14px; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; font-weight: 500; }
+.tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+.month-label { padding: 12px 20px 8px; font-size: 14px; font-weight: 600; color: var(--sub); background: var(--bg); }
+
+/* ── Accordion Entry ── */
+.entry { background: var(--surface); border-bottom: 0.5px solid #f0f0f0; cursor: pointer; transition: background 0.15s; }
+.entry:hover { background: #f8f8f8; }
+.entry-row { display: flex; gap: 12px; padding: 14px 20px; align-items: flex-start; }
+.entry-date { text-align: center; min-width: 32px; flex-shrink: 0; }
+.entry-date .day { font-size: 18px; font-weight: 700; }
+.entry-date .dow { font-size: 11px; color: var(--sub); }
+.entry-body { flex: 1; min-width: 0; }
+.entry-body h3 { font-size: 15px; font-weight: 600; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+.entry-body .preview { font-size: 13px; color: var(--sub); line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lock { color: var(--pink); font-size: 12px; }
+
+.chevron { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; transition: transform 0.3s ease; color: var(--hint); }
+.entry.open .chevron { transform: rotate(180deg); color: var(--blue); }
+
+.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease; opacity: 0; }
+.entry.open .accordion-content { opacity: 1; }
+
+.accordion-inner { padding: 0 20px 16px 64px; }
+.accordion-inner .full-text { font-size: 14px; line-height: 1.9; color: var(--text); margin-bottom: 12px; white-space: pre-line; }
+
+.accordion-photos { display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; }
+.accordion-photo { width: 80px; height: 60px; border-radius: 6px; flex-shrink: 0; }
+
+.accordion-meta { display: flex; gap: 12px; font-size: 11px; color: var(--hint); margin-bottom: 12px; }
+
+.accordion-actions { display: flex; gap: 8px; }
+.action-btn { padding: 6px 14px; border-radius: 16px; font-size: 12px; cursor: pointer; border: 0.5px solid var(--border); background: var(--surface); color: var(--sub); display: flex; align-items: center; gap: 4px; }
+.action-btn.edit { border-color: var(--blue); color: var(--blue); }
+.action-btn.publish { border-color: var(--pink); color: var(--pink); }
+
+.entry.open { background: var(--surface); border-left: 3px solid var(--blue); }
+.entry.open .entry-body .preview { display: none; }
+.entry.open .entry-date .day { color: var(--blue); }
+
+/* ── Secret ── */
+.secret-item { background: var(--surface); border-bottom: 0.5px solid #f0f0f0; cursor: pointer; }
+.secret-row { padding: 16px 20px; display: flex; align-items: flex-start; gap: 12px; }
+.secret-num .num { font-size: 18px; font-weight: 700; color: var(--pink); }
+.secret-body { flex: 1; min-width: 0; }
+.secret-body .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin-bottom: 4px; }
+.badge-important { background: #FFF0F3; color: var(--pink); }
+.badge-reference { background: #F0F4FF; color: var(--blue); }
+.secret-body h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.secret-body .preview { font-size: 12px; color: var(--sub); line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.secret-notice { padding: 10px 20px; font-size: 12px; color: var(--pink); font-weight: 500; }
+.secret-item.open { border-left: 3px solid var(--pink); }
+.secret-item.open .preview { display: none; }
+
+.secret-accordion { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease; opacity: 0; }
+.secret-item.open .secret-accordion { opacity: 1; }
+.secret-acc-inner { padding: 0 20px 16px 52px; }
+.secret-acc-inner .full-text { font-size: 13px; line-height: 1.8; color: var(--text); margin-bottom: 12px; white-space: pre-line; }
+
+.credential-table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: 12px; }
+.credential-table th { background: #f5f5f5; padding: 6px 10px; text-align: left; font-weight: 600; border: 0.5px solid var(--border); }
+.credential-table td { padding: 6px 10px; border: 0.5px solid var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+/* ── Dear ── */
+.dear-item { background: var(--surface); border-bottom: 0.5px solid #f0f0f0; cursor: pointer; }
+.dear-item.open { border-left: 3px solid var(--mint); background: #fafff9; }
+.dear-item.open .preview { display: none; }
+.dear-accordion { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease; opacity: 0; }
+.dear-item.open .dear-accordion { opacity: 1; }
+.dear-acc-inner { padding: 0 20px 16px 52px; }
+.dear-acc-inner .letter-text { font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+.dear-acc-inner .letter-text .em { color: var(--pink); font-weight: 500; }
+
+/* ── Settings ── */
+.settings-section { padding: 16px 20px; }
+.settings-section h2 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.family-badges { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.family-badge { text-align: center; }
+.family-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 600; }
+.family-status { font-size: 11px; margin-top: 4px; font-weight: 500; }
+.family-status.verified { color: var(--text); }
+.family-status.unverified { color: var(--pink); }
+.add-circle { width: 48px; height: 48px; border-radius: 50%; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--sub); cursor: pointer; }
+.schedule-row { display: flex; gap: 8px; margin: 12px 0; }
+.schedule-box { flex: 1; padding: 10px; text-align: center; border-radius: 8px; background: #f5f5f5; font-size: 14px; font-weight: 600; }
+.schedule-btn { width: 100%; padding: 12px; border-radius: 8px; background: var(--pink); color: white; border: none; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+.auth-badges { display: flex; gap: 8px; margin-top: 12px; }
+.auth-badge { flex: 1; padding: 10px; border-radius: 8px; text-align: center; border: 0.5px solid var(--border); font-size: 12px; }
+.auth-badge .label { font-weight: 600; margin-bottom: 4px; }
+.auth-badge .status { font-size: 11px; color: var(--sub); }
+.auth-badge .status.active { color: var(--blue); font-weight: 600; }
+.pub-row { display: flex; gap: 8px; margin-top: 12px; }
+.pub-btn { flex: 1; padding: 12px; border-radius: 8px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+.pub-btn.confirm { background: var(--blue); color: white; }
+.pub-btn.request { background: #f5f5f5; color: var(--sub); }
+
+.divider { height: 8px; background: var(--bg); }
+
+/* ── Navigation ── */
+.fab { position: absolute; bottom: 90px; right: 20px; width: 52px; height: 52px; border-radius: 50%; background: var(--text); color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; z-index: 20; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+.bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; height: 72px; background: var(--surface); border-top: 0.5px solid var(--border); display: flex; justify-content: space-around; align-items: center; padding: 0 8px; z-index: 20; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 6px 12px; }
+.nav-item svg { width: 22px; height: 22px; }
+.nav-item span { font-size: 10px; color: var(--sub); }
+.nav-item.active span { color: var(--text); font-weight: 600; }
+
+.screen-select { display: flex; gap: 6px; padding: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 8px; }
+.screen-btn { padding: 6px 12px; border-radius: 16px; font-size: 12px; cursor: pointer; border: 0.5px solid var(--border); background: #fff; color: var(--sub); }
+.screen-btn.active { background: var(--text); color: white; border-color: var(--text); }
+
+/* ── Design Tokens Reference (for developers) ── */
+.dev-ref { max-width: 375px; margin-top: 24px; padding: 16px; background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; font-size: 12px; color: #555; }
+.dev-ref h3 { font-size: 14px; color: #333; margin-bottom: 8px; }
+.dev-ref code { background: #f5f5f5; padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<h1 class="page-heading">Storige 앱 프로토타입 (개발 참조용)</h1>
+<p class="page-sub">이 파일을 Claude Code 프로젝트 루트에 두고 디자인 참조로 활용하세요</p>
+
+<div class="screen-select" id="screenSelect"></div>
+
+<div class="phone" id="phone">
+  <div class="phone-inner" id="phoneInner"></div>
+  <div class="fab" id="fab">+</div>
+  <div class="bottom-nav" id="bottomNav"></div>
+</div>
+
+<div class="dev-ref">
+  <h3>개발자 참조: 디자인 토큰</h3>
+  <p><code>--bg: #FAFAFA</code> | <code>--surface: #FFFFFF</code> | <code>--text: #1A1A1A</code></p>
+  <p><code>--blue: #4A90D9</code> | <code>--mint: #00C9B7</code> | <code>--pink: #FF6B9D</code></p>
+  <p><code>--green: #2ED573</code> | <code>--yellow: #FFD93D</code> | <code>--border: #E8E8E8</code></p>
+  <p style="margin-top:8px;">Font: Pretendard Variable | 본문 14px | 제목 22px</p>
+  <p>아코디언 보더: 일기=blue, Dear=mint, Secret=pink</p>
+  <p>가족 뱃지: 아내=blue, 아들=yellow, 딸=pink, 변호사=green</p>
+</div>
+
+<script>
+const screens = [
+  { id: 'list', label: '일기 목록', icon: 'diary' },
+  { id: 'dear', label: 'Dear My Son', icon: 'dear' },
+  { id: 'secret', label: '시크릿 코드', icon: 'secret' },
+  { id: 'settings', label: '내 스토리지', icon: 'settings' },
+];
+let currentScreen = 'list';
+const chevronSvg = '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+const navItems = [
+  { id:'diary', label:'일기', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>' },
+  { id:'dear', label:'편지', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' },
+  { id:'secret', label:'시크릿', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></svg>' },
+  { id:'settings', label:'관리', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>' },
+];
+
+function header() { return '<div class="header"><div class="logo">Stori<span>es</span>ge</div><div class="hamburger"><div></div><div></div><div></div></div></div>'; }
+function diaryTabs(a) { return '<div class="tabs">' + ['요약','목록','캘린더','미디어','지도'].map(t => '<div class="tab '+(a===t?'active':'')+'">' + t + '</div>').join('') + '</div>'; }
+
+const entries = [
+  { id:'e1', day:31, dow:'화', title:'사랑하는 아들아', preview:'사랑하는 나의 아들아 울지 마라 끝내 작별을 미룰 수 없구나.', full:'사랑하는 나의 아들아 울지 마라\n끝내 작별을 미룰 수 없구나\n\n너 하나로 인해 이 아빤 행복했다\n이루 말할 수 없이 고마웠다\n\n사랑하는 일은 위대하고 경이로우니\n온 맘과 온 몸으로 사랑해라', photos:['#8B9E82','#C4A86B','#7BA0B5'], location:'성수동1가 16-3', weather:'☁ 12°C', time:'오후 12:56', month:'2025년 3월' },
+  { id:'e2', day:29, dow:'월', title:'사랑하는 딸에게', preview:'사랑하는 나의 딸아 네가 세상에서 가장 빛나는 존재란다', full:'사랑하는 나의 딸아\n네가 세상에서 가장 빛나는 존재란다\n\n아빠가 너를 처음 안았을 때\n세상이 얼마나 따뜻했는지 모른다', photos:['#A0856E'], location:'한남동', weather:'☀ 15°C', time:'오전 10:23', month:'2025년 3월' },
+  { id:'e3', day:28, dow:'일', title:'아들아 결혼하기 전에 꼭 읽어보거라', preview:'넌 멋진 남자가 될 거다 네 여자라면 모둘 걸어라 아깝지 않다…', full:'넌 멋진 남자가 될 거다\n네 여자라면 모둘 걸어라 아깝지 않다\n\ndear son, Don\'t be afraid\nYou have to be brave', photos:[], location:'성수동', weather:'🌤 14°C', time:'오후 3:15', month:'2025년 3월' },
+  { id:'e4', day:31, dow:'화', title:'증여 관련해 (주)광장 이재명변호사와 논의하거라', preview:'공증 정보 및 권리관련한 사항은 이재명 변호사를 통해 관리했으니...', full:'공증 정보 및 권리관련한 사항은\n이재명 변호사를 통해 관리했으니\n그분과 상담하여 처리하거라', photos:[], location:'여의도', weather:'☁ 11°C', time:'오후 5:40', locked:true, month:'2025년 3월' },
+];
+
+let openEntryId=null, openDearId=null, openSecretId=null;
+
+function toggleEntry(id) { openEntryId = openEntryId===id ? null : id; render(); if(openEntryId) setTimeout(()=>document.getElementById('entry-'+id)?.scrollIntoView({behavior:'smooth',block:'nearest'}),50); }
+function toggleDear(id) { openDearId = openDearId===id ? null : id; render(); if(openDearId) setTimeout(()=>document.getElementById('dear-'+id)?.scrollIntoView({behavior:'smooth',block:'nearest'}),50); }
+function toggleSecret(id) { openSecretId = openSecretId===id ? null : id; render(); if(openSecretId) setTimeout(()=>document.getElementById('secret-'+id)?.scrollIntoView({behavior:'smooth',block:'nearest'}),50); }
+
+function renderList() {
+  let h = header() + '<div class="page-title"><h1>모든 일기</h1><div class="sub">2015년 ~ 2025년</div></div>' + diaryTabs('목록');
+  let lm = '';
+  entries.forEach(e => {
+    if(e.month!==lm) { h+='<div class="month-label">'+e.month+'</div>'; lm=e.month; }
+    const o = openEntryId===e.id;
+    h += '<div class="entry '+(o?'open':'')+'" id="entry-'+e.id+'"><div class="entry-row" onclick="toggleEntry(\''+e.id+'\')"><div class="entry-date"><div class="day">'+e.day+'</div><div class="dow">'+e.dow+'</div></div><div class="entry-body"><h3>'+e.title+(e.locked?'<span class="lock"> 🔒</span>':'')+'</h3><p class="preview">'+e.preview+'</p></div>'+chevronSvg+'</div>';
+    h += '<div class="accordion-content" style="max-height:'+(o?(e.photos.length?'420px':'320px'):'0')+';"><div class="accordion-inner"><div class="accordion-meta"><span>📍 '+e.location+'</span><span>'+e.weather+'</span><span>🕐 '+e.time+'</span></div><div class="full-text">'+e.full+'</div>';
+    if(e.photos.length) { h+='<div class="accordion-photos">'; e.photos.forEach(c=>{h+='<div class="accordion-photo" style="background:'+c+';"></div>';}); h+='</div>'; }
+    h += '<div class="accordion-actions"><div class="action-btn edit">✎ 편집</div><div class="action-btn">☆ 즐겨찾기</div><div class="action-btn publish">📖 출판</div></div></div></div></div>';
+  });
+  return h;
+}
+
+function renderDear() {
+  const ds = [
+    { id:'d1', day:31, dow:'화', title:'사랑하는 아들아', preview:'사랑하는 나의 아들아 울지 마라 끝내 작별을 미룰 수 없구나.', full:'사랑하는 나의 아들아 울지 마라\n끝내 작별을 미룰 수 없구나\n\n너 하나로 인해 이 아빤 행복했다\n\n<span class="em">엄마에게 잘 해 드려라 맘 단단히 먹고\n엄마도 네가 지킬 여자다.</span>', recipient:'아들' },
+    { id:'d2', day:29, dow:'수', title:'사랑하는 딸에게', preview:'사랑하는 나의 딸아 울지 마라 끝내 작별을 미룰 수 없구나', full:'사랑하는 나의 딸아 울지 마라\n끝내 작별을 미룰 수 없구나\n\n좋은 사람을 만나거라\n네 가치를 아는 사람을', recipient:'딸' },
+  ];
+  let h = header() + '<div class="page-title"><h1>Dear My Son</h1><div class="sub">자녀에게 보내는 편지</div></div><div class="month-label">2025년 3월</div>';
+  ds.forEach(e => {
+    const o = openDearId===e.id;
+    h += '<div class="dear-item '+(o?'open':'')+'" id="dear-'+e.id+'"><div class="entry-row" onclick="toggleDear(\''+e.id+'\')"><div class="entry-date"><div class="day">'+e.day+'</div><div class="dow">'+e.dow+'</div></div><div class="entry-body"><h3>'+e.title+'</h3><p class="preview">'+e.preview+'</p></div>'+chevronSvg+'</div>';
+    h += '<div class="dear-accordion" style="max-height:'+(o?'500px':'0')+';"><div class="dear-acc-inner"><div style="display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-bottom:10px;background:'+(e.recipient==='아들'?'var(--yellow)':'var(--pink)')+';color:'+(e.recipient==='아들'?'#333':'#fff')+';">'+e.recipient+'에게</div><div class="letter-text">'+e.full+'</div><div class="accordion-actions" style="margin-top:12px;"><div class="action-btn edit">✎ 편집</div><div class="action-btn publish">📖 출판 미리보기</div></div></div></div></div>';
+  });
+  return h;
+}
+
+function renderSecret() {
+  const ss = [
+    { id:'s1', num:'01', badge:'important', title:'부동산 등기 현황 및 계약사항', preview:'용산 타워펠리스 2동 1231호 임대계약서 참고하거라…', full:'용산 타워펠리스 2동 1231호\n임대계약서 참고하거라\n\n보증금은 월세에서 차감하여\n현재 2000만원 미수가 있으니', hasTable:false },
+    { id:'s2', num:'02', badge:'reference', title:'증여 관련해 (주)광장 이재명변호사와 논의하거라', preview:'공증 정보 및 권리관련한 사항은…', full:'공증 정보 및 권리관련한 사항은\n이재명 변호사를 통해 관리했으니\n그분과 상담하여 처리하거라', hasTable:false },
+    { id:'s3', num:'03', badge:'important', title:'주식투자 및 채권계좌 관련 정보', preview:'총 8개 증권사에 계좌가 등록되어있다…', full:'총 8개 증권사에 계좌가 등록되어있다\n그 중 신용거래금액을 차감하여\n증여를 위한 절차는 아래 참조', hasTable:true },
+  ];
+  let h = header() + '<div class="page-title"><h1>시크릿 코드</h1></div><div class="secret-notice">시크릿코드 기록은 암호화 되어 저장됩니다.</div><div class="month-label">2025년 3월</div>';
+  ss.forEach(s => {
+    const o = openSecretId===s.id;
+    h += '<div class="secret-item '+(o?'open':'')+'" id="secret-'+s.id+'"><div class="secret-row" onclick="toggleSecret(\''+s.id+'\')"><div class="secret-num"><div class="num">'+s.num+'</div></div><div class="secret-body"><span class="badge '+(s.badge==='important'?'badge-important':'badge-reference')+'">'+(s.badge==='important'?'중요':'참고')+'</span><h3>'+s.title+'</h3><p class="preview">'+s.preview+'</p></div>'+chevronSvg+'</div>';
+    h += '<div class="secret-accordion" style="max-height:'+(o?(s.hasTable?'350px':'250px'):'0')+';"><div class="secret-acc-inner"><div class="full-text">'+s.full+'</div>';
+    if(s.hasTable) h += '<table class="credential-table"><tr><th>기관</th><th>아이디</th><th>비번</th></tr><tr><td>우리은행</td><td>******</td><td>******</td></tr><tr><td>국민은행</td><td>******</td><td>******</td></tr><tr><td>신한은행</td><td>******</td><td>******</td></tr></table>';
+    h += '<div class="accordion-actions"><div class="action-btn edit">✎ 편집</div><div class="action-btn" style="border-color:var(--danger);color:var(--danger);">🔒 암호화 상태</div></div></div></div></div>';
+  });
+  return h;
+}
+
+function renderSettings() {
+  let h = header() + '<div class="page-title"><h1>내 스토리지 관리</h1><div class="sub">소중한 나의 기록인 내스토리지에 대한 권한등을 설정해주세요</div></div><div class="divider"></div>';
+  h += '<div class="settings-section"><h2>가족구성원 설정</h2><div class="family-badges"><div class="family-badge"><div class="family-circle" style="background:var(--blue);">아내</div><div class="family-status verified">인증</div></div><div class="family-badge"><div class="family-circle" style="background:var(--yellow);color:#333;">아들</div><div class="family-status verified">인증</div></div><div class="family-badge"><div class="family-circle" style="background:var(--pink);">딸</div><div class="family-status unverified">미인증</div></div><div class="family-badge"><div class="family-circle" style="background:var(--green);">변호사</div><div class="family-status verified">인증</div></div><div class="family-badge"><div class="add-circle">+</div><div class="family-status" style="color:var(--blue);">추가</div></div></div></div><div class="divider"></div>';
+  h += '<div class="settings-section"><h2>열람 공개 예약</h2><div class="schedule-row"><div class="schedule-box">2032년</div><div class="schedule-box">3월</div><div class="schedule-box">12일</div></div><button class="schedule-btn">변경하기 / 재등록</button></div><div class="divider"></div>';
+  h += '<div class="settings-section"><h2>2단계 인증 설정</h2><div class="auth-badges"><div class="auth-badge"><div class="label">휴대전화 인증</div><div class="status active">사용중</div></div><div class="auth-badge"><div class="label">보안코드 인증</div><div class="status" style="color:var(--blue);">변경</div></div><div class="auth-badge"><div class="label">생체인식 인증</div><div class="status" style="color:var(--blue);">변경</div></div></div></div><div class="divider"></div>';
+  h += '<div class="settings-section"><h2>내 스토리지 출판요청</h2><div class="sub" style="font-size:13px;color:var(--sub);margin-bottom:12px;">출판을 원하시면 접수 버튼을 눌러 시안확인을 완료해주시기 바랍니다.</div><div class="pub-row"><div class="pub-btn confirm">접수 / 시안확인</div><div class="pub-btn request">출판요청</div></div></div>';
+  return h;
+}
+
+const renderers = { list:renderList, dear:renderDear, secret:renderSecret, settings:renderSettings };
+
+function switchScreen(id) { currentScreen=id; openEntryId=openDearId=openSecretId=null; render(); }
+
+function render() {
+  document.getElementById('phoneInner').innerHTML = renderers[currentScreen]();
+  document.getElementById('screenSelect').innerHTML = screens.map(s=>'<div class="screen-btn '+(currentScreen===s.id?'active':'')+'" onclick="switchScreen(\''+s.id+'\')">'+s.label+'</div>').join('');
+  const an = screens.find(s=>s.id===currentScreen)?.icon||'diary';
+  document.getElementById('bottomNav').innerHTML = navItems.map(n=>'<div class="nav-item '+(an===n.id?'active':'')+'" onclick="switchScreen(\''+(n.id==='diary'?'list':n.id)+'\')">'+n.svg+'<span>'+n.label+'</span></div>').join('');
+}
+render();
+</script>
+</body>
+</html>

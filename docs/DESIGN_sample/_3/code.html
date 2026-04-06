@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>관리 - Storige</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed-dim": "#a0caff",
+              "surface-container-highest": "#e2e2e2",
+              "tertiary-fixed": "#5ffae6",
+              "on-primary-fixed-variant": "#474746",
+              "background": "#f9f9f9",
+              "error": "#ba1a1a",
+              "inverse-primary": "#c8c6c5",
+              "on-tertiary": "#ffffff",
+              "error-container": "#ffdad6",
+              "outline-variant": "#c1c7d2",
+              "surface-container-high": "#e8e8e8",
+              "surface-container-low": "#f3f3f3",
+              "on-surface-variant": "#414751",
+              "surface-variant": "#e2e2e2",
+              "on-error": "#ffffff",
+              "secondary": "#0061a5",
+              "on-secondary-fixed": "#001c37",
+              "on-tertiary-fixed-variant": "#005048",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#004375",
+              "on-primary-fixed": "#1c1b1b",
+              "secondary-fixed": "#d2e4ff",
+              "tertiary-container": "#008377",
+              "on-primary": "#ffffff",
+              "primary-container": "#757474",
+              "outline": "#717782",
+              "on-error-container": "#93000a",
+              "surface-bright": "#f9f9f9",
+              "primary-fixed": "#e5e2e1",
+              "tertiary-fixed-dim": "#37ddca",
+              "on-secondary-fixed-variant": "#00497e",
+              "on-surface": "#1a1c1c",
+              "on-tertiary-container": "#f4fffb",
+              "on-background": "#1a1c1c",
+              "surface-tint": "#5f5e5e",
+              "primary": "#5d5c5b",
+              "tertiary": "#00685e",
+              "primary-fixed-dim": "#c8c6c5",
+              "on-tertiary-fixed": "#00201c",
+              "surface-container": "#eeeeee",
+              "on-primary-container": "#f7feff",
+              "secondary-container": "#6fb2fd",
+              "surface-dim": "#dadada",
+              "inverse-surface": "#2f3131",
+              "surface": "#f9f9f9",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#f0f1f1"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50 bg-neutral-50/80 dark:bg-zinc-900/80 backdrop-blur-xl">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#1A1A1A] dark:text-zinc-100 cursor-pointer">menu</span>
+<h1 class="text-2xl font-bold tracking-tighter text-[#1A1A1A] dark:text-zinc-50 font-manrope">Storige</h1>
+</div>
+<div class="flex gap-6 items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Portrait of a middle-aged man with a thoughtful expression, soft studio lighting, professional and warm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfA8u_FYyYcrWBu5bbRDYUtkRmawsRkkqaithNMDQMfg-L-_TwlFU-DEuWHiJWIDAsnPPJrOv6HV_4_1RSNg2RGNbw8LoxscyOIjADGwIzoEfXINpwOZgdYygLgkRYdYBiqxs0PS9symPoSHRz9suBU5XLtGCgh9QmsLtyFvTeY0qCMwBHpgAsQjoLL6wzKpbQ9VAc8ZU-eI9kCaVtPYrYLn37xQJNHFatNz8yOsFJ2CO8wpY8xGudLIVy6uT6xXQe9dFfUmxXpU7I"/>
+</div>
+</div>
+</header>
+<main class="max-w-screen-lg mx-auto px-6 pt-12">
+<header class="mb-12">
+<p class="text-outline font-label text-[0.6875rem] uppercase tracking-[0.2em] mb-2">계정 관리</p>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface font-manrope">관리 설정</h2>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Left Column: Family Member Settings -->
+<div class="lg:col-span-2 space-y-8">
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold font-manrope">가족 구성원 설정</h3>
+<button class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Wife -->
+<div class="p-6 rounded-xl bg-surface-container-lowest flex flex-col items-center text-center shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/10">
+<div class="relative mb-4">
+<div class="w-16 h-16 rounded-full border-2 border-secondary p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="Smiling Korean woman in her 40s, friendly and warm expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcYS0MZKEN6GoT89GTSe5UjciV1i7utnWNT0NHGwaKSr1Sc3ousviZWrNFq2f63PhNnB365NFS1H7lmSFHnKahuGmE8UG57IhIXRUwiJ7k-6lbi4yMpicVZmayMAlBe9hVJEPFz_3f8AN0S4EO5cfvmrjVltuWYTIDZXTRQefjXoc-IOAA5UA09Ad5nlGK0sBE6ZvCufo65IIE0p8R1q5Yp8YEhIRkT3F40vy7TbR4E8H0XhE5xan1LRE-QK5PWNBlmdXtrzzv8tW1"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-secondary text-white rounded-full flex items-center justify-center scale-75">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<span class="font-bold text-on-surface">아내</span>
+<span class="text-[0.6875rem] text-secondary font-medium mt-1">인증됨</span>
+</div>
+<!-- Son -->
+<div class="p-6 rounded-xl bg-surface-container-lowest flex flex-col items-center text-center shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/10">
+<div class="relative mb-4">
+<div class="w-16 h-16 rounded-full border-2 border-yellow-400 p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="Korean boy smiling brightly, cheerful expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa90sry4icae8THwEUvjXM3Kk14IhDsw0dX8paVmAa30k-KY2mKvNGLwrUHqfGDLdb5g4n6QAnTiblrLfPF5Laqp9SvWsM7r2DWa9Ch6eWbCTlUQK21WQ5guwlf-cI95_Z1RS0ARXqeKBm9ZX9Vlzh2nDFv_wzQJtBbC9ffxNcpbtnx0VYjQ6VATO7-ar8Ue6aMNHcuQUaWKadALRv6FwrpVLc1k7Fr8E78MDUxOlpD9g22cWdrWtq21oD0hPS6YGlqh7S1ehprbYS"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-yellow-400 text-white rounded-full flex items-center justify-center scale-75">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">pending</span>
+</div>
+</div>
+<span class="font-bold text-on-surface">아들</span>
+<span class="text-[0.6875rem] text-outline font-medium mt-1">동기화 중</span>
+</div>
+<!-- Daughter -->
+<div class="p-6 rounded-xl bg-surface-container-lowest flex flex-col items-center text-center shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/10">
+<div class="relative mb-4">
+<div class="w-16 h-16 rounded-full border-2 border-pink-400 p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="Young Korean girl with a gentle smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuColp-erALctw5zwqezqx2PeI27qUmx83wN1t70mX9N2IaoA9QDg-N8E0C_KIX8smeov-AcaNfSqctFfK_wFgw2UCERfSgoJ2DbbOtUvU26GO8VdjhgC9K6nEyQimksgk_k2cdfe7q0mQ67MWJgcvRgUa3Znnr2GTj3YLnNSAKCXkt50g4aUDz_EYaPAtwWy9oMY4uZkX6qc7s3G9Igi44nk4tsKWYZ3visa3IdgKg--lFPf5_0PyWt8yAWG5MdTU6EwiBqjqg7TDZU"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-pink-400 text-white rounded-full flex items-center justify-center scale-75">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<span class="font-bold text-on-surface">딸</span>
+<span class="text-[0.6875rem] text-pink-500 font-medium mt-1">인증됨</span>
+</div>
+<!-- Lawyer -->
+<div class="p-6 rounded-xl bg-surface-container-lowest flex flex-col items-center text-center shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/10">
+<div class="relative mb-4">
+<div class="w-16 h-16 rounded-full border-2 border-tertiary p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="Professional Korean man in a suit, reliable and calm expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1ZmtH2_tu8roGNALLlJ8djLgkOQVyDYtQuVO_LdMK-vVg4EFfs-FHeGrNOT7n12mcn5rvKSVaSLAWd8rry33jdO_-azqhLyhSY8NzG9_0TXG0V1WSzXd9lIr7TBr9EsJqOp8JhQwSGEv3qY5ps_UZW5X9WEszw-HQ7S9iThhmb2schuIAplg1tsh-5tz9J6aBMpFYTnEgcK24Kjvd3Vd42fh-9SIgDVOIX8npySs-gWVJ7xyUF-dOc-48yhSxJtH5Mkb-WgVIwZY3"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-tertiary text-white rounded-full flex items-center justify-center scale-75">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<span class="font-bold text-on-surface">법정대리인</span>
+<span class="text-[0.6875rem] text-tertiary font-medium mt-1">법적 보호자</span>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-xl font-bold font-manrope mb-6">보안 및 인증</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-6 bg-surface-container-lowest rounded-2xl border-l-4 border-secondary shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+<span class="material-symbols-outlined text-secondary mb-3">smartphone</span>
+<p class="text-xs font-bold text-outline uppercase tracking-wider">휴대폰 번호</p>
+<p class="font-bold text-on-surface mt-1">+82 10 **** 5678</p>
+<p class="text-[0.6875rem] text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check_circle</span> 활성화됨
+                        </p>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-2xl border-l-4 border-outline-variant/30 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+<span class="material-symbols-outlined text-outline mb-3">pin</span>
+<p class="text-xs font-bold text-outline uppercase tracking-wider">보안 코드</p>
+<p class="font-bold text-on-surface mt-1">6자리 해시</p>
+<p class="text-[0.6875rem] text-outline mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">info</span> 업데이트 필요
+                        </p>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-2xl border-l-4 border-secondary shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+<span class="material-symbols-outlined text-secondary mb-3">fingerprint</span>
+<p class="text-xs font-bold text-outline uppercase tracking-wider">생체 인증</p>
+<p class="font-bold text-on-surface mt-1">Touch ID / Face ID</p>
+<p class="text-[0.6875rem] text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">lock</span> 암호화됨
+                        </p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Legacy Schedule & Publications -->
+<div class="space-y-8">
+<section class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/10">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">event_repeat</span>
+<h3 class="text-xl font-bold font-manrope">상속 액세스 일정</h3>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-lowest rounded-2xl">
+<p class="text-xs font-bold text-on-surface">공개 예정 일자</p>
+<p class="text-[0.75rem] text-outline mb-3">상속인들에게 일기와 편지가 공개되는 날짜입니다.</p>
+<div class="flex items-center justify-between bg-surface-container-low px-4 py-3 rounded-lg border-b-2 border-secondary">
+<span class="font-manrope font-bold text-secondary">2032.03.12</span>
+<span class="material-symbols-outlined text-sm text-outline">calendar_today</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-2xl flex items-center justify-between">
+<div>
+<p class="text-xs font-bold text-on-surface">비활성 트리거</p>
+<p class="text-[0.75rem] text-outline">12개월간 미접속 시 자동 공개</p>
+</div>
+<div class="w-10 h-5 bg-secondary rounded-full relative p-1 cursor-pointer">
+<div class="w-3 h-3 bg-white rounded-full absolute right-1 shadow-sm"></div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="bg-surface-container-lowest rounded-3xl p-6 relative border border-outline-variant/10 shadow-[0_16px_32px_rgba(0,0,0,0.03)] overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-tertiary">menu_book</span>
+<h3 class="text-lg font-bold font-manrope">출판 관리 상태</h3>
+</div>
+<div class="space-y-4">
+<div class="p-4 rounded-xl bg-surface-container-low/50">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-12 h-16 bg-primary-container/10 rounded border border-outline-variant/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary/40">auto_stories</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-bold text-sm text-on-surface truncate">2024년 앤솔로지</h4>
+<p class="text-[0.6875rem] text-outline">린넨 하드커버 • 324 페이지</p>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[65%]"></div>
+</div>
+<div class="flex justify-between items-center mt-3">
+<p class="text-[0.625rem] font-bold text-tertiary uppercase tracking-wider">교정 및 검토 중</p>
+<button class="px-3 py-1 bg-on-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-[0.625rem] font-bold">미리보기</button>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute -top-8 -right-8 w-32 h-32 bg-tertiary/5 rounded-full blur-2xl"></div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Updated Location & Style) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-2xl rounded-t-[2.5rem] shadow-[0_-12px_40px_rgba(0,0,0,0.08)] border-t border-outline-variant/10">
+<div class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-secondary dark:hover:text-blue-300 transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:scale-110 transition-transform">auto_stories</span>
+<span class="font-manrope text-[9px] font-semibold uppercase tracking-widest">Diary</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-secondary dark:hover:text-blue-300 transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:scale-110 transition-transform">mail</span>
+<span class="font-manrope text-[9px] font-semibold uppercase tracking-widest">Letters</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-secondary dark:hover:text-blue-300 transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:scale-110 transition-transform">lock</span>
+<span class="font-manrope text-[9px] font-semibold uppercase tracking-widest">Secret</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary dark:text-blue-400 scale-110 transition-transform cursor-pointer">
+<div class="bg-secondary/10 p-2 rounded-2xl mb-1">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+<span class="font-manrope text-[9px] font-extrabold uppercase tracking-widest">Admin</span>
+</div>
+</nav>
+</body></html>

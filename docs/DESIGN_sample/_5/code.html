@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0061A5",
+            "on-primary": "#FFFFFF",
+            secondary: "#0061A5",
+            "on-secondary": "#FFFFFF",
+            background: "#F9F9F9",
+            "on-background": "#1A1C1C",
+            surface: "#F9F9F9",
+            "on-surface": "#1A1C1C",
+            "surface-variant": "#E2E2E2",
+            "on-surface-variant": "#444748",
+            outline: "#747878",
+            "outline-variant": "#C4C7C7",
+            "surface-container-lowest": "#FFFFFF",
+            "surface-container-low": "#F3F3F3",
+            "surface-container": "#EEEEEE",
+            "surface-container-high": "#E8E8E8",
+            "surface-container-highest": "#E2E2E2"
+          },
+          fontFamily: {
+            headline: ["'Pretendard Variable'", "sans-serif"],
+            body: ["'Pretendard Variable'", "sans-serif"],
+            label: ["'Pretendard Variable'", "sans-serif"],
+            display: ["'Pretendard Variable'", "sans-serif"]
+          },
+          borderRadius: {
+            DEFAULT: "1rem",
+            lg: "1.25rem",
+            xl: "1.5rem",
+            full: "9999px"
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    body {
+      font-family: 'Pretendard Variable', sans-serif;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #e2e2e2;
+      border-radius: 10px;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    #grid-view-content { display: none; }
+    .view-active { display: block !important; }
+    .grid-view-active { display: grid !important; }
+    .tab-active { color: #0061A5; border-bottom: 2px solid #0061A5; font-weight: 700; }
+    .toggle-active { color: #0061A5; background-color: #F3F3F3; }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col">
+<!-- Top Navigation Shell -->
+<header class="bg-surface/80 backdrop-blur-xl flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50 border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface cursor-pointer">menu</span>
+<h1 class="text-2xl font-bold tracking-tighter text-on-surface font-headline">Storige</h1>
+</div>
+<!-- Desktop Navigation Links -->
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-headline tracking-tight text-sm text-primary font-bold transition-opacity" href="#">일기</a>
+<a class="font-headline tracking-tight text-sm text-on-surface-variant hover:opacity-70 transition-opacity" href="#">편지</a>
+<a class="font-headline tracking-tight text-sm text-on-surface-variant hover:opacity-70 transition-opacity" href="#">비밀</a>
+<a class="font-headline tracking-tight text-sm text-on-surface-variant hover:opacity-70 transition-opacity" href="#">관리</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface cursor-pointer">search</span>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="User Portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPkydo_GhGHeClx1ZMCh9lT3lobhsK9jTWUMuLihyFre0fDUjMAvlhbfzY6BQvupyPZh5xl3ZUri_PyoYEq9ykKzPnZKDpgdVHkfRtEmEkooyX0YzTFoc0NlS7wLgAzY8byQZsPhrMGdw8FKW3NFz-OxYSkft8tfStIba0j7kZKLKocqlwe9dahVZ_sgjuuEI2qLxk7Sq8ZFkf2J8o62kSHJ8_VV2dR59v7ugTfWTg9u7OkaM2_kEPNEwkDqlzEIBxdpYsmOGtFkm9"/>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-6xl w-full mx-auto px-6 py-10 md:pb-24">
+<!-- Hero Header Area -->
+<section class="mb-12">
+<p class="font-label text-outline uppercase tracking-[0.2em] text-[10px] mb-2">오늘의 성찰</p>
+<h2 class="font-headline text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-tight">나의 살아있는 유산</h2>
+</section>
+<!-- Tabs with View Switcher -->
+<div class="flex items-center justify-between border-b border-outline-variant mb-10">
+<div class="flex gap-1 overflow-x-auto no-scrollbar">
+<button class="px-6 py-3 font-headline font-semibold text-sm text-outline hover:text-on-surface transition-colors whitespace-nowrap">요약</button>
+<button class="px-6 py-3 font-headline text-sm tab-active whitespace-nowrap">목록</button>
+<button class="px-6 py-3 font-headline font-semibold text-sm text-outline hover:text-on-surface transition-colors whitespace-nowrap">캘린더</button>
+<button class="px-6 py-3 font-headline font-semibold text-sm text-outline hover:text-on-surface transition-colors whitespace-nowrap">미디어</button>
+<button class="px-6 py-3 font-headline font-semibold text-sm text-outline hover:text-on-surface transition-colors whitespace-nowrap">지도</button>
+</div>
+<!-- View Switcher -->
+<div class="hidden md:flex items-center bg-surface-container-low rounded-lg p-1 ml-4 self-center mb-2">
+<button class="p-2 rounded-md transition-all flex items-center justify-center toggle-active" id="list-view-btn" onclick="switchView('list')">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+<button class="p-2 rounded-md transition-all flex items-center justify-center text-outline hover:text-on-surface" id="grid-view-btn" onclick="switchView('grid')">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+</div>
+</div>
+<!-- Container for View Modes -->
+<div id="view-container">
+<!-- List View Content (Default) -->
+<div class="space-y-6 view-active" id="list-view-content">
+<!-- Open Accordion Style Entry -->
+<div class="bg-surface-container-lowest rounded-xl p-6 md:p-8 border border-outline-variant/30 shadow-sm transition-all duration-300">
+<div class="flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
+<div class="flex flex-col items-center md:items-start shrink-0">
+<span class="font-headline text-4xl md:text-5xl font-extrabold text-primary leading-none">24</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-outline mt-1">10월 / 목</span>
+</div>
+<div class="flex-1 space-y-6">
+<div class="flex flex-col md:flex-row justify-between items-start gap-4">
+<div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-3 leading-snug">안개 낀 아침의 정적</h3>
+<div class="flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-1.5 text-outline text-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>서울 성수동</span>
+</div>
+<div class="flex items-center gap-1.5 text-outline text-xs">
+<span class="material-symbols-outlined text-[16px]">cloud</span>
+<span>12°C</span>
+</div>
+<div class="flex items-center gap-1.5 text-outline text-xs">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>오후 12:56</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low rounded-full text-outline transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low rounded-full text-outline transition-colors"><span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">star</span></button>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low rounded-full text-outline transition-colors"><span class="material-symbols-outlined text-xl">share</span></button>
+</div>
+</div>
+<div class="border-t border-outline-variant/20 pt-6">
+<p class="text-on-surface-variant leading-relaxed text-base font-body max-w-3xl">
+                  오늘 아침 한강 위로 안개가 낮게 깔려 도시의 경계가 흐릿해 보였다. 성수동에 있는 그 작은 카페, 노출 벽돌과 갓 볶은 원두 향이 가득한 그곳에 앉았다. 내가 써온 편지들에 대해 생각했다. 나는 나 자신의 얼마만큼을 진실되게 남기고 있는 것일까?
+                </p>
+<div class="flex gap-4 pt-6 overflow-x-auto no-scrollbar">
+<img alt="Foggy city" class="w-48 h-32 md:w-64 md:h-40 object-cover rounded-xl border border-outline-variant/10 flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4B3rv918EaYkRCDGHT3alc5P_5Ca-MEqjUbbP-CkTN9AzBHv5SIGJBzvftXKxmvoEwdLUYgm8I8bxAqXKCiiu1gRZ-yQ4grPI6WKV-RUCaUgbpVaRn6xq0GJsOlLKA8ATMwQ4WE2KezQoZpZfobJlY582uXpKxpo1LF07RwNnUklzBssEmD3gZ-3UZdRnrfF3Zoj-vFrTFyiCL5TaupCbQbQaAvGms5oxKaTrTXVLdBqvc_I5KNGtruu9GNfRvXu2oBDm5qhdOo2r"/>
+<img alt="Latte art" class="w-48 h-32 md:w-64 md:h-40 object-cover rounded-xl border border-outline-variant/10 flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3yXKNGXvjIk8HfEYDeRE1TCZrb2Q3NdGpZlaeIasEPqObGYyJJe4qJCMb6WWwlLHlAIDyaGVB0Wi3aSKQdd3fSI6h-yt6yMJL5F_Ivrqj6MDMnsNvQuV8qX2iHserdInHr5ykIYWiX8X2lCSeuJE9N_Jwrm6JwHOTDQUBN1HAQXPzNSKzybTRCyZjGYt2_-pPpQyQ1fDGvSp7Qsx41MaCqk1UMevH7lkUJfsJk1677Hx8pKhJcySu6M27Rr1fXGcEfym0SXkdi7zq"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Closed List Entry 1 -->
+<div class="group bg-surface-container-low hover:bg-surface-container-highest rounded-xl p-6 transition-all duration-300 cursor-pointer border border-transparent hover:border-outline-variant/30">
+<div class="flex items-center gap-8">
+<div class="flex flex-col items-center shrink-0 w-12">
+<span class="font-headline text-2xl font-bold text-outline group-hover:text-primary transition-colors leading-none">22</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-outline mt-1">10월 / 화</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<h3 class="font-headline text-lg font-bold text-on-surface truncate group-hover:text-primary transition-colors">해 질 녘 건축물의 그림자</h3>
+<p class="text-on-surface-variant/70 text-sm truncate font-body">도서관 벽에 비친 빛의 모습이 집을 생각나게 한다...</p>
+</div>
+<div class="flex items-center gap-4 text-outline">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="material-symbols-outlined text-[20px]">wb_sunny</span>
+</div>
+</div>
+</div>
+<!-- Closed List Entry 2 -->
+<div class="group bg-surface-container-low hover:bg-surface-container-highest rounded-xl p-6 transition-all duration-300 cursor-pointer border border-transparent hover:border-outline-variant/30">
+<div class="flex items-center gap-8">
+<div class="flex flex-col items-center shrink-0 w-12">
+<span class="font-headline text-2xl font-bold text-outline group-hover:text-primary transition-colors leading-none">21</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-outline mt-1">10월 / 월</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<h3 class="font-headline text-lg font-bold text-on-surface truncate group-hover:text-primary transition-colors">오랜 친구와의 대화</h3>
+<p class="text-on-surface-variant/70 text-sm truncate font-body">우리는 중요하지 않은 일과 중요한 일들에 대해 몇 시간 동안 이야기했다...</p>
+</div>
+<div class="flex items-center gap-4 text-outline">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Grid View Content (Hidden by default) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="grid-view-content">
+<!-- Entry 1: Large Featured Card -->
+<div class="group relative md:col-span-2 lg:col-span-2 aspect-[16/10] overflow-hidden rounded-xl shadow-lg cursor-pointer border border-outline-variant/20">
+<img alt="Foggy city landscape" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4B3rv918EaYkRCDGHT3alc5P_5Ca-MEqjUbbP-CkTN9AzBHv5SIGJBzvftXKxmvoEwdLUYgm8I8bxAqXKCiiu1gRZ-yQ4grPI6WKV-RUCaUgbpVaRn6xq0GJsOlLKA8ATMwQ4WE2KezQoZpZfobJlY582uXpKxpo1LF07RwNnUklzBssEmD3gZ-3UZdRnrfF3Zoj-vFrTFyiCL5TaupCbQbQaAvGms5oxKaTrTXVLdBqvc_I5KNGtruu9GNfRvXu2oBDm5qhdOo2r"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-primary text-on-primary px-3 py-1 rounded-full text-xs font-bold tracking-tight">24 OCT</div>
+<div class="flex gap-2 text-white/80 text-xs">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>서울 성수동</span>
+</div>
+</div>
+<h3 class="text-white font-headline text-3xl md:text-4xl font-extrabold mb-3 group-hover:translate-x-2 transition-transform duration-300">안개 낀 아침의 정적</h3>
+<p class="text-white/70 line-clamp-2 max-w-2xl font-body">오늘 아침 한강 위로 안개가 낮게 깔려 도시의 경계가 흐릿해 보였다...</p>
+</div>
+</div>
+<!-- Entry 2: Portrait Card -->
+<div class="group relative aspect-[3/4] overflow-hidden rounded-xl shadow-lg cursor-pointer border border-outline-variant/20">
+<img alt="Latte art close up" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3yXKNGXvjIk8HfEYDeRE1TCZrb2Q3NdGpZlaeIasEPqObGYyJJe4qJCMb6WWwlLHlAIDyaGVB0Wi3aSKQdd3fSI6h-yt6yMJL5F_Ivrqj6MDMnsNvQuV8qX2iHserdInHr5ykIYWiX8X2lCSeuJE9N_Jwrm6JwHOTDQUBN1HAQXPzNSKzybTRCyZjGYt2_-pPpQyQ1fDGvSp7Qsx41MaCqk1UMevH7lkUJfsJk1677Hx8pKhJcySu6M27Rr1fXGcEfym0SXkdi7zq"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-6">
+<div class="bg-white/20 backdrop-blur-md self-start text-white px-3 py-1 rounded-full text-[10px] font-bold mb-3">22 OCT</div>
+<h3 class="text-white font-headline text-2xl font-bold mb-2 group-hover:translate-y-[-4px] transition-transform duration-300">해 질 녘 건축물의 그림자</h3>
+<p class="text-white/80 text-sm line-clamp-2 font-body">도서관 벽에 비친 빛의 모습이 집을 생각나게 한다...</p>
+</div>
+</div>
+<!-- Entry 3: Minimal Text Card -->
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/20 flex flex-col justify-between hover:bg-surface-container-high transition-colors cursor-pointer group shadow-sm">
+<div>
+<div class="flex justify-between items-start mb-8">
+<div class="flex flex-col">
+<span class="font-headline text-3xl font-extrabold text-primary">21</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-outline">OCT / MON</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">chat_bubble</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-4">오랜 친구와의 대화</h3>
+<p class="text-on-surface-variant leading-relaxed font-body text-sm">우리는 중요하지 않은 일과 중요한 일들에 대해 몇 시간 동안 이야기했다.</p>
+</div>
+<div class="mt-8 flex items-center gap-2 text-outline text-xs">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>오후 07:15</span>
+</div>
+</div>
+<!-- Entry 4: Placeholder/CTA -->
+<div class="border-2 border-dashed border-outline-variant/40 rounded-xl flex flex-col items-center justify-center p-8 text-outline hover:text-primary hover:border-primary transition-all cursor-pointer group bg-surface-container-lowest/50">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-3xl group-hover:scale-125 transition-transform">add_notes</span>
+</div>
+<p class="font-headline font-bold">새로운 순간 기록하기</p>
+<p class="text-[10px] uppercase tracking-widest mt-1">Write your legacy</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-28 right-6 md:bottom-12 md:right-12 w-14 h-14 md:w-16 md:h-16 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<!-- Bottom Navigation NavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-3 bg-surface/95 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0_-4px_24px_rgba(0,0,0,0.04)] md:hidden">
+<div class="flex flex-col items-center justify-center text-primary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-headline text-[10px] uppercase tracking-wider mt-1">일기</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-headline text-[10px] uppercase tracking-wider mt-1">편지</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-headline text-[10px] uppercase tracking-wider mt-1">비밀</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline text-[10px] uppercase tracking-wider mt-1">관리</span>
+</div>
+</nav>
+<script>
+    function switchView(view) {
+      const listViewContent = document.getElementById('list-view-content');
+      const gridViewContent = document.getElementById('grid-view-content');
+      const listBtn = document.getElementById('list-view-btn');
+      const gridBtn = document.getElementById('grid-view-btn');
+
+      if (view === 'list') {
+        listViewContent.classList.add('view-active');
+        gridViewContent.classList.remove('grid-view-active');
+        listBtn.classList.add('toggle-active');
+        listBtn.classList.remove('text-outline', 'hover:text-on-surface');
+        gridBtn.classList.remove('toggle-active');
+        gridBtn.classList.add('text-outline', 'hover:text-on-surface');
+      } else {
+        listViewContent.classList.remove('view-active');
+        gridViewContent.classList.add('grid-view-active');
+        gridBtn.classList.add('toggle-active');
+        gridBtn.classList.remove('text-outline', 'hover:text-on-surface');
+        listBtn.classList.remove('toggle-active');
+        listBtn.classList.add('text-outline', 'hover:text-on-surface');
+      }
+    }
+  </script>
+</body></html>
