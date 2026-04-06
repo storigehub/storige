@@ -102,7 +102,11 @@ storige/
 │   ├── AGENT_TESTER.md
 │   └── ORCHESTRATION_GUIDE.md
 ├── docs/
-│   ├── storige-prototype.html   ← UI 프로토타입 (디자인 기준)
+│   ├── DESIGN_sample/           ← 디자인 시스템 기준 (최우선)
+│   │   ├── _1~_7/               ← 화면별 HTML 템플릿 + 스크린샷
+│   │   ├── dear_my_son_*/       ← Dear 화면 템플릿
+│   │   └── eterna_archive/      ← DESIGN.md (Midnight Archive 시스템 문서)
+│   ├── storige-prototype.html   ← 레거시 레이아웃 참고 (토큰 사용 금지)
 │   └── storige_스토리보드_초안.pdf
 ├── src/
 │   ├── app/                     # Next.js App Router 페이지
@@ -150,24 +154,142 @@ chore: 빌드/설정
 
 ## UI/UX 핵심 결정사항
 
-### 디자인 토큰
+> **디자인 기준 파일:** `docs/DESIGN_sample/` (최우선) → `docs/DESIGN_sample/eterna_archive/DESIGN.md` (시스템 문서)  
+> `docs/storige-prototype.html`은 초기 레이아웃 참고용으로만 유지 (토큰은 DESIGN_sample 우선)
+
+---
+
+### 디자인 시스템: Midnight Archive
+
+**철학:** 고급 물리 저널의 디지털 등가물. 편집적(editorial)이고 큐레이션된 미학. 브루탈리즘 건축과 개인적 성찰의 중간. 흰 공간(white space)을 프리미엄 재료로 취급.
+
+---
+
+### 컬러 토큰 (Material Design 3 기반)
+
+```css
+/* ── 서피스 계층 (tonal layering) ── */
+--surface-lowest:   #FFFFFF;   /* 활성 카드, 주요 콘텐츠 */
+--surface-low:      #F3F3F3;   /* 보조 액션, 리스트 아이템 */
+--surface:          #EEEEEE;   /* 그룹 배경 */
+--surface-high:     #E8E8E8;   /* 구분 영역 */
+--surface-highest:  #E2E2E2;   /* 최하위 배경 */
+--background:       #F9F9F9;   /* 앱 전체 배경 */
+--surface-dim:      #DADADA;   /* 비활성/오버레이 배경 */
+
+/* ── 텍스트 ── */
+--on-surface:         #1A1C1C;   /* 기본 텍스트 */
+--on-surface-variant: #444748;   /* 보조 텍스트 */
+--outline:            #747878;   /* 아이콘, 힌트 */
+--outline-variant:    #C4C7C7;   /* 서브틀한 경계 (30% 이하 opacity 필수) */
+
+/* ── 브랜드 액센트 ── */
+--primary:            #0061A5;   /* 코발트 블루 — 주요 인터랙션, CTA, 일기 강조 */
+--on-primary:         #FFFFFF;
+--primary-container:  #D2E4FF;   /* 선택된 칩, 서브 배경 */
+
+/* ── 화면별 테마 액센트 ── */
+--dear-tertiary:      #006B5F;   /* Dear My Son — 틸 그린 */
+--secret-pink:        #E91E63;   /* Secret Code — 딥 핑크 (이전 #FF6B9D와 다름) */
+--secret-gradient:    linear-gradient(135deg, #0061A5 0%, #00201C 100%);
+
+/* ── 시스템 ── */
+--error:              #BA1A1A;
+--error-container:    #FFDAD6;
 ```
-배경: #FAFAFA (bg) / #FFFFFF (surface)
-텍스트: #1A1A1A (text) / #888 (sub) / #B0B0B0 (hint)
-액센트: #4A90D9 (blue) / #00C9B7 (mint) / #FF6B9D (pink)
-       #FFD93D (yellow) / #2ED573 (green) / #FF4757 (danger)
-폰트: Pretendard Variable
-시크릿 마스킹: JetBrains Mono
+
+> ⚠️ **마이그레이션 주의:** 앱 코드에 남아있는 `#4A90D9`(구 blue), `#00C9B7`(구 mint), `#FF6B9D`(구 pink)는  
+> 향후 스프린트에서 위 토큰으로 통합 예정. 신규 화면은 반드시 Midnight Archive 토큰 사용.
+
+---
+
+### 타이포그래피
+
 ```
+헤드라인/디스플레이: 'Plus Jakarta Sans'  700-800, tracking-tight
+본문/UI:            'Pretendard Variable' — 동적 서브셋 권장
+시크릿 코드 값:      'JetBrains Mono'     — 암호화 데이터 전용
+아이콘:              Material Symbols Outlined (variable font)
+
+폰트 스케일:
+  Hero/대제목:  36px–48px  Extrabold (800)  tracking-tight
+  섹션 헤더:    24px–30px  Bold (700)
+  본문:         16px        Regular (400)    leading-relaxed
+  UI 레이블:    10px–14px  — UPPERCASE, tracking-widest (0.2em)
+  소형 캡션:    10px–12px  outline 컬러
+```
+
+---
+
+### 간격 & 라운딩
+
+```
+표준 카드 radius:   1.25rem (20px)    ← 기존 8px에서 변경
+대형 카드 radius:   1.5rem  (24px)
+버튼 radius:        0.625rem (10px)
+Pill/칩:            9999px
+FAB:                50% (원형)
+
+페이지 좌우 패딩:   24px (desktop) / 16px (mobile)
+카드 내부 패딩:     16px–20px
+섹션 간격:          배경색 전환으로 구분 (divider 라인 지양)
+터치 영역 최소:     44px × 44px
+```
+
+---
+
+### 핵심 디자인 규칙 (No-Line Rule 등)
+
+```
+1. No-Line Rule: 1px solid border로 섹션 구분 금지
+   → 배경색 전환(surface 계층)으로 영역 구분
+   → 경계가 꼭 필요할 때만: outline-variant 색, 0.125rem, 30% opacity 이하
+
+2. Backdrop Blur Rule: 고정(sticky) 헤더·플로팅 요소 필수
+   → backdrop-blur-xl (20px+), bg-white/80 또는 bg-surface/80
+   → 완전 불투명 배경 금지
+
+3. Tonal Layering: 그림자 대신 배경색 계층으로 깊이 표현
+   → 카드: shadow-sm (Level 1)
+   → 피처드/이미지: shadow-lg (Level 2)
+   → FAB/모달: shadow-2xl (Level 3)
+
+4. 비대칭 레이아웃: 날짜는 왼쪽, 콘텐츠는 오른쪽 (다른 margin)
+5. 메타데이터 라벨: UPPERCASE + tracking-widest (0.2em)
+6. 이미지 카드: 풀블리드 + 상단 그라디언트(black→transparent) 오버레이
+```
+
+---
 
 ### 아코디언 UI 패턴 (확정)
+
 - 일기/편지/시크릿 코드 목록에서 항목 터치 시 아코디언 펼침
-- 왼쪽 컬러 보더: 일기=blue, Dear=mint, 시크릿=pink
+- 왼쪽 컬러 보더: 일기=`--primary(#0061A5)`, Dear=`--dear-tertiary(#006B5F)`, 시크릿=`--secret-pink(#E91E63)`
+- 열림 시 배경: 일기=`#F0F7FF`, Dear=`#E8F5F3`, 시크릿=`#FFF0F5`
 - 한 번에 하나만 열림 (다른 항목 터치 시 기존 닫힘)
-- 디자인 기준: `docs/storige-prototype.html` 참조
+
+---
+
+### 네비게이션 레이블 (샘플 기준)
+
+```
+데스크탑 상단: 일기장 | 서신 | 비밀 코드 | 설정
+모바일 하단:   Diary  | Letters | Secret | Manage
+              (탭 활성: 2px cobalt 언더라인 + Bold, 배경 박싱 없음)
+```
+
+---
 
 ### 가족 뱃지 색상
-아내=blue, 아들=yellow, 딸=pink, 변호사=green
+
+```
+배우자(spouse): #0061A5 (cobalt)
+아들(son):      #FFD93D (yellow)
+딸(daughter):   #E91E63 (pink)    ← 기존 #FF6B9D에서 변경
+변호사(lawyer): #2ED573 (green)
+부모(parent):   #006B5F (teal)
+기타(other):    #747878 (outline)
+```
 
 ---
 
@@ -235,6 +357,7 @@ Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 | `STORIGE_INTEGRATION_GUIDE.md` | 나의이야기+Remember+랜딩 통합 계획 |
 | `agents/AUTOPILOT.md` | 자동 오케스트레이션 파이프라인 |
 | `agents/ORCHESTRATION_GUIDE.md` | 에이전트 수동 운용 가이드 |
-| `docs/storige-prototype.html` | UI 프로토타입 (디자인 참고) |
-| `docs/DESIGN_sample/` | UI 디지인시스템 (디자인 기준) |
+| `docs/DESIGN_sample/` | **디자인 기준 (최우선)** — Midnight Archive 시스템 + 화면별 HTML 템플릿 |
+| `docs/DESIGN_sample/eterna_archive/DESIGN.md` | Midnight Archive 디자인 시스템 공식 문서 |
+| `docs/storige-prototype.html` | 레거시 레이아웃 참고 (토큰 사용 금지) |
 | 참조 서비스 | https://dayoneapp.com/features/ |

@@ -232,5 +232,7 @@ Phase 5: 웹 + iOS + Android 동시 런칭
 ## 참조 문서
 - `CLAUDE.md` — 프로젝트 가이드 (Claude Code 자동 참조)
 - `STORIGE_DEV_PLAN.md` — 전체 개발 계획
-- `docs/storige-prototype.html` — UI 프로토타입
+- `docs/DESIGN_sample/` — 디자인 템플릿 (최우선 기준)
+- `docs/DESIGN_sample/eterna_archive/DESIGN.md` — Midnight Archive 시스템
+- `docs/storige-prototype.html` — 레거시 레이아웃 참고 (토큰 사용 금지)
 - `STORIGE_INTEGRATION_GUIDE.md` — 통합 시 DB 확장 계획

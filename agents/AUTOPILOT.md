@@ -90,11 +90,13 @@ Phase [번호] Sprint [번호]를 자동 파이프라인으로 실행해줘.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  STEP 2: UI 사양 확인 (디자인팀장)       [AUTO]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  - docs/storige-prototype.html 참조
-  - AGENT_DESIGN_LEAD.md의 디자인 토큰 적용
-  - 컬러, 간격, 폰트, 인터랙션 확인
+  - docs/DESIGN_sample/ 의 해당 화면 code.html 참조 (최우선)
+  - docs/DESIGN_sample/eterna_archive/DESIGN.md 디자인 시스템 준수
+  - AGENT_DESIGN_LEAD.md의 Midnight Archive 토큰 적용
+  - 컬러, 간격, 폰트, 라운딩, No-Line Rule, Backdrop Blur 확인
+  - (docs/storige-prototype.html은 레이아웃 흐름 참고용만, 토큰 금지)
 
-  → 프로토타입에 없는 화면이면 사양 생성 후 자동 진행 ↓
+  → 해당 화면 샘플이 없으면 DESIGN.md 규칙 기반 사양 생성 후 자동 진행 ↓
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  STEP 3: 테스트 작성 (테스터)            [AUTO]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
