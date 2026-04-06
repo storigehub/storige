@@ -204,10 +204,14 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 
 ```
 최종 업데이트: 2026-04-06
-현재 Phase: 1
-현재 Sprint: 1-4 완료 (Phase 1 전체 완료)
-완료 이슈: Sprint 1-1 (프로젝트 초기화), 1-2 (DB 스키마+RLS), 1-3 (Auth 모듈), 1-4 (레이아웃+네비)
-진행 중: Phase 1 QC 검증 대기
+현재 Phase: 3
+현재 Sprint: 3-1 시작 예정
+완료 이슈:
+  Phase 1: Sprint 1-1~1-4 전체 완료 (프로젝트 초기화, DB 스키마+RLS, Auth, 레이아웃)
+  Phase 2: Sprint 2-1~2-4 완료 (Tiptap 에디터, 5개 뷰, 커스텀 훅, 카카오맵)
+           - Supabase v2.101 Generics 오류 수정 완료 (Relationships:[] 추가)
+           - Tailwind/Tiptap 의존성 충돌 해결 완료
+진행 중: Phase 3 시작 — Sprint 3-1 (Dear My Son 편지) 착수
 블로커: 없음
 Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 ```

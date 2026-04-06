@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { DiaryListView } from '@/components/diary/DiaryListView'
 import { DiaryCalendarView } from '@/components/diary/DiaryCalendarView'
 import { DiaryMediaView } from '@/components/diary/DiaryMediaView'
+import { DiaryMapView } from '@/components/diary/DiaryMapView'
 import { DiarySearchBar } from '@/components/diary/DiarySearchBar'
 import { useDiaryList } from '@/hooks/useDiaryList'
 
@@ -64,7 +65,7 @@ export default function DiaryPage() {
         <DiaryMediaView entries={entries} />
       )}
       {activeTab === '지도' && (
-        <DiaryMapPlaceholder />
+        <DiaryMapView entries={entries} />
       )}
     </div>
   )
@@ -106,23 +107,6 @@ function DiarySummaryView({ entries }: { entries: ReturnType<typeof useDiaryList
       <div className="bg-[#f0f7ff] rounded-2xl p-4 text-sm text-[#4A90D9]">
         💡 AI 요약 기능은 Phase 5에서 추가됩니다
       </div>
-    </div>
-  )
-}
-
-// 지도 뷰 플레이스홀더 (Kakao Maps API 키 설정 후 활성화)
-function DiaryMapPlaceholder() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3 text-center px-4">
-      <div className="text-4xl">🗺️</div>
-      <p className="text-sm font-medium text-[#1A1A1A]">지도 뷰</p>
-      <p className="text-xs text-[#888]">
-        Kakao Maps API 키를 .env.local에 설정하면<br />
-        위치 기반 일기 지도가 표시됩니다
-      </p>
-      <code className="text-xs bg-[#f5f5f5] px-3 py-1.5 rounded text-[#555]">
-        NEXT_PUBLIC_KAKAO_JS_KEY=your_key
-      </code>
     </div>
   )
 }
