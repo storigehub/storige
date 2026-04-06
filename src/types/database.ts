@@ -51,6 +51,7 @@ export interface Database {
           is_2fa_enabled?: boolean
           updated_at?: string
         }
+        Relationships: []
       }
       entries: {
         Row: {
@@ -110,6 +111,7 @@ export interface Database {
           updated_at?: string
           published_at?: string | null
         }
+        Relationships: []
       }
       media: {
         Row: {
@@ -142,6 +144,7 @@ export interface Database {
           thumbnail_path?: string | null
           file_size?: number | null
         }
+        Relationships: []
       }
       secret_codes: {
         Row: {
@@ -177,6 +180,7 @@ export interface Database {
           sort_order?: number
           updated_at?: string
         }
+        Relationships: []
       }
       family_members: {
         Row: {
@@ -221,6 +225,7 @@ export interface Database {
           sss_share?: string | null
           access_permissions?: Json
         }
+        Relationships: []
       }
       legacy_settings: {
         Row: {
@@ -256,6 +261,7 @@ export interface Database {
           sss_total?: number
           updated_at?: string
         }
+        Relationships: []
       }
       legacy_requests: {
         Row: {
@@ -284,6 +290,7 @@ export interface Database {
           admin_note?: string | null
           reviewed_at?: string | null
         }
+        Relationships: []
       }
       publish_orders: {
         Row: {
@@ -322,6 +329,7 @@ export interface Database {
           shipping_address?: Json | null
           updated_at?: string
         }
+        Relationships: []
       }
       tags: {
         Row: {
@@ -337,6 +345,7 @@ export interface Database {
         Update: {
           name?: string
         }
+        Relationships: []
       }
       entry_tags: {
         Row: {
@@ -348,6 +357,7 @@ export interface Database {
           tag_id: string
         }
         Update: Record<string, never>
+        Relationships: []
       }
     }
     Views: Record<string, never>
