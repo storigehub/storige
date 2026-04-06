@@ -205,10 +205,11 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 ```
 최종 업데이트: 2026-04-06
 현재 Phase: 1
-현재 Sprint: 1-1 (프로젝트 초기화)
-완료 이슈: 없음
-진행 중: Sprint 1-1 — Next.js 초기화, Supabase 프로젝트 생성 중
+현재 Sprint: 1-4 완료 (Phase 1 전체 완료)
+완료 이슈: Sprint 1-1 (프로젝트 초기화), 1-2 (DB 스키마+RLS), 1-3 (Auth 모듈), 1-4 (레이아웃+네비)
+진행 중: Phase 1 QC 검증 대기
 블로커: 없음
+Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 ```
 
 ---
