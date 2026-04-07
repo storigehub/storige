@@ -63,7 +63,7 @@ Monitoring: Sentry + Vercel Analytics
 | Diary | `src/app/(main)/diary/` | 일기 CRUD, 아코디언 목록, 5개 뷰 |
 | Dear | `src/app/(main)/dear/` | 자녀에게 보내는 편지 |
 | Secret | `src/app/(main)/secret/` | E2EE 암호화 보안 정보 |
-| Album | `src/app/(main)/album/` | 가족 포토앨범 |
+| Album | `src/app/(main)/album/` | 가족 포토앨범 (Phase 4 구현 예정 — 현재 플레이스홀더) |
 | Publish | `src/app/(main)/publish/` | 출판 미리보기/주문 (파파스 POD) |
 | Settings | `src/app/(main)/settings/` | 가족관리, 보안, 구독 |
 | Legacy | `src/app/(legacy)/` | 유고 후 열람 전용 |
@@ -299,7 +299,7 @@ FAB:                50% (원형)
 Phase 1 (2주):  프로젝트 설정 + Auth + 기본 레이아웃
 Phase 2 (3주):  Diary 핵심 (에디터, 아코디언, 5개 뷰, 미디어)
 Phase 3 (4주):  Dear My Son + Secret Code + Family + 출판
-Phase 4 (3주):  Legacy Access + Capacitor 네이티브 + 앱스토어
+Phase 4 (3주):  포토앨범(Capacitor camera 연동) + Legacy Access + Capacitor 네이티브 + 앱스토어
 Phase 5 (2주):  AI 기능 + PWA + 테스트 + 최적화 + 런칭
 Phase 6 (이후): 나의이야기 통합 + Remember 통합 + 랜딩 리뉴얼
 ```
