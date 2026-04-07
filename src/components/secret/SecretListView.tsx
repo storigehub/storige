@@ -7,13 +7,25 @@ import { PassphraseModal } from './PassphraseModal'
 import type { SecretCode } from '@/types/database'
 import type { DecryptedSecretCode } from '@/hooks/useSecretCodes'
 
-// 시크릿 코드 목록 뷰 — 아코디언 + 복호화 모달
-export function SecretListView() {
+interface SecretListViewProps {
+  selectedCategory?: string
+}
+
+/**
+ * 시크릿 코드 목록 뷰 — _1 기준
+ * selectedCategory: 'all' 또는 카테고리 문자열로 필터
+ */
+export function SecretListView({ selectedCategory = 'all' }: SecretListViewProps) {
   const { codes, loading, error, decryptCode, deleteCode } = useSecretCodes()
   const [openId, setOpenId] = useState<string | null>(null)
   const [decryptedMap, setDecryptedMap] = useState<Record<string, DecryptedSecretCode>>({})
   const [pendingCode, setPendingCode] = useState<SecretCode | null>(null)
   const [decryptError, setDecryptError] = useState<string | null>(null)
+
+  // 카테고리 필터 적용
+  const filteredCodes = selectedCategory === 'all'
+    ? codes
+    : codes.filter((c) => c.category === selectedCategory)
 
   const handleToggle = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id))
@@ -27,13 +39,11 @@ export function SecretListView() {
     }
   }
 
-  // 복호화 요청 — 패스프레이즈 모달 표시
   const handleDecryptRequest = (code: SecretCode) => {
     setDecryptError(null)
     setPendingCode(code)
   }
 
-  // 패스프레이즈 입력 후 복호화 시도
   const handlePassphraseSubmit = async (passphrase: string) => {
     if (!pendingCode) return
 
@@ -62,7 +72,7 @@ export function SecretListView() {
 
   if (codes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
+      <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-4 px-4">
         <span className="material-symbols-outlined text-5xl text-[#E91E63]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>lock</span>
         <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">중요한 정보를 안전하게 보관하세요</h2>
         <p className="text-sm text-[#747878]">은행 계좌, 부동산, 법률 정보를 암호화하여 저장합니다</p>
@@ -70,10 +80,19 @@ export function SecretListView() {
     )
   }
 
+  if (filteredCodes.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[30vh] text-center gap-3 px-4">
+        <span className="material-symbols-outlined text-4xl text-[#c4c7c7]">search_off</span>
+        <p className="text-sm text-[#747878]">이 카테고리에 저장된 항목이 없습니다</p>
+      </div>
+    )
+  }
+
   return (
     <>
-      <div className="px-5 pb-4 space-y-4">
-        {codes.map((code, index) => (
+      <div className="space-y-4">
+        {filteredCodes.map((code, index) => (
           <SecretAccordionItem
             key={code.id}
             code={code}
@@ -87,7 +106,6 @@ export function SecretListView() {
         ))}
       </div>
 
-      {/* 패스프레이즈 입력 모달 */}
       {pendingCode && (
         <PassphraseModal
           title={`"${pendingCode.title}" 열람`}

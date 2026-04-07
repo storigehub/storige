@@ -19,6 +19,7 @@ type Tab = typeof TABS[number]
  */
 export default function DiaryPage() {
   const [activeTab, setActiveTab] = useState<Tab>('목록')
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
   const [searchQuery, setSearchQuery] = useState('')
   const { entries } = useDiaryList()
 
@@ -60,13 +61,21 @@ export default function DiaryPage() {
             </button>
           ))}
         </div>
-        {/* 뷰 전환 버튼 — 목록 탭, 데스크탑 전용 */}
+        {/* 뷰 전환 버튼 — 목록 탭에서만, 모바일+데스크탑 모두 */}
         {activeTab === '목록' && (
-          <div className="hidden md:flex items-center bg-[#f3f3f3] rounded-lg p-1 ml-4 self-center mb-1">
-            <button className="p-2 rounded-md bg-white text-[#0061A5] shadow-sm transition-all flex items-center justify-center">
+          <div className="flex items-center bg-[#f3f3f3] rounded-lg p-1 ml-4 self-center mb-1">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`p-2 rounded-md transition-all flex items-center justify-center ${viewMode === 'list' ? 'bg-white text-[#0061A5] shadow-sm' : 'text-[#747878] hover:text-[#1a1c1c]'}`}
+              aria-label="목록 보기"
+            >
               <span className="material-symbols-outlined text-[20px]">view_list</span>
             </button>
-            <button className="p-2 rounded-md text-[#747878] hover:text-[#1a1c1c] transition-all flex items-center justify-center">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`p-2 rounded-md transition-all flex items-center justify-center ${viewMode === 'grid' ? 'bg-white text-[#0061A5] shadow-sm' : 'text-[#747878] hover:text-[#1a1c1c]'}`}
+              aria-label="그리드 보기"
+            >
               <span className="material-symbols-outlined text-[20px]">grid_view</span>
             </button>
           </div>
@@ -83,7 +92,7 @@ export default function DiaryPage() {
       {/* 탭 콘텐츠 */}
       <div className="px-6">
         {activeTab === '요약' && <DiarySummaryView entries={entries} />}
-        {activeTab === '목록' && <DiaryListView searchQuery={searchQuery} />}
+        {activeTab === '목록' && <DiaryListView searchQuery={searchQuery} viewMode={viewMode} />}
         {activeTab === '캘린더' && <DiaryCalendarView entries={entries} />}
         {activeTab === '미디어' && <DiaryMediaView entries={entries} />}
         {activeTab === '지도' && <DiaryMapView entries={entries} />}

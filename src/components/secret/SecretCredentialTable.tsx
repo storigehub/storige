@@ -7,49 +7,95 @@ interface SecretCredentialTableProps {
   credentials: CredentialEntry[]
 }
 
-// 복호화된 계정 정보 테이블 — 복사 버튼 포함
+/**
+ * 복호화된 계정 정보 테이블 — _1 JetBrains Mono label/value row 기준
+ * label: text-outline text-sm font-semibold
+ * value: font-mono font-bold text-base (공개) / text-[#E91E63] tracking-[0.3em] (마스킹)
+ */
 export function SecretCredentialTable({ credentials }: SecretCredentialTableProps) {
   const [copiedField, setCopiedField] = useState<string | null>(null)
+  const [visiblePasswords, setVisiblePasswords] = useState<Set<string>>(new Set())
 
-  const handleCopy = (text: string, field: string) => {
+  const handleCopy = (text: string, fieldKey: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      setCopiedField(field)
+      setCopiedField(fieldKey)
       setTimeout(() => setCopiedField(null), 1500)
     })
   }
 
+  const togglePasswordVisibility = (fieldKey: string) => {
+    setVisiblePasswords((prev) => {
+      const next = new Set(prev)
+      next.has(fieldKey) ? next.delete(fieldKey) : next.add(fieldKey)
+      return next
+    })
+  }
+
   return (
-    <div className="mb-3">
-      <p className="text-xs text-[#888] mb-2">계정 정보</p>
-      <div className="rounded-xl border border-[#f0f0f0] overflow-hidden">
-        {credentials.map((cred, i) => (
-          <div key={i} className={`p-3 ${i > 0 ? 'border-t border-[#f5f5f5]' : ''}`}>
-            <p className="text-xs font-semibold text-[#1A1A1A] mb-2">{cred.service}</p>
-            <div className="grid grid-cols-[60px_1fr_auto] gap-1 text-xs">
-              <span className="text-[#888]">아이디</span>
-              <span className="font-mono text-[#1A1A1A] truncate">{cred.username}</span>
+    <div>
+      <p className="text-[10px] text-[#747878] font-bold uppercase tracking-widest mb-3">계정 정보</p>
+      {credentials.map((cred, i) => (
+        <div key={i} className={i > 0 ? 'mt-4 pt-4 border-t border-[#f3f3f3]' : ''}>
+          {/* 서비스명 */}
+          <p className="text-sm font-bold text-[#1a1c1c] mb-2">{cred.service}</p>
+
+          {/* 아이디 행 */}
+          <div className="flex justify-between items-center py-3 border-b border-[#c4c7c7]/20">
+            <span className="text-[#747878] text-sm font-semibold">온라인 ID</span>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[#1a1c1c] font-bold text-sm">{cred.username}</span>
               <button
                 onClick={() => handleCopy(cred.username, `${i}-user`)}
-                className="text-[#0061A5] pl-2"
+                className="text-[10px] font-bold text-[#0061A5] hover:text-[#004c82] transition-colors min-w-[2rem] text-right"
               >
                 {copiedField === `${i}-user` ? '✓' : '복사'}
               </button>
+            </div>
+          </div>
 
-              <span className="text-[#888]">비밀번호</span>
-              <span className="font-mono text-[#1A1A1A] truncate">{cred.password}</span>
+          {/* 비밀번호 행 */}
+          <div className="flex justify-between items-center py-3 border-b border-[#c4c7c7]/20">
+            <span className="text-[#747878] text-sm font-semibold">접속 비밀번호</span>
+            <div className="flex items-center gap-2">
+              <span
+                className="font-mono font-bold text-sm"
+                style={{
+                  color: visiblePasswords.has(`${i}-pass`) ? '#1a1c1c' : '#E91E63',
+                  letterSpacing: visiblePasswords.has(`${i}-pass`) ? '0' : '0.3em',
+                }}
+              >
+                {visiblePasswords.has(`${i}-pass`) ? cred.password : '••••••••••'}
+              </span>
+              <button
+                onClick={() => togglePasswordVisibility(`${i}-pass`)}
+                className="material-symbols-outlined text-[14px] text-[#747878] hover:text-[#1a1c1c] transition-colors"
+              >
+                {visiblePasswords.has(`${i}-pass`) ? 'visibility_off' : 'visibility'}
+              </button>
               <button
                 onClick={() => handleCopy(cred.password, `${i}-pass`)}
-                className="text-[#0061A5] pl-2"
+                className="text-[10px] font-bold text-[#0061A5] hover:text-[#004c82] transition-colors min-w-[2rem] text-right"
               >
                 {copiedField === `${i}-pass` ? '✓' : '복사'}
               </button>
             </div>
-            {cred.memo && (
-              <p className="text-xs text-[#888] mt-1.5">{cred.memo}</p>
-            )}
           </div>
-        ))}
-      </div>
+
+          {/* 메모 */}
+          {cred.memo && (
+            <div className="flex justify-between items-center py-3">
+              <span className="text-[#747878] text-sm font-semibold">메모</span>
+              <span className="font-mono text-[#1a1c1c] text-sm">{cred.memo}</span>
+            </div>
+          )}
+        </div>
+      ))}
+
+      {/* 보안 푸터 */}
+      <p className="flex items-center gap-1.5 text-[11px] text-[#747878]/60 mt-4 italic">
+        <span className="material-symbols-outlined text-[12px]">info</span>
+        2단계 인증으로 보호되는 정보입니다
+      </p>
     </div>
   )
 }
