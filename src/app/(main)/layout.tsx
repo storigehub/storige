@@ -7,7 +7,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="min-h-screen bg-[#f9f9f9]">
       <Header />
-      <main className="pb-20 pt-2">
+      {/* pb-24: 모바일 BottomNav 여백 / md:pb-0: 데스크탑은 BottomNav hidden */}
+      <main className="pb-24 md:pb-0">
         {children}
       </main>
       <BottomNav />
