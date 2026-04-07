@@ -326,24 +326,18 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 
 ```
 최종 업데이트: 2026-04-07
-현재 Phase: 3
+현재 Phase: 3 (디자인 마이그레이션 전용 스프린트 완료)
 현재 Sprint: 3-7 대기 중 (오너 Go 확인 후 시작)
 완료 이슈:
-  Phase 1: Sprint 1-1~1-4 전체 완료
-  Phase 2: Sprint 2-1~2-4 완료 (Tiptap 에디터, 5개 뷰, 훅, 카카오맵)
-  Phase 3: Sprint 3-1~3-6 완료
-    - DearEditor (수신자 선택 + recipient_id 저장)
-    - SecretCode E2EE (AES-256-GCM + SSS)
-    - 암호화 테스트 23개 Green
-    - 가족 구성원 CRUD + 원형 뱃지 UI
-    - 출판 미리보기 + 주문 폼
-  QC 수정: P0~P2 완료
-  Midnight Archive 디자인 마이그레이션 완료 (38파일):
-    - Header/BottomNav/FAB → Material Symbols Outlined + Cobalt #0061A5
-    - 모든 아코디언(Diary/Dear/Secret) → border-l-4 + 카드 gap + 날짜 블록
-    - Auth(Login/Signup) → surface-low 입력, cobalt CTA, uppercase 라벨
-    - 레거시 #4A90D9→#0061A5 / #00C9B7→#006B5F / #FF6B9D→#E91E63 전역 치환
-    - Plus Jakarta Sans + Material Symbols Outlined 폰트 추가
+  Phase 1~2: 전체 완료
+  Phase 3: Sprint 3-1~3-6 + QC P0~P2 완료
+  디자인 마이그레이션 스프린트 완료:
+    P0: Header(데스크탑 인라인 nav) / BottomNav(라벨 일기·편지·비밀·관리, md:hidden) / FAB(bottom-28 md:bottom-12)
+    P2: /settings/page.tsx 신설(_6 기반 허브), /album/page.tsx 플레이스홀더(Phase 4 예정)
+    P3-Diary: 히어로 "오늘의 성찰", 탭 border-b-2 cobalt, DiaryAccordionItem p-6~8 open card
+    P3-Dear: 히어로 "마음을 담은 영원한 기록", 월별 teal 섹션 헤더, 편지지 스타일 열린 카드
+    P3-Secret: "Archive Section 08" 히어로, fingerprint 보안 배너, "Encrypted Records" 라벨
+    레거시 #4A90D9/#00C9B7/#FF6B9D 전역 치환, Plus Jakarta Sans + Material Symbols Outlined 추가
   총 테스트: 40개 통과 | 빌드: ✅ | Vercel 배포: ✅
 다음: Sprint 3-7 (포트원 결제 + 파파스 POD API)
 블로커: 포트원 API 키 + 파파스 POD API 계약 필요 (오너 확인)
