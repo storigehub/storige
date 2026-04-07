@@ -325,7 +325,7 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 ## 현재 진행 상태 (자동 업데이트)
 
 ```
-최종 업데이트: 2026-04-06
+최종 업데이트: 2026-04-07
 현재 Phase: 3
 현재 Sprint: 3-7 대기 중 (오너 Go 확인 후 시작)
 완료 이슈:
@@ -337,10 +337,14 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
     - 암호화 테스트 23개 Green
     - 가족 구성원 CRUD + 원형 뱃지 UI
     - 출판 미리보기 + 주문 폼
-  QC P0 수정: DearEditor recipient_id 저장 버그
-  QC P1 수정: SecretListView index prop / 파일 분리(SecretCodeForm, publish/page) / 가족 UI 원형화
-  QC P2 수정: Dear 열림 배경 #fafff9 / SSS 복구 키 배분 (useSSSKeyManager + SSSKeySetup)
-  총 테스트: 40개 통과
+  QC 수정: P0~P2 완료
+  Midnight Archive 디자인 마이그레이션 완료 (38파일):
+    - Header/BottomNav/FAB → Material Symbols Outlined + Cobalt #0061A5
+    - 모든 아코디언(Diary/Dear/Secret) → border-l-4 + 카드 gap + 날짜 블록
+    - Auth(Login/Signup) → surface-low 입력, cobalt CTA, uppercase 라벨
+    - 레거시 #4A90D9→#0061A5 / #00C9B7→#006B5F / #FF6B9D→#E91E63 전역 치환
+    - Plus Jakarta Sans + Material Symbols Outlined 폰트 추가
+  총 테스트: 40개 통과 | 빌드: ✅ | Vercel 배포: ✅
 다음: Sprint 3-7 (포트원 결제 + 파파스 POD API)
 블로커: 포트원 API 키 + 파파스 POD API 계약 필요 (오너 확인)
 Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
