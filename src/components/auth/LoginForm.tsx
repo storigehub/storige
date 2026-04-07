@@ -15,6 +15,7 @@ export function LoginForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [oauthLoading, setOauthLoading] = useState<'google' | 'kakao' | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -98,16 +99,34 @@ export function LoginForm() {
           type="button"
           variant="outline"
           className="w-full rounded-xl h-11 border-[#eeeeee] bg-white hover:bg-[#f3f3f3] text-[#1a1c1c] font-medium"
-          onClick={signInWithGoogle}
+          disabled={oauthLoading !== null}
+          onClick={async () => {
+            setError(null)
+            setOauthLoading('google')
+            const { error } = await signInWithGoogle()
+            if (error) {
+              setError('Google 로그인을 사용할 수 없습니다. 관리자에게 문의하세요.')
+              setOauthLoading(null)
+            }
+          }}
         >
-          Google로 계속하기
+          {oauthLoading === 'google' ? '이동 중...' : 'Google로 계속하기'}
         </Button>
         <Button
           type="button"
           className="w-full rounded-xl h-11 bg-[#FEE500] border-0 hover:bg-[#f0d800] text-[#3C1E1E] font-medium"
-          onClick={signInWithKakao}
+          disabled={oauthLoading !== null}
+          onClick={async () => {
+            setError(null)
+            setOauthLoading('kakao')
+            const { error } = await signInWithKakao()
+            if (error) {
+              setError('카카오 로그인을 사용할 수 없습니다. 관리자에게 문의하세요.')
+              setOauthLoading(null)
+            }
+          }}
         >
-          카카오로 계속하기
+          {oauthLoading === 'kakao' ? '이동 중...' : '카카오로 계속하기'}
         </Button>
       </div>
 

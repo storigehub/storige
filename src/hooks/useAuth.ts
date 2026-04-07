@@ -67,16 +67,19 @@ export function useAuth() {
     return { error }
   }
 
-  // 구글 소셜 로그인
+  // 구글 소셜 로그인 — PKCE flow, /auth/callback 으로 리다이렉트
   const signInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+        queryParams: { access_type: 'offline', prompt: 'consent' },
+      },
     })
     return { error }
   }
 
-  // 카카오 소셜 로그인
+  // 카카오 소셜 로그인 — PKCE flow, /auth/callback 으로 리다이렉트
   const signInWithKakao = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'kakao',
