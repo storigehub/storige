@@ -51,7 +51,7 @@ export function SecretListView() {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-6 h-6 border-2 border-[#FF6B9D] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-[#E91E63] border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -63,16 +63,16 @@ export function SecretListView() {
   if (codes.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
-        <div className="text-5xl">🔐</div>
-        <h2 className="text-lg font-semibold text-[#1A1A1A]">중요한 정보를 안전하게 보관하세요</h2>
-        <p className="text-sm text-[#888]">은행 계좌, 부동산, 법률 정보를 암호화하여 저장합니다</p>
+        <span className="material-symbols-outlined text-5xl text-[#E91E63]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>lock</span>
+        <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">중요한 정보를 안전하게 보관하세요</h2>
+        <p className="text-sm text-[#747878]">은행 계좌, 부동산, 법률 정보를 암호화하여 저장합니다</p>
       </div>
     )
   }
 
   return (
     <>
-      <div>
+      <div className="px-4 py-4 space-y-3">
         {codes.map((code, index) => (
           <SecretAccordionItem
             key={code.id}

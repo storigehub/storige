@@ -33,11 +33,11 @@ export function useFamilyMembers() {
 // 가족 역할별 뱃지 색상
 export function getBadgeColor(role: string): string {
   const map: Record<string, string> = {
-    spouse: '#4A90D9',
+    spouse: '#0061A5',
     son: '#FFD93D',
-    daughter: '#FF6B9D',
+    daughter: '#E91E63',
     lawyer: '#2ED573',
-    parent: '#00C9B7',
+    parent: '#006B5F',
     other: '#B0B0B0',
   }
   return map[role] ?? '#B0B0B0'

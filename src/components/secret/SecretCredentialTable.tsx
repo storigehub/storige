@@ -30,7 +30,7 @@ export function SecretCredentialTable({ credentials }: SecretCredentialTableProp
               <span className="font-mono text-[#1A1A1A] truncate">{cred.username}</span>
               <button
                 onClick={() => handleCopy(cred.username, `${i}-user`)}
-                className="text-[#4A90D9] pl-2"
+                className="text-[#0061A5] pl-2"
               >
                 {copiedField === `${i}-user` ? '✓' : '복사'}
               </button>
@@ -39,7 +39,7 @@ export function SecretCredentialTable({ credentials }: SecretCredentialTableProp
               <span className="font-mono text-[#1A1A1A] truncate">{cred.password}</span>
               <button
                 onClick={() => handleCopy(cred.password, `${i}-pass`)}
-                className="text-[#4A90D9] pl-2"
+                className="text-[#0061A5] pl-2"
               >
                 {copiedField === `${i}-pass` ? '✓' : '복사'}
               </button>

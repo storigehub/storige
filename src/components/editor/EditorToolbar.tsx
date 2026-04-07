@@ -57,7 +57,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
           title={tool.title}
           className={`w-8 h-8 rounded flex items-center justify-center text-sm transition-colors
             ${tool.isActive
-              ? 'bg-[#4A90D9] text-white'
+              ? 'bg-[#0061A5] text-white'
               : 'text-[#888] hover:bg-[#f5f5f5]'
             } ${tool.className}`}
         >

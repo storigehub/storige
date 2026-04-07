@@ -8,7 +8,7 @@ import { SecretCredentialTable } from './SecretCredentialTable'
 
 interface SecretAccordionItemProps {
   code: SecretCode
-  index: number           // 목록 순번 (01, 02…) — 프로토타입 기준
+  index: number
   isOpen: boolean
   onToggle: () => void
   onDelete: () => void
@@ -16,13 +16,13 @@ interface SecretAccordionItemProps {
   decrypted?: DecryptedSecretCode
 }
 
-// 중요도 뱃지 — 프로토타입 badge-important / badge-reference
-const IMPORTANCE_STYLE: Record<string, { bg: string; color: string; label: string }> = {
-  important: { bg: '#FFF0F3', color: '#FF6B9D', label: '중요' },
-  reference: { bg: '#F0F4FF', color: '#4A90D9', label: '참고' },
+// 중요도 뱃지 스타일 — Midnight Archive (_4 템플릿)
+const IMPORTANCE_STYLE: Record<string, { bg: string; color: string; label: string; icon: string }> = {
+  important: { bg: '#fce4ec', color: '#E91E63', label: '중요', icon: 'priority_high' },
+  reference: { bg: '#d2e4ff', color: '#0061A5', label: '참고', icon: 'info' },
 }
 
-// 시크릿 코드 아코디언 아이템 — 왼쪽 보더 pink, 순번 숫자 표시
+// 시크릿 코드 아코디언 아이템 — Midnight Archive / _4 템플릿 디자인
 export function SecretAccordionItem({
   code,
   index,
@@ -34,52 +34,74 @@ export function SecretAccordionItem({
 }: SecretAccordionItemProps) {
   const router = useRouter()
   const badge = IMPORTANCE_STYLE[code.importance] ?? IMPORTANCE_STYLE.reference
-  const num = String(index + 1).padStart(2, '0') // 01, 02, 03…
+  const num = String(index + 1).padStart(2, '0')
 
   return (
     <div
-      className={`bg-white border-b border-[#f5f5f5] transition-all ${
-        isOpen ? 'border-l-[3px] border-l-[#FF6B9D]' : ''
+      className={`rounded-xl overflow-hidden transition-all duration-300 ${
+        isOpen
+          ? 'bg-white shadow-sm border-[1.5px] border-[#E91E63]/40'
+          : 'bg-[#f3f3f3]'
       }`}
       id={`secret-${code.id}`}
     >
-      {/* 아코디언 헤더 — 프로토타입: num + badge + title */}
+      {/* 아코디언 헤더 */}
       <div
-        className="flex items-start gap-3 px-4 py-4 cursor-pointer active:bg-[#fafafa]"
+        className="flex items-center gap-3 px-4 py-4 cursor-pointer active:opacity-80"
         onClick={onToggle}
       >
-        {/* 순번 숫자 */}
-        <div className="flex-shrink-0 w-8 text-center pt-0.5">
-          <span className="text-lg font-bold leading-none" style={{ color: '#FF6B9D' }}>
-            {num}
+        {/* 보안 아이콘 + 순번 */}
+        <div
+          className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+          style={{ backgroundColor: isOpen ? '#fce4ec' : '#eeeeee' }}
+        >
+          <span
+            className="material-symbols-outlined text-[20px]"
+            style={{
+              color: isOpen ? '#E91E63' : '#747878',
+              fontVariationSettings: isOpen ? "'FILL' 1" : "'FILL' 0",
+            }}
+          >
+            {decrypted ? 'lock_open' : 'security'}
           </span>
         </div>
 
-        {/* 뱃지 + 제목 + 미리보기 */}
+        {/* 제목 + 미리보기 */}
         <div className="flex-1 min-w-0">
-          <span
-            className="inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full mb-1"
-            style={{ backgroundColor: badge.bg, color: badge.color }}
-          >
-            {badge.label}
-          </span>
-          <h3 className="text-sm font-semibold text-[#1A1A1A] leading-snug">{code.title}</h3>
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <span
+              className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+              style={{ backgroundColor: badge.bg, color: badge.color }}
+            >
+              {badge.label}
+            </span>
+            <span className="text-[10px] text-[#747878] font-mono">{num}</span>
+          </div>
+          <h3 className="text-sm font-semibold text-[#1a1c1c]">{code.title}</h3>
           {!isOpen && (
-            <p className="text-xs text-[#888] mt-0.5 truncate">
-              {decrypted ? decrypted.decryptedContent ?? '•••' : '암호화된 내용'}
+            <p className="text-xs text-[#747878] mt-0.5 font-mono truncate">
+              {decrypted ? (decrypted.decryptedContent ?? '•••') : '****-****-****'}
             </p>
           )}
         </div>
 
-        {/* 잠금 + 쉐브론 */}
+        {/* 잠금 상태 + 쉐브론 */}
         <div className="flex items-center gap-1 flex-shrink-0">
-          <span className="text-sm text-[#B0B0B0]">{decrypted ? '🔓' : '🔒'}</span>
+          <span
+            className="material-symbols-outlined text-[18px]"
+            style={{
+              color: decrypted ? '#006B5F' : '#747878',
+              fontVariationSettings: decrypted ? "'FILL' 1" : "'FILL' 0",
+            }}
+          >
+            {decrypted ? 'lock_open' : 'lock'}
+          </span>
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className="text-[#B0B0B0]"
+            className="material-symbols-outlined text-[20px] text-[#747878]"
           >
-            ∨
+            keyboard_arrow_down
           </motion.span>
         </div>
       </div>
@@ -95,13 +117,18 @@ export function SecretAccordionItem({
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 pl-[3.25rem]">
+            <div className="px-4 pb-4 border-t border-[#f3f3f3]">
               {decrypted ? (
-                <>
+                <div className="pt-3 space-y-3">
+                  {/* 알고리즘 + 접근 키 — _4 템플릿 스타일 */}
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-[#747878]">Algorithm</span>
+                    <span className="font-mono text-[#0061A5] font-medium">AES-256-GCM</span>
+                  </div>
                   {decrypted.decryptedContent && (
-                    <div className="mb-3">
-                      <p className="text-xs text-[#888] mb-1">내용</p>
-                      <p className="text-sm text-[#1A1A1A] leading-relaxed whitespace-pre-wrap font-mono">
+                    <div className="mt-1">
+                      <p className="text-xs text-[#747878] mb-1">내용</p>
+                      <p className="text-sm text-[#1a1c1c] leading-relaxed whitespace-pre-wrap font-mono bg-[#f3f3f3] rounded-lg p-3">
                         {decrypted.decryptedContent}
                       </p>
                     </div>
@@ -109,31 +136,34 @@ export function SecretAccordionItem({
                   {decrypted.decryptedCredentials && decrypted.decryptedCredentials.length > 0 && (
                     <SecretCredentialTable credentials={decrypted.decryptedCredentials} />
                   )}
-                </>
+                </div>
               ) : (
-                <div className="flex items-center gap-2 py-2 mb-3">
-                  <span className="text-sm text-[#888]">암호화된 내용입니다</span>
+                <div className="pt-3 flex items-center gap-2">
+                  <p className="text-sm text-[#747878] flex-1">암호화된 내용입니다</p>
                   <button
                     onClick={() => onDecryptRequest(code)}
-                    className="text-xs border border-[#FF6B9D] rounded-full px-3 py-1 text-[#FF6B9D] hover:bg-[#fff0f5]"
+                    className="flex items-center gap-1 text-xs rounded-full px-4 py-2 font-bold transition-colors bg-[#0061A5] text-white hover:bg-[#004c82] active:scale-95"
                   >
-                    🔓 열람하기
+                    <span className="material-symbols-outlined text-[14px]">lock_open</span>
+                    열람하기
                   </button>
                 </div>
               )}
 
-              <div className="flex gap-2 mt-2">
+              <div className="flex gap-2 mt-3">
                 <button
                   onClick={() => router.push(`/secret/${code.id}/edit`)}
-                  className="text-xs border border-[#e0e0e0] rounded-full px-3 py-1 text-[#555] hover:bg-[#f5f5f5]"
+                  className="flex items-center gap-1 text-xs bg-[#f3f3f3] rounded-full px-3 py-1.5 text-[#444748] hover:bg-[#eeeeee] transition-colors"
                 >
-                  ✎ 편집
+                  <span className="material-symbols-outlined text-[14px]">edit</span>
+                  편집
                 </button>
                 <button
                   onClick={onDelete}
-                  className="text-xs border border-[#FF4757] rounded-full px-3 py-1 text-[#FF4757] hover:bg-[#ffeef0] ml-auto"
+                  className="flex items-center gap-1 text-xs bg-[#fff0f0] rounded-full px-3 py-1.5 text-[#ba1a1a] hover:bg-[#ffe0e0] transition-colors ml-auto"
                 >
-                  ✕ 삭제
+                  <span className="material-symbols-outlined text-[14px]">delete</span>
+                  삭제
                 </button>
               </div>
             </div>

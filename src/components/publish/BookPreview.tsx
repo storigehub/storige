@@ -90,7 +90,7 @@ export function BookPreview({ entries, title }: BookPreviewProps) {
                 setCurrentPage(i)
               }}
               className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                i === currentPage ? 'bg-[#4A90D9]' : 'bg-[#e0e0e0]'
+                i === currentPage ? 'bg-[#0061A5]' : 'bg-[#e0e0e0]'
               }`}
             />
           ))}
@@ -122,14 +122,14 @@ function PageContent({ page }: { page: BookPage }) {
         <div className="text-4xl mb-4">📖</div>
         <h1 className="text-xl font-bold text-[#1A1A1A] mb-2">{page.title}</h1>
         <p className="text-xs text-[#888]">Storige에서 출판</p>
-        <div className="mt-8 w-16 h-0.5 bg-[#4A90D9]" />
+        <div className="mt-8 w-16 h-0.5 bg-[#0061A5]" />
       </div>
     )
   }
 
   if (page.type === 'back_cover') {
     return (
-      <div className="h-full flex flex-col items-center justify-center bg-[#4A90D9] px-6 text-center">
+      <div className="h-full flex flex-col items-center justify-center bg-[#0061A5] px-6 text-center">
         <p className="text-white text-sm font-medium mb-2">이야기저장소</p>
         <p className="text-white/70 text-xs">storige.co.kr</p>
       </div>

@@ -20,7 +20,7 @@ export function SecretCredentialFields({
     <div>
       <div className="flex items-center justify-between mb-2">
         <p className="text-xs text-[#888]">계정 정보 (선택)</p>
-        <button onClick={onAdd} className="text-xs text-[#FF6B9D] font-medium">
+        <button onClick={onAdd} className="text-xs text-[#E91E63] font-medium">
           + 추가
         </button>
       </div>
@@ -44,7 +44,7 @@ export function SecretCredentialFields({
                 field === 'username' ? '아이디' :
                 field === 'password' ? '비밀번호' : '메모 (선택)'
               }
-              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg text-sm outline-none focus:border-[#FF6B9D] font-mono bg-white"
+              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg text-sm outline-none focus:border-[#E91E63] font-mono bg-white"
             />
           ))}
         </div>

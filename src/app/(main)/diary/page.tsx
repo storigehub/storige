@@ -29,16 +29,16 @@ export default function DiaryPage() {
 
   return (
     <div>
-      {/* 탭 네비게이션 */}
-      <div className="flex border-b border-[#f0f0f0] bg-white overflow-x-auto">
+      {/* 탭 네비게이션 — Midnight Archive */}
+      <div className="flex bg-white/80 backdrop-blur-sm overflow-x-auto border-b border-[#eeeeee] px-4 gap-1">
         {TABS.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-shrink-0 px-4 py-2.5 text-sm font-medium transition-colors border-b-2 ${
+            className={`flex-shrink-0 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
               activeTab === tab
-                ? 'border-[#4A90D9] text-[#4A90D9]'
-                : 'border-transparent text-[#888]'
+                ? 'border-[#0061A5] text-[#0061A5] font-bold'
+                : 'border-transparent text-[#747878]'
             }`}
           >
             {tab}
@@ -82,30 +82,31 @@ function DiarySummaryView({ entries }: { entries: ReturnType<typeof useDiaryList
   return (
     <div className="px-4 py-6 space-y-4">
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white rounded-2xl p-4 border border-[#f0f0f0]">
-          <p className="text-xs text-[#888]">전체 일기</p>
-          <p className="text-3xl font-bold text-[#4A90D9] mt-1">{entries.length}</p>
+        <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+          <p className="text-xs text-[#747878] uppercase tracking-wider font-medium">전체 일기</p>
+          <p className="text-3xl font-bold font-headline text-[#0061A5] mt-1">{entries.length}</p>
         </div>
-        <div className="bg-white rounded-2xl p-4 border border-[#f0f0f0]">
-          <p className="text-xs text-[#888]">이번 달</p>
-          <p className="text-3xl font-bold text-[#00C9B7] mt-1">{thisMonth.length}</p>
+        <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+          <p className="text-xs text-[#747878] uppercase tracking-wider font-medium">이번 달</p>
+          <p className="text-3xl font-bold font-headline text-[#006B5F] mt-1">{thisMonth.length}</p>
         </div>
-        <div className="bg-white rounded-2xl p-4 border border-[#f0f0f0]">
-          <p className="text-xs text-[#888]">즐겨찾기</p>
-          <p className="text-3xl font-bold text-[#FFD93D] mt-1">
+        <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+          <p className="text-xs text-[#747878] uppercase tracking-wider font-medium">즐겨찾기</p>
+          <p className="text-3xl font-bold font-headline text-[#f59e0b] mt-1">
             {entries.filter((e) => e.is_favorite).length}
           </p>
         </div>
-        <div className="bg-white rounded-2xl p-4 border border-[#f0f0f0]">
-          <p className="text-xs text-[#888]">사진</p>
-          <p className="text-3xl font-bold text-[#FF6B9D] mt-1">
+        <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+          <p className="text-xs text-[#747878] uppercase tracking-wider font-medium">사진</p>
+          <p className="text-3xl font-bold font-headline text-[#E91E63] mt-1">
             {entries.reduce((acc, e) => acc + e.media.filter((m) => m.media_type === 'photo').length, 0)}
           </p>
         </div>
       </div>
 
-      <div className="bg-[#f0f7ff] rounded-2xl p-4 text-sm text-[#4A90D9]">
-        💡 AI 요약 기능은 Phase 5에서 추가됩니다
+      <div className="bg-[#d2e4ff] rounded-2xl p-4 text-sm text-[#004375]">
+        <span className="material-symbols-outlined text-[16px] align-middle mr-1">tips_and_updates</span>
+        AI 요약 기능은 Phase 5에서 추가됩니다
       </div>
     </div>
   )

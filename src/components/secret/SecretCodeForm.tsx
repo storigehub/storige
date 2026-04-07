@@ -80,7 +80,7 @@ export function SecretCodeForm() {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="text-[#FF6B9D] font-semibold text-sm disabled:opacity-40"
+          className="text-[#E91E63] font-semibold text-sm disabled:opacity-40"
         >
           {isSaving ? '저장 중...' : '저장'}
         </button>
@@ -103,7 +103,7 @@ export function SecretCodeForm() {
                 onClick={() => setCategory(cat.value)}
                 className={`flex flex-col items-center gap-1 py-3 rounded-xl border text-xs transition-colors ${
                   category === cat.value
-                    ? 'border-[#FF6B9D] bg-[#fff0f5] text-[#FF6B9D]'
+                    ? 'border-[#E91E63] bg-[#fff0f5] text-[#E91E63]'
                     : 'border-[#f0f0f0] text-[#555]'
                 }`}
               >
@@ -122,7 +122,7 @@ export function SecretCodeForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="예: 신한은행 계좌 정보"
-            className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#FF6B9D]"
+            className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#E91E63]"
           />
         </div>
 
@@ -137,7 +137,7 @@ export function SecretCodeForm() {
                 className={`flex-1 py-2 rounded-xl border text-xs font-medium transition-colors ${
                   importance === imp
                     ? imp === 'important'
-                      ? 'border-[#FF6B9D] bg-[#fff0f5] text-[#FF6B9D]'
+                      ? 'border-[#E91E63] bg-[#fff0f5] text-[#E91E63]'
                       : 'border-[#B0B0B0] bg-[#f5f5f5] text-[#555]'
                     : 'border-[#f0f0f0] text-[#888]'
                 }`}
@@ -156,7 +156,7 @@ export function SecretCodeForm() {
             onChange={(e) => setContent(e.target.value)}
             placeholder="보관할 정보를 입력하세요&#10;예: 계좌번호, 주소, 계약 내용 등"
             rows={4}
-            className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#FF6B9D] resize-none font-mono"
+            className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#E91E63] resize-none font-mono"
           />
         </div>
 

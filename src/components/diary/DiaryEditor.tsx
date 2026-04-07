@@ -58,7 +58,7 @@ export function DiaryEditor({ entryId, initialTitle }: DiaryEditorProps) {
 
         <button
           onClick={handleDone}
-          className="text-[#4A90D9] font-semibold text-sm"
+          className="text-[#0061A5] font-semibold text-sm"
         >
           완료
         </button>

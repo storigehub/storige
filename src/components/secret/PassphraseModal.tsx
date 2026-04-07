@@ -47,7 +47,7 @@ export function PassphraseModal({ title, error, onSubmit, onCancel }: Passphrase
               value={passphrase}
               onChange={(e) => setPassphrase(e.target.value)}
               placeholder="패스프레이즈를 입력하세요"
-              className="w-full px-4 py-3 pr-12 border border-[#e0e0e0] rounded-xl text-sm font-mono outline-none focus:border-[#FF6B9D] bg-[#fafafa]"
+              className="w-full px-4 py-3 pr-12 border border-[#e0e0e0] rounded-xl text-sm font-mono outline-none focus:border-[#E91E63] bg-[#fafafa]"
               autoComplete="current-password"
             />
             <button
@@ -83,7 +83,7 @@ export function PassphraseModal({ title, error, onSubmit, onCancel }: Passphrase
             <button
               type="submit"
               disabled={!passphrase.trim()}
-              className="flex-1 py-2.5 bg-[#FF6B9D] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
+              className="flex-1 py-2.5 bg-[#E91E63] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
             >
               열람
             </button>

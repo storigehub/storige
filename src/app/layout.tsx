@@ -18,7 +18,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#4A90D9',
+  themeColor: '#0061A5',
 }
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full antialiased">
-      <body className="min-h-full bg-[#FAFAFA]">
+      <body className="min-h-full bg-[#f9f9f9]">
         {children}
         <Toaster position="top-center" richColors />
       </body>

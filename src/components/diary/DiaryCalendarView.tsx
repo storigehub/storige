@@ -81,7 +81,7 @@ export function DiaryCalendarView({ entries }: DiaryCalendarViewProps) {
       {/* 요일 헤더 */}
       <div className="grid grid-cols-7 mb-2">
         {DAYS.map((d) => (
-          <div key={d} className={`text-center text-xs font-medium py-1 ${d === '일' ? 'text-[#FF4757]' : d === '토' ? 'text-[#4A90D9]' : 'text-[#888]'}`}>
+          <div key={d} className={`text-center text-xs font-medium py-1 ${d === '일' ? 'text-[#FF4757]' : d === '토' ? 'text-[#0061A5]' : 'text-[#888]'}`}>
             {d}
           </div>
         ))}
@@ -95,14 +95,14 @@ export function DiaryCalendarView({ entries }: DiaryCalendarViewProps) {
               <button
                 onClick={() => entriesSet.has(day) && handleDayClick(day)}
                 className={`w-8 h-8 rounded-full flex flex-col items-center justify-center relative transition-colors
-                  ${isToday(day) ? 'bg-[#4A90D9] text-white' : 'text-[#1A1A1A]'}
+                  ${isToday(day) ? 'bg-[#0061A5] text-white' : 'text-[#1A1A1A]'}
                   ${entriesSet.has(day) && !isToday(day) ? 'font-semibold' : ''}
                 `}
               >
                 <span className="text-xs">{day}</span>
                 {/* 일기 있음 표시 점 */}
                 {entriesSet.has(day) && (
-                  <span className={`absolute bottom-0.5 w-1 h-1 rounded-full ${isToday(day) ? 'bg-white' : 'bg-[#4A90D9]'}`} />
+                  <span className={`absolute bottom-0.5 w-1 h-1 rounded-full ${isToday(day) ? 'bg-white' : 'bg-[#0061A5]'}`} />
                 )}
               </button>
             ) : null}

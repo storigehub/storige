@@ -30,7 +30,7 @@ export function DiaryListView({ searchQuery }: DiaryListViewProps) {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-6 h-6 border-2 border-[#4A90D9] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-[#0061A5] border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -44,11 +44,11 @@ export function DiaryListView({ searchQuery }: DiaryListViewProps) {
   if (entries.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
-        <div className="text-5xl">📓</div>
-        <h2 className="text-lg font-semibold text-[#1A1A1A]">
+        <span className="material-symbols-outlined text-5xl text-[#0061A5]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>book_2</span>
+        <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">
           {searchQuery ? '검색 결과가 없습니다' : '첫 번째 일기를 작성해보세요'}
         </h2>
-        <p className="text-sm text-[#888]">
+        <p className="text-sm text-[#747878]">
           {searchQuery ? '다른 검색어를 시도해보세요' : '우측 하단 + 버튼을 눌러 시작하세요'}
         </p>
       </div>
@@ -62,19 +62,21 @@ export function DiaryListView({ searchQuery }: DiaryListViewProps) {
     <div>
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
-          <div className="px-4 py-2 text-sm font-medium text-[#888] bg-[#FAFAFA]">
+          <div className="px-4 py-2 text-[11px] font-bold text-[#747878] uppercase tracking-widest bg-[#f3f3f3]">
             {month}
           </div>
-          {monthEntries.map((entry) => (
-            <DiaryAccordionItem
-              key={entry.id}
-              entry={entry}
-              isOpen={openId === entry.id}
-              onToggle={() => handleToggle(entry.id)}
-              onFavoriteToggle={() => toggleFavorite(entry.id, entry.is_favorite)}
-              onDelete={() => deleteEntry(entry.id)}
-            />
-          ))}
+          <div className="px-4 pb-2 space-y-2 pt-2">
+            {monthEntries.map((entry) => (
+              <DiaryAccordionItem
+                key={entry.id}
+                entry={entry}
+                isOpen={openId === entry.id}
+                onToggle={() => handleToggle(entry.id)}
+                onFavoriteToggle={() => toggleFavorite(entry.id, entry.is_favorite)}
+                onDelete={() => deleteEntry(entry.id)}
+              />
+            ))}
+          </div>
         </div>
       ))}
     </div>

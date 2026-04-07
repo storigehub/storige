@@ -16,10 +16,11 @@ export default function DearPage() {
 
   return (
     <div>
-      {/* 페이지 헤더 */}
-      <div className="px-4 py-4 bg-white border-b border-[#f0f0f0]">
-        <h1 className="text-lg font-bold text-[#1A1A1A]">편지</h1>
-        <p className="text-xs text-[#888] mt-0.5">소중한 사람에게 마음을 전하세요</p>
+      {/* 페이지 헤더 — Midnight Archive dear_my_son_3 스타일 */}
+      <div className="px-5 pt-5 pb-4 bg-white/80 backdrop-blur-sm">
+        <span className="text-[10px] tracking-[0.2em] font-bold text-[#006B5F] uppercase block mb-1">Letters Archive</span>
+        <h1 className="text-3xl font-extrabold tracking-tight text-[#1a1c1c] font-headline leading-tight">Letters</h1>
+        <p className="text-sm text-[#747878] mt-1">SHARED ARCHIVES</p>
       </div>
 
       <DearListView />

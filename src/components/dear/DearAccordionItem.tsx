@@ -15,7 +15,7 @@ interface DearAccordionItemProps {
   recipient?: FamilyMember
 }
 
-// Dear My Son 편지 아코디언 아이템 — 왼쪽 보더 mint
+// Dear My Son 편지 아코디언 아이템 — Midnight Archive / dear_my_son_3 디자인
 export function DearAccordionItem({
   entry,
   isOpen,
@@ -26,56 +26,61 @@ export function DearAccordionItem({
   const router = useRouter()
   const date = new Date(entry.created_at)
   const day = date.getDate()
-  const dow = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]
-  const badgeColor = recipient ? getBadgeColor(recipient.role) : '#00C9B7'
+  const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+  const month = monthNames[date.getMonth()]
+  const badgeColor = recipient ? getBadgeColor(recipient.role) : '#006B5F'
 
   return (
     <div
-      className={`border-b border-[#f5f5f5] transition-all ${
-        isOpen ? 'bg-[#fafff9] border-l-4 border-l-[#00C9B7]' : 'bg-white'
+      className={`rounded-xl overflow-hidden transition-all duration-300 ${
+        isOpen
+          ? 'bg-white shadow-lg border-l-4 border-l-[#006B5F]'
+          : 'bg-[#f3f3f3] border border-[#eeeeee]'
       }`}
       id={`dear-${entry.id}`}
     >
       {/* 아코디언 헤더 */}
       <div
-        className="flex items-center gap-3 px-4 py-3 cursor-pointer active:bg-[#fafafa]"
+        className="flex items-center gap-3 px-4 py-3.5 cursor-pointer active:opacity-80"
         onClick={onToggle}
       >
-        {/* 날짜 */}
+        {/* 날짜 블록 */}
         <div className="flex-shrink-0 w-10 text-center">
-          <div className="text-lg font-bold text-[#1A1A1A] leading-none">{day}</div>
-          <div className="text-xs text-[#888] mt-0.5">{dow}</div>
+          <div className="text-2xl font-bold leading-none text-[#1a1c1c] font-headline">{day}</div>
+          <div className="text-[9px] font-bold uppercase tracking-widest text-[#747878] mt-0.5">{month}</div>
         </div>
 
         {/* 수신자 뱃지 + 제목 */}
         <div className="flex-1 min-w-0">
           {recipient && (
-            <div className="flex items-center gap-1.5 mb-0.5">
+            <div className="flex items-center gap-1.5 mb-1">
               <span
-                className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full text-white"
+                className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
                 style={{ backgroundColor: badgeColor }}
               >
-                {recipient.name}
+                To. {recipient.name}
               </span>
-              <span className="text-[10px] text-[#B0B0B0]">{getRoleLabel(recipient.role)}</span>
+              <span className="text-[10px] text-[#747878]">{getRoleLabel(recipient.role)}</span>
             </div>
           )}
-          <h3 className="text-sm font-semibold text-[#1A1A1A] truncate">
+          <h3 className="text-sm font-semibold text-[#1a1c1c] truncate">
             {entry.title || '제목 없음'}
           </h3>
-          <p className="text-xs text-[#888] mt-0.5 truncate">
+          <p className="text-xs text-[#747878] mt-0.5 truncate">
             {entry.content_text || '내용 없음'}
           </p>
         </div>
 
-        {/* 쉐브론 */}
-        <motion.span
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-[#B0B0B0] flex-shrink-0"
-        >
-          ∨
-        </motion.span>
+        {/* 미전달 뱃지 + 쉐브론 */}
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          <motion.span
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="material-symbols-outlined text-[20px] text-[#747878]"
+          >
+            keyboard_arrow_down
+          </motion.span>
+        </div>
       </div>
 
       {/* 아코디언 콘텐츠 */}
@@ -89,19 +94,26 @@ export function DearAccordionItem({
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 pl-[3.25rem]">
-              {/* 작성 시각 */}
-              <div className="flex items-center gap-2 text-xs text-[#888] mb-3">
-                <span>🕐 {formatTime(date)}</span>
+            <div className="px-4 pb-4 pt-1">
+              {/* 메타데이터 */}
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1 text-xs text-[#747878] bg-[#f3f3f3] rounded-full px-2.5 py-1">
+                  <span className="material-symbols-outlined text-[14px]">schedule</span>
+                  {formatTime(date)}
+                </span>
                 {recipient && (
-                  <span style={{ color: badgeColor }}>
-                    To. {recipient.name}
+                  <span
+                    className="inline-flex items-center gap-1 text-xs rounded-full px-2.5 py-1"
+                    style={{ backgroundColor: `${badgeColor}20`, color: badgeColor }}
+                  >
+                    <span className="material-symbols-outlined text-[14px]">mail</span>
+                    {recipient.name}에게
                   </span>
                 )}
               </div>
 
               {/* 본문 */}
-              <p className="text-sm text-[#1A1A1A] leading-relaxed whitespace-pre-wrap mb-4">
+              <p className="text-sm text-[#1a1c1c] leading-relaxed whitespace-pre-wrap mb-4">
                 {entry.content_text}
               </p>
 
@@ -109,21 +121,25 @@ export function DearAccordionItem({
               <div className="flex gap-2">
                 <button
                   onClick={() => router.push(`/dear/${entry.id}/edit`)}
-                  className="text-xs border border-[#e0e0e0] rounded-full px-3 py-1 text-[#555] hover:bg-[#f5f5f5]"
+                  className="flex items-center gap-1 text-xs bg-[#f3f3f3] rounded-full px-3 py-1.5 text-[#444748] hover:bg-[#eeeeee] transition-colors"
                 >
-                  ✎ 편집
+                  <span className="material-symbols-outlined text-[14px]">edit</span>
+                  편집
                 </button>
                 <button
                   onClick={() => router.push(`/publish?entry=${entry.id}`)}
-                  className="text-xs border border-[#00C9B7] rounded-full px-3 py-1 text-[#00C9B7] hover:bg-[#f0fffd]"
+                  className="flex items-center gap-1 text-xs rounded-full px-3 py-1.5 transition-colors"
+                  style={{ backgroundColor: `${badgeColor}15`, color: badgeColor }}
                 >
-                  📖 출판
+                  <span className="material-symbols-outlined text-[14px]">menu_book</span>
+                  출판
                 </button>
                 <button
                   onClick={onDelete}
-                  className="text-xs border border-[#FF4757] rounded-full px-3 py-1 text-[#FF4757] hover:bg-[#ffeef0] ml-auto"
+                  className="flex items-center gap-1 text-xs bg-[#fff0f0] rounded-full px-3 py-1.5 text-[#ba1a1a] hover:bg-[#ffe0e0] transition-colors ml-auto"
                 >
-                  ✕ 삭제
+                  <span className="material-symbols-outlined text-[14px]">delete</span>
+                  삭제
                 </button>
               </div>
             </div>

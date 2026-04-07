@@ -32,7 +32,7 @@ export function DearListView() {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-6 h-6 border-2 border-[#00C9B7] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-[#006B5F] border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -44,9 +44,9 @@ export function DearListView() {
   if (entries.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
-        <div className="text-5xl">✉️</div>
-        <h2 className="text-lg font-semibold text-[#1A1A1A]">첫 번째 편지를 써보세요</h2>
-        <p className="text-sm text-[#888]">소중한 사람에게 마음을 전해보세요</p>
+        <span className="material-symbols-outlined text-5xl text-[#006B5F]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>mail</span>
+        <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">첫 번째 편지를 써보세요</h2>
+        <p className="text-sm text-[#747878]">소중한 사람에게 마음을 전해보세요</p>
       </div>
     )
   }
@@ -58,19 +58,21 @@ export function DearListView() {
     <div>
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
-          <div className="px-4 py-2 text-sm font-medium text-[#888] bg-[#FAFAFA]">
+          <div className="px-4 py-2 text-[11px] font-bold text-[#747878] uppercase tracking-widest bg-[#f3f3f3]">
             {month}
           </div>
-          {monthEntries.map((entry) => (
-            <DearAccordionItem
-              key={entry.id}
-              entry={entry}
-              isOpen={openId === entry.id}
-              onToggle={() => handleToggle(entry.id)}
-              onDelete={() => deleteEntry(entry.id)}
-              recipient={getMember(entry.recipient_id)}
-            />
-          ))}
+          <div className="px-4 pb-2 space-y-2 pt-2">
+            {monthEntries.map((entry) => (
+              <DearAccordionItem
+                key={entry.id}
+                entry={entry}
+                isOpen={openId === entry.id}
+                onToggle={() => handleToggle(entry.id)}
+                onDelete={() => deleteEntry(entry.id)}
+                recipient={getMember(entry.recipient_id)}
+              />
+            ))}
+          </div>
         </div>
       ))}
     </div>

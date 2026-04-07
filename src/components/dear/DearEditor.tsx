@@ -68,7 +68,7 @@ export function DearEditor() {
 
         <button
           onClick={handleDone}
-          className="text-[#00C9B7] font-semibold text-sm"
+          className="text-[#006B5F] font-semibold text-sm"
         >
           완료
         </button>
@@ -90,8 +90,8 @@ export function DearEditor() {
                   color: '#fff',
                 }
               : {
-                  borderColor: '#00C9B7',
-                  color: '#00C9B7',
+                  borderColor: '#006B5F',
+                  color: '#006B5F',
                 }
           }
         >
@@ -112,7 +112,7 @@ export function DearEditor() {
 
             {membersLoading ? (
               <div className="flex justify-center py-4">
-                <div className="w-5 h-5 border-2 border-[#00C9B7] border-t-transparent rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-[#006B5F] border-t-transparent rounded-full animate-spin" />
               </div>
             ) : members.length === 0 ? (
               <div className="text-center py-4">
@@ -139,7 +139,7 @@ export function DearEditor() {
                       <p className="text-xs text-[#888]">{getRoleLabel(member.role)}</p>
                     </div>
                     {selectedRecipientId === member.id && (
-                      <span className="ml-auto text-[#00C9B7]">✓</span>
+                      <span className="ml-auto text-[#006B5F]">✓</span>
                     )}
                   </button>
                 ))}

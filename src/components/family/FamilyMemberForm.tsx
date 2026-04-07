@@ -79,7 +79,7 @@ export function FamilyMemberForm({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="이름을 입력하세요"
-          className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#4A90D9]"
+          className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#0061A5]"
         />
       </div>
 
@@ -91,7 +91,7 @@ export function FamilyMemberForm({
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="010-0000-0000"
-          className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#4A90D9]"
+          className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#0061A5]"
         />
       </div>
 
@@ -103,7 +103,7 @@ export function FamilyMemberForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="이메일 주소"
-          className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#4A90D9]"
+          className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#0061A5]"
         />
       </div>
 
@@ -119,7 +119,7 @@ export function FamilyMemberForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="flex-1 py-3 bg-[#4A90D9] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
+          className="flex-1 py-3 bg-[#0061A5] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
         >
           {isLoading ? '저장 중...' : '저장'}
         </button>

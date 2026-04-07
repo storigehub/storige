@@ -16,10 +16,11 @@ export default function SecretPage() {
 
   return (
     <div>
-      {/* 페이지 헤더 */}
-      <div className="px-4 py-4 bg-white border-b border-[#f0f0f0]">
-        <h1 className="text-lg font-bold text-[#1A1A1A]">시크릿 코드</h1>
-        <p className="text-xs text-[#888] mt-0.5">중요한 정보를 암호화하여 안전하게 보관합니다</p>
+      {/* 페이지 헤더 — Midnight Archive _4 스타일 */}
+      <div className="px-5 pt-5 pb-4 bg-white/80 backdrop-blur-sm">
+        <span className="text-[10px] tracking-[0.2em] font-bold text-[#0061A5] uppercase block mb-1">Archive Section 08</span>
+        <h1 className="text-3xl font-extrabold tracking-tight text-[#1a1c1c] font-headline leading-tight">Secret Code</h1>
+        <p className="text-sm text-[#747878] mt-1">Your encrypted memories, locked behind the veil of time.</p>
       </div>
 
       <SecretListView />
