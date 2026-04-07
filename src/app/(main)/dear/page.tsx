@@ -19,13 +19,16 @@ export default function DearPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* 히어로 섹션 — dear_my_son_1 */}
-      <section className="px-6 pt-10 pb-8 md:pt-16 md:pb-12">
-        <p className="font-headline text-[#747878] uppercase tracking-[0.2em] text-[10px] mb-2">Letters Archive</p>
-        <h1 className="font-headline text-4xl md:text-5xl font-extrabold leading-tight tracking-tight text-[#1a1c1c] mb-4">
+      {/* 히어로 섹션 — dear_my_son_2 editorial style */}
+      <section className="px-6 pt-10 pb-6 md:pt-14 md:pb-8">
+        <span className="inline-flex items-center gap-2 mb-3">
+          <span className="w-5 h-px bg-[#006B5F]" />
+          <p className="font-headline text-[#006B5F] uppercase tracking-[0.25em] text-[10px] font-bold">Private Archive</p>
+        </span>
+        <h1 className="font-headline text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-[#1a1c1c] mb-3">
           마음을 담은 <span className="text-[#006B5F]">영원한</span> 기록
         </h1>
-        <p className="text-[#444748] max-w-xl text-base leading-relaxed">
+        <p className="text-[#747878] max-w-xl text-sm leading-relaxed">
           소중한 사람에게 전하고 싶은 말을 지금 기록하세요.
           지정한 순간이 오면 자동으로 전달됩니다.
         </p>

@@ -47,7 +47,7 @@ export function Header() {
   const initials = profile?.full_name?.[0]?.toUpperCase() ?? '?'
 
   return (
-    <header className="sticky top-0 z-50 bg-[#f9f9f9]/80 backdrop-blur-xl border-b border-[#c4c7c7]/10">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]">
       <div className="flex justify-between items-center h-16 px-6 max-w-6xl mx-auto">
 
         {/* 왼쪽: 햄버거(모바일) + 브랜드 */}
@@ -62,41 +62,50 @@ export function Header() {
             </SheetTrigger>
 
             <SheetContent side="left" className="w-72 p-0 bg-[#f9f9f9]">
+              {/* 사이드 프로필 헤더 */}
               <div className="p-6 bg-white border-b border-[#eeeeee]">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#0061A5] flex items-center justify-center text-white font-bold overflow-hidden border border-[#c4c7c7]/20">
-                    {profile?.avatar_url
-                      ? <img src={profile.avatar_url} alt="프로필" className="w-full h-full object-cover" />
-                      : initials}
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-full bg-[#0061A5] flex items-center justify-center text-white font-bold overflow-hidden">
+                      {profile?.avatar_url
+                        ? <img src={profile.avatar_url} alt="프로필" className="w-full h-full object-cover" />
+                        : initials}
+                    </div>
+                    <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#0061A5] rounded-full border-2 border-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#1a1c1c] text-sm">{profile?.full_name ?? '사용자'}</p>
-                    <p className="text-xs text-[#747878] mt-0.5">{profile?.email}</p>
+                    <p className="font-bold text-[#1a1c1c] text-sm font-headline">{profile?.full_name ?? '사용자'}</p>
+                    <p className="text-xs text-[#747878]">{profile?.email}</p>
                   </div>
                 </div>
               </div>
               <nav className="py-2">
-                {SIDE_ITEMS.map((item) => (
-                  <button
-                    key={item.href}
-                    onClick={() => handleNav(item.href)}
-                    className={`w-full flex items-center gap-3 px-6 py-3.5 text-sm transition-colors ${
-                      pathname.startsWith(item.href)
-                        ? 'text-[#0061A5] bg-[#d2e4ff]/30 font-semibold'
-                        : 'text-[#1a1c1c] hover:bg-[#eeeeee]'
-                    }`}
-                  >
-                    <span className={`material-symbols-outlined text-[20px] ${pathname.startsWith(item.href) ? 'text-[#0061A5]' : 'text-[#0061A5]'}`}>
-                      {item.icon}
-                    </span>
-                    <span>{item.label}</span>
-                  </button>
-                ))}
+                {SIDE_ITEMS.map((item) => {
+                  const isActive = pathname.startsWith(item.href)
+                  return (
+                    <button
+                      key={item.href}
+                      onClick={() => handleNav(item.href)}
+                      className={`w-full flex items-center gap-3 px-6 py-3 text-sm transition-colors ${
+                        isActive
+                          ? 'text-[#0061A5] bg-[#d2e4ff]/30 font-bold'
+                          : 'text-[#1a1c1c] hover:bg-[#eeeeee]'
+                      }`}
+                    >
+                      <span className={`material-symbols-outlined text-[20px] ${isActive ? 'text-[#0061A5]' : 'text-[#747878]'}`}
+                        style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}>
+                        {item.icon}
+                      </span>
+                      <span>{item.label}</span>
+                      {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#0061A5]" />}
+                    </button>
+                  )
+                })}
               </nav>
               <div className="border-t border-[#eeeeee] py-2">
                 <button
                   onClick={handleSignOut}
-                  className="w-full flex items-center gap-3 px-6 py-3.5 text-sm text-[#747878] hover:bg-[#eeeeee] transition-colors"
+                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-[#747878] hover:bg-[#eeeeee] transition-colors"
                 >
                   <span className="material-symbols-outlined text-[20px]">logout</span>
                   <span>로그아웃</span>
@@ -107,27 +116,30 @@ export function Header() {
 
           {/* 브랜드 */}
           <h1
-            className="text-2xl font-bold tracking-tighter text-[#1a1c1c] font-headline cursor-pointer"
+            className="text-xl font-extrabold tracking-tighter text-[#1a1c1c] font-headline cursor-pointer"
             onClick={() => router.push('/diary')}
           >
             Storige
           </h1>
 
           {/* 데스크탑 인라인 nav */}
-          <nav className="hidden md:flex gap-8 items-center ml-4">
+          <nav className="hidden md:flex items-center ml-4">
             {NAV_ITEMS.map((item) => {
               const isActive = pathname.startsWith(item.href)
               return (
                 <a
                   key={item.href}
                   href={item.href}
-                  className={`font-headline tracking-tight text-sm transition-opacity ${
+                  className={`relative px-4 py-5 font-headline text-sm transition-colors ${
                     isActive
                       ? 'text-[#0061A5] font-bold'
-                      : 'text-[#444748] hover:opacity-70'
+                      : 'text-[#747878] hover:text-[#1a1c1c]'
                   }`}
                 >
                   {item.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#0061A5] rounded-full" />
+                  )}
                 </a>
               )
             })}
@@ -135,17 +147,17 @@ export function Header() {
         </div>
 
         {/* 오른쪽: 검색 + 아바타 */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <a
             href="/diary"
             aria-label="검색"
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#f3f3f3] active:opacity-70 transition-colors"
+            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#f3f3f3] active:opacity-70 transition-colors"
           >
-            <span className="material-symbols-outlined text-[22px] text-[#1a1c1c]">search</span>
+            <span className="material-symbols-outlined text-[20px] text-[#747878]">search</span>
           </a>
           <button
             onClick={() => router.push('/settings')}
-            className="w-8 h-8 rounded-full bg-[#e8e8e8] overflow-hidden border border-[#c4c7c7]/30 flex items-center justify-center text-sm font-bold text-[#747878] active:opacity-70"
+            className="w-8 h-8 rounded-full bg-[#0061A5] overflow-hidden flex items-center justify-center text-xs font-bold text-white shadow-sm active:opacity-80 transition-opacity"
             aria-label="프로필 설정"
           >
             {profile?.avatar_url

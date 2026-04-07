@@ -58,13 +58,11 @@ export function DearListView() {
     <div>
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
-          <div className="flex items-center justify-between py-4 border-b border-[#c4c7c7]/30 mb-2">
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-8 bg-[#006B5F] rounded-full" />
-              <h3 className="font-headline text-lg font-bold text-[#1a1c1c]">{month}</h3>
-            </div>
+          <div className="flex items-center gap-3 py-4 mb-1">
+            <span className="w-1.5 h-6 bg-[#006B5F] rounded-full shrink-0" />
+            <h3 className="font-headline text-[11px] font-bold text-[#747878] uppercase tracking-[0.2em]">{month}</h3>
           </div>
-          <div className="px-4 pb-2 space-y-2 pt-2">
+          <div className="pb-4 space-y-2 pt-1">
             {monthEntries.map((entry) => (
               <DearAccordionItem
                 key={entry.id}

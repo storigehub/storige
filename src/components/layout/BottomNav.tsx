@@ -19,28 +19,34 @@ export function BottomNav() {
   const router = useRouter()
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-3 bg-[#f9f9f9]/95 backdrop-blur-xl border-t border-[#c4c7c7]/10 shadow-[0_-4px_24px_rgba(0,0,0,0.04)] md:hidden">
+    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-3 bg-white/90 backdrop-blur-xl border-t border-[#e8e8e8] shadow-[0_-8px_32px_rgba(0,0,0,0.06)] md:hidden">
       {TABS.map((tab) => {
         const isActive = pathname.startsWith(tab.href)
         return (
           <button
             key={tab.href}
             onClick={() => router.push(tab.href)}
-            className={`flex flex-col items-center justify-center transition-colors ${
-              isActive ? 'text-[#0061A5]' : 'text-[#747878] hover:text-[#1a1c1c]'
-            }`}
+            className="flex flex-col items-center justify-center gap-0.5 active:scale-95 transition-transform"
           >
-            <span
-              className="material-symbols-outlined text-[26px]"
-              style={{
-                fontVariationSettings: isActive
-                  ? "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24"
-                  : "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24",
-              }}
-            >
-              {tab.icon}
-            </span>
-            <span className="font-headline text-[10px] uppercase tracking-wider mt-1 font-bold">
+            <div className={`rounded-2xl px-4 py-1.5 transition-colors ${
+              isActive ? 'bg-[#d2e4ff]' : 'bg-transparent'
+            }`}>
+              <span
+                className={`material-symbols-outlined text-[22px] transition-colors ${
+                  isActive ? 'text-[#0061A5]' : 'text-[#a0a3a3]'
+                }`}
+                style={{
+                  fontVariationSettings: isActive
+                    ? "'FILL' 1, 'wght' 600"
+                    : "'FILL' 0, 'wght' 400",
+                }}
+              >
+                {tab.icon}
+              </span>
+            </div>
+            <span className={`font-headline text-[9px] uppercase tracking-wider font-bold transition-colors ${
+              isActive ? 'text-[#0061A5]' : 'text-[#a0a3a3]'
+            }`}>
               {tab.label}
             </span>
           </button>

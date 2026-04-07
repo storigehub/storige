@@ -62,10 +62,11 @@ export function DiaryListView({ searchQuery }: DiaryListViewProps) {
     <div>
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
-          <div className="py-2 text-[10px] font-bold text-[#747878] uppercase tracking-[0.2em] bg-[#f3f3f3]">
-            {month}
+          <div className="flex items-center gap-3 py-4 mb-1">
+            <span className="w-1.5 h-6 bg-[#0061A5] rounded-full shrink-0" />
+            <h3 className="font-headline text-[11px] font-bold text-[#747878] uppercase tracking-[0.2em]">{month}</h3>
           </div>
-          <div className="pb-2 space-y-3 pt-2">
+          <div className="pb-4 space-y-2 pt-1">
             {monthEntries.map((entry) => (
               <DiaryAccordionItem
                 key={entry.id}

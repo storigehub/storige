@@ -31,12 +31,16 @@ export default function DiaryPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* 히어로 헤더 — _5 "오늘의 성찰" 섹션 */}
-      <section className="px-6 pt-10 pb-6 md:pt-12">
-        <p className="font-headline text-[#747878] uppercase tracking-[0.2em] text-[10px] mb-2">오늘의 성찰</p>
-        <h2 className="font-headline text-4xl md:text-5xl font-extrabold text-[#1a1c1c] tracking-tight leading-tight">
+      {/* 히어로 헤더 — 그라디언트 레이블 + 대형 타이포 */}
+      <section className="px-6 pt-10 pb-6 md:pt-14 md:pb-8">
+        <span className="inline-flex items-center gap-2 mb-3">
+          <span className="w-5 h-px bg-[#0061A5]" />
+          <p className="font-headline text-[#0061A5] uppercase tracking-[0.25em] text-[10px] font-bold">오늘의 성찰</p>
+        </span>
+        <h2 className="font-headline text-4xl md:text-5xl font-extrabold text-[#1a1c1c] tracking-tight leading-[1.1] mb-1">
           나의 살아있는 유산
         </h2>
+        <p className="text-sm text-[#747878] mt-2 leading-relaxed">기억을 기록하고, 이야기를 이어가세요.</p>
       </section>
 
       {/* 탭 + 뷰 전환 — _5 tab-active 스타일 */}
@@ -98,27 +102,21 @@ function DiarySummaryView({ entries }: { entries: ReturnType<typeof useDiaryList
 
   return (
     <div className="py-6 space-y-4">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-[#c4c7c7]/20">
-          <p className="font-headline text-[10px] text-[#747878] uppercase tracking-widest">전체 일기</p>
-          <p className="text-4xl font-extrabold font-headline text-[#0061A5] mt-2 leading-none">{entries.length}</p>
-        </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-[#c4c7c7]/20">
-          <p className="font-headline text-[10px] text-[#747878] uppercase tracking-widest">이번 달</p>
-          <p className="text-4xl font-extrabold font-headline text-[#006B5F] mt-2 leading-none">{thisMonth.length}</p>
-        </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-[#c4c7c7]/20">
-          <p className="font-headline text-[10px] text-[#747878] uppercase tracking-widest">즐겨찾기</p>
-          <p className="text-4xl font-extrabold font-headline text-[#f59e0b] mt-2 leading-none">
-            {entries.filter((e) => e.is_favorite).length}
-          </p>
-        </div>
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-[#c4c7c7]/20">
-          <p className="font-headline text-[10px] text-[#747878] uppercase tracking-widest">사진</p>
-          <p className="text-4xl font-extrabold font-headline text-[#E91E63] mt-2 leading-none">
-            {entries.reduce((acc, e) => acc + e.media.filter((m) => m.media_type === 'photo').length, 0)}
-          </p>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {[
+          { label: '전체 일기', value: entries.length, color: '#0061A5', border: '#0061A5' },
+          { label: '이번 달', value: thisMonth.length, color: '#006B5F', border: '#006B5F' },
+          { label: '즐겨찾기', value: entries.filter((e) => e.is_favorite).length, color: '#f59e0b', border: '#f59e0b' },
+          { label: '사진', value: entries.reduce((acc, e) => acc + e.media.filter((m) => m.media_type === 'photo').length, 0), color: '#E91E63', border: '#E91E63' },
+        ].map(({ label, value, color, border }) => (
+          <div key={label} className="bg-white rounded-xl p-5 shadow-sm" style={{ borderLeft: `3px solid ${border}` }}>
+            <p className="font-headline text-[10px] text-[#747878] uppercase tracking-widest mb-2">{label}</p>
+            <p className="text-4xl font-extrabold font-headline leading-none" style={{ color }}>
+              {value}
+              <span className="text-sm font-medium text-[#c4c7c7] ml-1">건</span>
+            </p>
+          </div>
+        ))}
       </div>
       {/* AI 플레이스홀더 카드 — _5 dashed CTA 스타일 */}
       <div className="border-2 border-dashed border-[#c4c7c7]/40 rounded-xl flex flex-col items-center justify-center p-8 text-[#747878] hover:text-[#0061A5] hover:border-[#0061A5] transition-all cursor-pointer group bg-white/50">
