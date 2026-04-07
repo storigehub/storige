@@ -72,7 +72,7 @@ export function SecretListView() {
 
   return (
     <>
-      <div className="px-4 py-4 space-y-3">
+      <div className="px-5 pb-4 space-y-4">
         {codes.map((code, index) => (
           <SecretAccordionItem
             key={code.id}
