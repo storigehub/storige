@@ -38,13 +38,13 @@ export function LoginForm() {
     <div className="w-full max-w-sm space-y-6">
       {/* 로고 + 타이틀 */}
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-extrabold text-[#1a1c1c] font-headline tracking-tight">Storige</h1>
-        <p className="text-[10px] tracking-[0.2em] font-bold text-[#747878] uppercase">기억을 저장하고, 내일을 준비하세요</p>
+        <h1 className="text-3xl font-extrabold text-on-surface font-headline tracking-tight">Storige</h1>
+        <p className="text-[10px] tracking-[0.2em] font-bold text-outline uppercase">기억을 저장하고, 내일을 준비하세요</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-xs font-medium text-[#747878] uppercase tracking-wider">이메일</Label>
+          <Label htmlFor="email" className="text-xs font-medium text-outline uppercase tracking-wider">이메일</Label>
           <Input
             id="email"
             type="email"
@@ -53,12 +53,12 @@ export function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="bg-[#f3f3f3] border-0 rounded-xl focus:ring-2 focus:ring-[#0061A5]/20"
+            className="bg-surface-container-low border-0 rounded-xl focus:ring-2 focus:ring-primary/20"
           />
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="password" className="text-xs font-medium text-[#747878] uppercase tracking-wider">비밀번호</Label>
+          <Label htmlFor="password" className="text-xs font-medium text-outline uppercase tracking-wider">비밀번호</Label>
           <Input
             id="password"
             type="password"
@@ -67,17 +67,17 @@ export function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
-            className="bg-[#f3f3f3] border-0 rounded-xl focus:ring-2 focus:ring-[#0061A5]/20"
+            className="bg-surface-container-low border-0 rounded-xl focus:ring-2 focus:ring-primary/20"
           />
         </div>
 
         {error && (
-          <p className="text-sm text-[#ba1a1a] bg-[#fff0f0] rounded-lg px-3 py-2">{error}</p>
+          <p className="text-sm text-error bg-[#fff0f0] rounded-lg px-3 py-2">{error}</p>
         )}
 
         <Button
           type="submit"
-          className="w-full bg-[#0061A5] hover:bg-[#004c82] text-white rounded-xl h-12 font-semibold"
+          className="w-full bg-primary hover:bg-[#004c82] text-white rounded-xl h-12 font-semibold"
           disabled={loading}
         >
           {loading ? '로그인 중...' : '로그인'}
@@ -86,9 +86,9 @@ export function LoginForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-[#eeeeee]" />
+          <span className="w-full border-t border-surface-container" />
         </div>
-        <div className="relative flex justify-center text-xs text-[#747878]">
+        <div className="relative flex justify-center text-xs text-outline">
           <span className="bg-[#f9f9f9] px-3">또는</span>
         </div>
       </div>
@@ -98,7 +98,7 @@ export function LoginForm() {
         <Button
           type="button"
           variant="outline"
-          className="w-full rounded-xl h-11 border-[#eeeeee] bg-white hover:bg-[#f3f3f3] text-[#1a1c1c] font-medium"
+          className="w-full rounded-xl h-11 border-surface-container bg-white hover:bg-surface-container-low text-on-surface font-medium"
           disabled={oauthLoading !== null}
           onClick={async () => {
             setError(null)
@@ -130,9 +130,9 @@ export function LoginForm() {
         </Button>
       </div>
 
-      <p className="text-center text-sm text-[#747878]">
+      <p className="text-center text-sm text-outline">
         계정이 없으신가요?{' '}
-        <a href="/signup" className="text-[#0061A5] hover:underline font-semibold">
+        <a href="/signup" className="text-primary hover:underline font-semibold">
           회원가입
         </a>
       </p>

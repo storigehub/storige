@@ -78,7 +78,7 @@ export function PublishOrderForm({ selectedEntryIds, publishType, pageCount, onB
   return (
     <div className="space-y-5">
       {/* 주문 요약 */}
-      <div className="bg-[#f0f7ff] rounded-2xl p-4">
+      <div className="bg-diary-open rounded-2xl p-4">
         <h3 className="text-sm font-semibold text-[#1A1A1A] mb-2">{TYPE_LABEL[publishType]}</h3>
         <div className="space-y-1 text-xs text-[#555]">
           <div className="flex justify-between">
@@ -97,7 +97,7 @@ export function PublishOrderForm({ selectedEntryIds, publishType, pageCount, onB
             <span>배송비</span>
             <span>{shippingFee.toLocaleString()}원</span>
           </div>
-          <div className="flex justify-between font-bold text-[#0061A5] text-sm pt-1 border-t border-[#d0e8ff]">
+          <div className="flex justify-between font-bold text-primary text-sm pt-1 border-t border-[#d0e8ff]">
             <span>총 금액</span>
             <span>{total.toLocaleString()}원</span>
           </div>
@@ -121,7 +121,7 @@ export function PublishOrderForm({ selectedEntryIds, publishType, pageCount, onB
                 value={value}
                 onChange={(e) => setter(e.target.value)}
                 placeholder={placeholder}
-                className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-[#0061A5]"
+                className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-primary"
               />
             </div>
           ))}
@@ -141,7 +141,7 @@ export function PublishOrderForm({ selectedEntryIds, publishType, pageCount, onB
         <button
           onClick={handleOrder}
           disabled={isSubmitting}
-          className="flex-1 py-3 bg-[#0061A5] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
+          className="flex-1 py-3 bg-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40"
         >
           {isSubmitting ? '처리 중...' : `${total.toLocaleString()}원 주문하기`}
         </button>

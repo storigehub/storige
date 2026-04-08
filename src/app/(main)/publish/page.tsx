@@ -50,7 +50,7 @@ export default function PublishPage() {
   return (
     <div className="min-h-screen bg-[#f9f9f9]">
       {/* 헤더 */}
-      <div className="px-4 py-4 bg-white/80 backdrop-blur-md border-b border-[#eeeeee] sticky top-0 z-10">
+      <div className="px-4 py-4 bg-white/80 backdrop-blur-md border-b border-surface-container sticky top-0 z-10">
         <div className="flex items-center gap-3">
           {step !== 'select' && (
             <button
@@ -73,7 +73,7 @@ export default function PublishPage() {
               <div
                 key={s}
                 className={`w-2 h-2 rounded-full transition-colors ${
-                  step === s ? 'bg-[#0061A5]' : i < STEPS.indexOf(step) ? 'bg-[#0061A5]/40' : 'bg-[#e0e0e0]'
+                  step === s ? 'bg-primary' : i < STEPS.indexOf(step) ? 'bg-primary/40' : 'bg-[#e0e0e0]'
                 }`}
               />
             ))}
@@ -111,7 +111,7 @@ export default function PublishPage() {
             </div>
             <button
               onClick={() => setStep('order')}
-              className="w-full py-3 bg-[#0061A5] text-white rounded-xl text-sm font-semibold"
+              className="w-full py-3 bg-primary text-white rounded-xl text-sm font-semibold"
             >
               출판 신청하기
             </button>

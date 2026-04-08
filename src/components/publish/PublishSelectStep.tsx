@@ -42,18 +42,18 @@ export function PublishSelectStep({
               onClick={() => setPublishType(t.value)}
               className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors ${
                 publishType === t.value
-                  ? 'border-[#0061A5] bg-[#f0f7ff]'
+                  ? 'border-primary bg-diary-open'
                   : 'border-[#f0f0f0] bg-white'
               }`}
             >
               <span className="text-2xl">{t.icon}</span>
               <div>
-                <p className={`text-sm font-semibold ${publishType === t.value ? 'text-[#0061A5]' : 'text-[#1A1A1A]'}`}>
+                <p className={`text-sm font-semibold ${publishType === t.value ? 'text-primary' : 'text-[#1A1A1A]'}`}>
                   {t.label}
                 </p>
                 <p className="text-xs text-[#888]">{t.desc}</p>
               </div>
-              {publishType === t.value && <span className="ml-auto text-[#0061A5]">✓</span>}
+              {publishType === t.value && <span className="ml-auto text-primary">✓</span>}
             </button>
           ))}
         </div>
@@ -63,9 +63,9 @@ export function PublishSelectStep({
       <div>
         <div className="flex items-center justify-between mb-2">
           <p className="text-xs text-[#888]">
-            글 선택 <span className="text-[#0061A5]">({selectedIds.length}/{entries.length})</span>
+            글 선택 <span className="text-primary">({selectedIds.length}/{entries.length})</span>
           </p>
-          <button onClick={onSelectAll} className="text-xs text-[#0061A5]">
+          <button onClick={onSelectAll} className="text-xs text-primary">
             {selectedIds.length === entries.length ? '전체 해제' : '전체 선택'}
           </button>
         </div>
@@ -81,12 +81,12 @@ export function PublishSelectStep({
                   key={entry.id}
                   onClick={() => onToggle(entry.id)}
                   className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors ${
-                    selected ? 'border-[#0061A5] bg-[#f0f7ff]' : 'border-[#f0f0f0] bg-white'
+                    selected ? 'border-primary bg-diary-open' : 'border-[#f0f0f0] bg-white'
                   }`}
                 >
                   <div
                     className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center text-xs ${
-                      selected ? 'border-[#0061A5] bg-[#0061A5] text-white' : 'border-[#e0e0e0]'
+                      selected ? 'border-primary bg-primary text-white' : 'border-[#e0e0e0]'
                     }`}
                   >
                     {selected && '✓'}
@@ -107,7 +107,7 @@ export function PublishSelectStep({
       <button
         onClick={onNext}
         disabled={selectedIds.length === 0}
-        className="w-full py-3 bg-[#0061A5] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
+        className="w-full py-3 bg-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40"
       >
         미리보기 →
       </button>

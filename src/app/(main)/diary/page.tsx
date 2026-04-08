@@ -35,17 +35,17 @@ export default function DiaryPage() {
       {/* 히어로 헤더 — 그라디언트 레이블 + 대형 타이포 */}
       <section className="px-6 pt-10 pb-6 md:pt-14 md:pb-8">
         <span className="inline-flex items-center gap-2 mb-3">
-          <span className="w-5 h-px bg-[#0061A5]" />
-          <p className="font-headline text-[#0061A5] uppercase tracking-[0.25em] text-[10px] font-bold">오늘의 성찰</p>
+          <span className="w-5 h-px bg-primary" />
+          <p className="font-headline text-primary uppercase tracking-[0.25em] text-[10px] font-bold">오늘의 성찰</p>
         </span>
-        <h2 className="font-headline text-4xl md:text-5xl font-extrabold text-[#1a1c1c] tracking-tight leading-[1.1] mb-1">
+        <h2 className="font-headline text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-[1.1] mb-1">
           나의 살아있는 유산
         </h2>
-        <p className="text-sm text-[#747878] mt-2 leading-relaxed">기억을 기록하고, 이야기를 이어가세요.</p>
+        <p className="text-sm text-outline mt-2 leading-relaxed">기억을 기록하고, 이야기를 이어가세요.</p>
       </section>
 
       {/* 탭 + 뷰 전환 — _5 tab-active 스타일 */}
-      <div className="flex items-center justify-between border-b border-[#c4c7c7]/30 px-6">
+      <div className="flex items-center justify-between border-b border-outline-variant/30 px-6">
         <div className="flex gap-1 overflow-x-auto">
           {TABS.map((tab) => (
             <button
@@ -53,8 +53,8 @@ export default function DiaryPage() {
               onClick={() => setActiveTab(tab)}
               className={`px-5 py-3 font-headline text-sm whitespace-nowrap transition-colors ${
                 activeTab === tab
-                  ? 'text-[#0061A5] font-bold border-b-2 border-[#0061A5]'
-                  : 'text-[#747878] font-semibold hover:text-[#1a1c1c]'
+                  ? 'text-primary font-bold border-b-2 border-primary'
+                  : 'text-outline font-semibold hover:text-on-surface'
               }`}
             >
               {tab}
@@ -63,17 +63,17 @@ export default function DiaryPage() {
         </div>
         {/* 뷰 전환 버튼 — 목록 탭에서만, 모바일+데스크탑 모두 */}
         {activeTab === '목록' && (
-          <div className="flex items-center bg-[#f3f3f3] rounded-lg p-1 ml-4 self-center mb-1">
+          <div className="flex items-center bg-surface-container-low rounded-lg p-1 ml-4 self-center mb-1">
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-md transition-all flex items-center justify-center ${viewMode === 'list' ? 'bg-white text-[#0061A5] shadow-sm' : 'text-[#747878] hover:text-[#1a1c1c]'}`}
+              className={`p-2 rounded-md transition-all flex items-center justify-center ${viewMode === 'list' ? 'bg-white text-primary shadow-sm' : 'text-outline hover:text-on-surface'}`}
               aria-label="목록 보기"
             >
               <span className="material-symbols-outlined text-[20px]">view_list</span>
             </button>
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-md transition-all flex items-center justify-center ${viewMode === 'grid' ? 'bg-white text-[#0061A5] shadow-sm' : 'text-[#747878] hover:text-[#1a1c1c]'}`}
+              className={`p-2 rounded-md transition-all flex items-center justify-center ${viewMode === 'grid' ? 'bg-white text-primary shadow-sm' : 'text-outline hover:text-on-surface'}`}
               aria-label="그리드 보기"
             >
               <span className="material-symbols-outlined text-[20px]">grid_view</span>
@@ -119,17 +119,17 @@ function DiarySummaryView({ entries }: { entries: ReturnType<typeof useDiaryList
           { label: '사진', value: entries.reduce((acc, e) => acc + e.media.filter((m) => m.media_type === 'photo').length, 0), color: '#E91E63', border: '#E91E63' },
         ].map(({ label, value, color, border }) => (
           <div key={label} className="bg-white rounded-xl p-5 shadow-sm" style={{ borderLeft: `3px solid ${border}` }}>
-            <p className="font-headline text-[10px] text-[#747878] uppercase tracking-widest mb-2">{label}</p>
+            <p className="font-headline text-[10px] text-outline uppercase tracking-widest mb-2">{label}</p>
             <p className="text-4xl font-extrabold font-headline leading-none" style={{ color }}>
               {value}
-              <span className="text-sm font-medium text-[#c4c7c7] ml-1">건</span>
+              <span className="text-sm font-medium text-outline-variant ml-1">건</span>
             </p>
           </div>
         ))}
       </div>
       {/* AI 플레이스홀더 카드 — _5 dashed CTA 스타일 */}
-      <div className="border-2 border-dashed border-[#c4c7c7]/40 rounded-xl flex flex-col items-center justify-center p-8 text-[#747878] hover:text-[#0061A5] hover:border-[#0061A5] transition-all cursor-pointer group bg-white/50">
-        <div className="w-16 h-16 rounded-full bg-[#eeeeee] flex items-center justify-center mb-4 group-hover:bg-[#d2e4ff] transition-colors">
+      <div className="border-2 border-dashed border-outline-variant/40 rounded-xl flex flex-col items-center justify-center p-8 text-outline hover:text-primary hover:border-primary transition-all cursor-pointer group bg-white/50">
+        <div className="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary-container transition-colors">
           <span className="material-symbols-outlined text-3xl group-hover:scale-125 transition-transform">tips_and_updates</span>
         </div>
         <p className="font-headline font-bold">AI 자서전 요약</p>

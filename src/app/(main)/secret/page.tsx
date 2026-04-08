@@ -39,10 +39,10 @@ export default function SecretPage() {
       >
         <div className="px-6 pt-6 pb-5">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-[#E91E63]/20 p-2.5 rounded-xl">
-              <span className="material-symbols-outlined text-[#E91E63] text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+            <div className="bg-pink-accent/20 p-2.5 rounded-xl">
+              <span className="material-symbols-outlined text-pink-accent text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
             </div>
-            <span className="text-[#E91E63] font-mono text-xs tracking-[0.2em] uppercase font-bold">Secure Access Only</span>
+            <span className="text-pink-accent font-mono text-xs tracking-[0.2em] uppercase font-bold">Secure Access Only</span>
           </div>
           <h1 className="font-headline text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2">
             Secret Code
@@ -71,8 +71,8 @@ export default function SecretPage() {
             onClick={() => setSelectedCategory(cat.key)}
             className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all ${
               selectedCategory === cat.key
-                ? 'bg-[#E91E63] text-white shadow-sm'
-                : 'bg-[#f3f3f3] text-[#747878] hover:bg-[#eeeeee]'
+                ? 'bg-pink-accent text-white shadow-sm'
+                : 'bg-surface-container-low text-outline hover:bg-surface-container'
             }`}
           >
             <span className="material-symbols-outlined text-[14px]">{cat.icon}</span>
@@ -86,8 +86,8 @@ export default function SecretPage() {
         {/* 사이드바 (col-span-4) */}
         <aside className="md:col-span-4 space-y-5">
           {/* 카테고리 네비 */}
-          <div className="p-6 rounded-2xl bg-[#f3f3f3] border border-[#e8e8e8]">
-            <h3 className="font-headline font-bold text-[10px] uppercase tracking-[0.15em] text-[#747878] mb-5">자산 카테고리</h3>
+          <div className="p-6 rounded-2xl bg-surface-container-low border border-surface-container-high">
+            <h3 className="font-headline font-bold text-[10px] uppercase tracking-[0.15em] text-outline mb-5">자산 카테고리</h3>
             <nav className="space-y-2">
               {CATEGORIES.map((cat) => (
                 <button
@@ -95,12 +95,12 @@ export default function SecretPage() {
                   onClick={() => setSelectedCategory(cat.key)}
                   className={`w-full flex items-center justify-between p-3.5 rounded-xl transition-all ${
                     selectedCategory === cat.key
-                      ? 'bg-white shadow-sm border-l-4 border-[#E91E63]'
+                      ? 'bg-white shadow-sm border-l-4 border-pink-accent'
                       : 'hover:bg-white/60'
                   }`}
                 >
                   <span className={`flex items-center gap-3 font-semibold text-sm ${
-                    selectedCategory === cat.key ? 'text-[#1a1c1c]' : 'text-[#747878]'
+                    selectedCategory === cat.key ? 'text-on-surface' : 'text-outline'
                   }`}>
                     <span
                       className="material-symbols-outlined text-[18px]"
@@ -123,7 +123,7 @@ export default function SecretPage() {
               boxShadow: '0 0 24px rgba(233, 30, 99, 0.12)',
             }}
           >
-            <div className="bg-[#E91E63] w-12 h-12 flex items-center justify-center rounded-2xl mb-5">
+            <div className="bg-pink-accent w-12 h-12 flex items-center justify-center rounded-2xl mb-5">
               <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>security</span>
             </div>
             <h4 className="font-headline font-bold text-xl mb-2">금고 쉴드</h4>
@@ -140,8 +140,8 @@ export default function SecretPage() {
         {/* 목록 (col-span-8) */}
         <section className="md:col-span-8">
           <div className="flex items-center gap-3 mb-5">
-            <span className="w-1.5 h-5 bg-[#E91E63] rounded-full" />
-            <p className="text-[10px] tracking-[0.2em] font-bold text-[#747878] uppercase font-headline">
+            <span className="w-1.5 h-5 bg-pink-accent rounded-full" />
+            <p className="text-[10px] tracking-[0.2em] font-bold text-outline uppercase font-headline">
               Encrypted Records
             </p>
           </div>
@@ -152,8 +152,8 @@ export default function SecretPage() {
       {/* 모바일 목록 (md 미만) */}
       <div className="md:hidden">
         <div className="flex items-center gap-3 mb-4">
-          <span className="w-1.5 h-5 bg-[#E91E63] rounded-full" />
-          <p className="text-[10px] tracking-[0.2em] font-bold text-[#747878] uppercase font-headline">
+          <span className="w-1.5 h-5 bg-pink-accent rounded-full" />
+          <p className="text-[10px] tracking-[0.2em] font-bold text-outline uppercase font-headline">
             Encrypted Records
           </p>
         </div>

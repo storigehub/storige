@@ -39,7 +39,7 @@ export function MediaAttachment({ entryId, mediaList, onUploaded }: MediaAttachm
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
-          className="flex items-center gap-1.5 text-xs text-[#0061A5] border border-[#0061A5] rounded-full px-3 py-1.5 active:bg-[#f0f7ff]"
+          className="flex items-center gap-1.5 text-xs text-primary border border-primary rounded-full px-3 py-1.5 active:bg-diary-open"
         >
           <span>📷</span>
           <span>{uploading ? `업로드 중... ${progress}%` : '사진 추가'}</span>

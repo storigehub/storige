@@ -17,8 +17,8 @@ interface DearAccordionItemProps {
 
 /**
  * Dear My Son 편지 아코디언 — dear_my_son_2 editorial style
- * 닫힘: border-l-4 border-transparent, hover:border-[#006B5F]/40
- * 열림: border-l-4 border-[#006B5F], letter-texture 배경, shadow-md
+ * 닫힘: border-l-4 border-transparent, hover:border-dear/40
+ * 열림: border-l-4 border-dear, letter-texture 배경, shadow-md
  */
 export function DearAccordionItem({
   entry,
@@ -38,8 +38,8 @@ export function DearAccordionItem({
     <div
       className={`rounded-none md:rounded-xl transition-all duration-300 overflow-hidden ${
         isOpen
-          ? 'bg-[#fdfcf8] shadow-md border-l-4'
-          : 'group bg-[#f3f3f3] hover:bg-white border-l-4 border-transparent hover:border-[#006B5F]/30 hover:shadow-sm cursor-pointer'
+          ? 'bg-dear-open-bg shadow-md border-l-4'
+          : 'group bg-surface-container-low hover:bg-white border-l-4 border-transparent hover:border-dear/30 hover:shadow-sm cursor-pointer'
       }`}
       style={isOpen ? { borderLeftColor: '#006B5F' } : undefined}
       id={`dear-${entry.id}`}
@@ -51,16 +51,16 @@ export function DearAccordionItem({
       >
         {/* 날짜 블록 */}
         <div className="flex flex-col items-center shrink-0">
-          <span className={`font-headline font-extrabold text-[#006B5F] leading-none ${isOpen ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
+          <span className={`font-headline font-extrabold text-dear leading-none ${isOpen ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
             {day}
           </span>
-          <span className="font-headline text-[9px] uppercase tracking-widest text-[#747878] mt-1 leading-none">
+          <span className="font-headline text-[9px] uppercase tracking-widest text-outline mt-1 leading-none">
             {month}
           </span>
         </div>
 
         {/* 수직 구분선 */}
-        <div className="self-stretch w-px bg-[#e8e8e8] shrink-0" />
+        <div className="self-stretch w-px bg-surface-container-high shrink-0" />
 
         {/* 제목 영역 */}
         <div className="flex-1 min-w-0">
@@ -72,13 +72,13 @@ export function DearAccordionItem({
               {getRoleLabel(recipient.role)}
             </span>
           )}
-          <h3 className={`font-headline font-bold text-[#1a1c1c] leading-snug transition-colors ${
-            isOpen ? 'text-xl md:text-2xl' : 'text-sm truncate group-hover:text-[#006B5F]'
+          <h3 className={`font-headline font-bold text-on-surface leading-snug transition-colors ${
+            isOpen ? 'text-xl md:text-2xl' : 'text-sm truncate group-hover:text-dear'
           }`}>
             {entry.title || '제목 없음'}
           </h3>
           {!isOpen && (
-            <p className="text-xs text-[#747878] mt-0.5 truncate">{entry.content_text || '내용 없음'}</p>
+            <p className="text-xs text-outline mt-0.5 truncate">{entry.content_text || '내용 없음'}</p>
           )}
         </div>
 
@@ -86,7 +86,7 @@ export function DearAccordionItem({
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="material-symbols-outlined text-[20px] text-[#747878] shrink-0"
+          className="material-symbols-outlined text-[20px] text-outline shrink-0"
         >
           expand_more
         </motion.span>
@@ -106,7 +106,7 @@ export function DearAccordionItem({
             <div className="px-6 md:px-8 pb-6 md:pb-8">
               {/* 편지지 영역 — letter-texture 라인 배경 */}
               <div
-                className="relative p-6 md:p-8 rounded-xl border border-[#e8e8e8] shadow-inner mb-5"
+                className="relative p-6 md:p-8 rounded-xl border border-surface-container-high shadow-inner mb-5"
                 style={{
                   backgroundImage: 'linear-gradient(#e8e8e8 1px, transparent 1px)',
                   backgroundSize: '100% 2.5rem',
@@ -115,38 +115,38 @@ export function DearAccordionItem({
               >
                 {/* 인용 워터마크 */}
                 <span
-                  className="material-symbols-outlined absolute top-4 right-4 text-[#006B5F]/10 text-5xl pointer-events-none"
+                  className="material-symbols-outlined absolute top-4 right-4 text-dear/10 text-5xl pointer-events-none"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   format_quote
                 </span>
-                <p className="text-[#444748] leading-[2.5rem] text-base whitespace-pre-wrap relative z-10">
+                <p className="text-on-surface-variant leading-[2.5rem] text-base whitespace-pre-wrap relative z-10">
                   {entry.content_text}
                 </p>
               </div>
 
               {/* 시간 + 액션 버튼 */}
               <div className="flex items-center justify-between">
-                <span className="text-[11px] text-[#747878] flex items-center gap-1">
+                <span className="text-[11px] text-outline flex items-center gap-1">
                   <span className="material-symbols-outlined text-[14px]">schedule</span>
                   {formatTime(date)}
                 </span>
                 <div className="flex gap-2">
                   <button
                     onClick={() => router.push(`/dear/${entry.id}/edit`)}
-                    className="text-sm font-bold text-[#747878] hover:text-[#1a1c1c] px-4 py-2 transition-colors"
+                    className="text-sm font-bold text-outline hover:text-on-surface px-4 py-2 transition-colors"
                   >
                     수정하기
                   </button>
                   <button
                     onClick={() => router.push(`/publish?entry=${entry.id}`)}
-                    className="bg-[#006B5F] text-white px-6 py-2 rounded-lg text-sm font-bold shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all"
+                    className="bg-dear text-white px-6 py-2 rounded-lg text-sm font-bold shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all"
                   >
                     미리보기
                   </button>
                   <button
                     onClick={onDelete}
-                    className="text-sm font-bold text-[#ba1a1a] hover:bg-[#ffdad6]/40 px-3 py-2 rounded-lg transition-colors"
+                    className="text-sm font-bold text-error hover:bg-error-container/40 px-3 py-2 rounded-lg transition-colors"
                   >
                     <span className="material-symbols-outlined text-[18px] align-middle">delete</span>
                   </button>

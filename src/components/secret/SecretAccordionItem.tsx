@@ -52,8 +52,8 @@ export function SecretAccordionItem({
     <div
       className={`rounded-xl overflow-hidden transition-all duration-300 ${
         isOpen
-          ? 'bg-white border border-[#c4c7c7]/30 shadow-[0_12px_40px_rgba(233,30,99,0.08)]'
-          : 'bg-white border border-[#c4c7c7]/30 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:translate-y-[-2px] cursor-pointer'
+          ? 'bg-white border border-outline-variant/30 shadow-[0_12px_40px_rgba(233,30,99,0.08)]'
+          : 'bg-white border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:translate-y-[-2px] cursor-pointer'
       }`}
       id={`secret-${code.id}`}
     >
@@ -91,17 +91,17 @@ export function SecretAccordionItem({
                 {badge.label}
               </span>
               {decrypted && (
-                <span className="text-[10px] font-bold text-[#006B5F] flex items-center gap-0.5">
+                <span className="text-[10px] font-bold text-dear flex items-center gap-0.5">
                   <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock_open</span>
                   열람됨
                 </span>
               )}
             </div>
-            <h3 className="font-headline font-extrabold text-lg md:text-2xl text-[#1a1c1c] leading-tight truncate">
+            <h3 className="font-headline font-extrabold text-lg md:text-2xl text-on-surface leading-tight truncate">
               {code.title}
             </h3>
             {!isOpen && (
-              <p className="text-sm text-[#747878] mt-0.5 font-mono truncate">
+              <p className="text-sm text-outline mt-0.5 font-mono truncate">
                 {decrypted ? (decrypted.decryptedContent?.slice(0, 30) ?? '•••') : '****-****-****'}
               </p>
             )}
@@ -110,7 +110,7 @@ export function SecretAccordionItem({
 
         {/* 잠금 상태 + 쉐브론 */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className="w-10 h-10 rounded-full bg-[#f3f3f3] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
             <span
               className="material-symbols-outlined text-[18px]"
               style={{
@@ -124,7 +124,7 @@ export function SecretAccordionItem({
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className="material-symbols-outlined text-[22px] text-[#747878]"
+            className="material-symbols-outlined text-[22px] text-outline"
           >
             expand_more
           </motion.span>
@@ -142,20 +142,20 @@ export function SecretAccordionItem({
             transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-5 md:px-8 pb-6 md:pb-8 border-t border-[#f3f3f3]">
+            <div className="px-5 md:px-8 pb-6 md:pb-8 border-t border-surface-container-low">
               {decrypted ? (
                 <div className="pt-5 space-y-1">
                   {/* 알고리즘 정보 행 */}
-                  <div className="flex justify-between items-center py-3 border-b border-[#c4c7c7]/20">
-                    <span className="text-[#747878] text-sm font-semibold">암호화 방식</span>
-                    <span className="font-mono text-[#0061A5] font-bold text-sm">AES-256-GCM</span>
+                  <div className="flex justify-between items-center py-3 border-b border-outline-variant/20">
+                    <span className="text-outline text-sm font-semibold">암호화 방식</span>
+                    <span className="font-mono text-primary font-bold text-sm">AES-256-GCM</span>
                   </div>
 
                   {/* 복호화된 내용 */}
                   {decrypted.decryptedContent && (
-                    <div className="py-4 border-b border-[#c4c7c7]/20">
-                      <p className="text-[10px] text-[#747878] font-bold uppercase tracking-widest mb-3">내용</p>
-                      <p className="font-mono text-[#1a1c1c] font-bold text-sm leading-relaxed whitespace-pre-wrap bg-[#f9f9f9] rounded-xl p-4">
+                    <div className="py-4 border-b border-outline-variant/20">
+                      <p className="text-[10px] text-outline font-bold uppercase tracking-widest mb-3">내용</p>
+                      <p className="font-mono text-on-surface font-bold text-sm leading-relaxed whitespace-pre-wrap bg-[#f9f9f9] rounded-xl p-4">
                         {decrypted.decryptedContent}
                       </p>
                     </div>
@@ -172,13 +172,13 @@ export function SecretAccordionItem({
                   <div className="flex gap-3 pt-4">
                     <button
                       onClick={() => router.push(`/secret/${code.id}/edit`)}
-                      className="flex-1 py-3 border border-[#c4c7c7]/50 rounded-xl text-sm font-bold text-[#444748] hover:bg-[#f3f3f3] transition-colors"
+                      className="flex-1 py-3 border border-outline-variant/50 rounded-xl text-sm font-bold text-on-surface-variant hover:bg-surface-container-low transition-colors"
                     >
                       수정
                     </button>
                     <button
                       onClick={onDelete}
-                      className="px-5 py-3 rounded-xl text-sm font-bold text-[#ba1a1a] hover:bg-[#ffdad6]/40 transition-colors"
+                      className="px-5 py-3 rounded-xl text-sm font-bold text-error hover:bg-error-container/40 transition-colors"
                     >
                       <span className="material-symbols-outlined text-[16px] align-middle">delete</span>
                     </button>
@@ -186,26 +186,26 @@ export function SecretAccordionItem({
                 </div>
               ) : (
                 <div className="pt-5 space-y-4">
-                  <p className="text-sm text-[#747878] leading-relaxed">
+                  <p className="text-sm text-outline leading-relaxed">
                     이 항목은 AES-256-GCM으로 암호화되어 있습니다.<br />
                     패스프레이즈를 입력해 내용을 열람하세요.
                   </p>
                   <button
                     onClick={() => onDecryptRequest(code)}
-                    className="w-full py-4 bg-[#1a1c1c] text-white rounded-xl text-sm font-bold hover:bg-[#2f3131] transition-all active:scale-[0.98]"
+                    className="w-full py-4 bg-on-surface text-white rounded-xl text-sm font-bold hover:bg-[#2f3131] transition-all active:scale-[0.98]"
                   >
                     정보 공개
                   </button>
                   <div className="flex gap-3">
                     <button
                       onClick={() => router.push(`/secret/${code.id}/edit`)}
-                      className="flex-1 py-3 border border-[#c4c7c7]/50 rounded-xl text-sm font-bold text-[#444748] hover:bg-[#f3f3f3] transition-colors"
+                      className="flex-1 py-3 border border-outline-variant/50 rounded-xl text-sm font-bold text-on-surface-variant hover:bg-surface-container-low transition-colors"
                     >
                       수정
                     </button>
                     <button
                       onClick={onDelete}
-                      className="px-5 py-3 rounded-xl text-sm font-bold text-[#ba1a1a] hover:bg-[#ffdad6]/40 transition-colors"
+                      className="px-5 py-3 rounded-xl text-sm font-bold text-error hover:bg-error-container/40 transition-colors"
                     >
                       <span className="material-symbols-outlined text-[16px] align-middle">delete</span>
                     </button>
@@ -222,7 +222,7 @@ export function SecretAccordionItem({
   // 열린 상태: 그라디언트 테두리 래퍼 적용 (_1 crypto card 스타일)
   if (isOpen) {
     return (
-      <div className="relative p-[1.5px] rounded-xl bg-gradient-to-br from-[#E91E63]/20 via-[#0061A5]/20 to-[#E91E63]/20">
+      <div className="relative p-[1.5px] rounded-xl bg-gradient-to-br from-pink-accent/20 via-primary/20 to-pink-accent/20">
         {cardContent}
       </div>
     )

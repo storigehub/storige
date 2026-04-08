@@ -75,14 +75,14 @@ export default function FamilyPage() {
     <div className="px-4 py-4">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="text-[10px] tracking-[0.2em] font-bold text-[#747878] uppercase mb-1">계정 관리</p>
-          <h1 className="text-2xl font-extrabold text-[#1a1c1c] font-headline">가족 구성원</h1>
-          <p className="text-xs text-[#747878] mt-0.5">열람 권한과 SSS 키를 관리합니다</p>
+          <p className="text-[10px] tracking-[0.2em] font-bold text-outline uppercase mb-1">계정 관리</p>
+          <h1 className="text-2xl font-extrabold text-on-surface font-headline">가족 구성원</h1>
+          <p className="text-xs text-outline mt-0.5">열람 권한과 SSS 키를 관리합니다</p>
         </div>
-        {formMode === 'closed' && (
+        {formMode === 'closed' && members.length === 0 && (
           <button
             onClick={() => setFormMode('add')}
-            className="w-9 h-9 rounded-full bg-[#0061A5] text-white flex items-center justify-center hover:bg-[#004c82] active:scale-95 transition-all"
+            className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#004c82] active:scale-95 transition-all"
           >
             <span className="material-symbols-outlined text-[18px]">add</span>
           </button>
@@ -92,7 +92,7 @@ export default function FamilyPage() {
       {/* 추가/편집 폼 */}
       {formMode !== 'closed' && (
         <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.04)] p-4 mb-4">
-          <h3 className="text-sm font-semibold text-[#1a1c1c] mb-3 font-headline">
+          <h3 className="text-sm font-semibold text-on-surface mb-3 font-headline">
             {formMode === 'add' ? '새 가족 구성원' : '구성원 편집'}
           </h3>
           <FamilyMemberForm
@@ -110,16 +110,28 @@ export default function FamilyPage() {
       {/* 구성원 목록 */}
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="w-6 h-6 border-2 border-[#0061A5] border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : members.length === 0 ? (
-        <div className="text-center py-12">
-          <span className="material-symbols-outlined text-4xl text-[#747878] block mb-3" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>group</span>
-          <p className="text-sm text-[#747878]">등록된 가족 구성원이 없습니다</p>
+        <div className="flex flex-col items-center justify-center py-16 text-center gap-3">
+          <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-1">
+            <span className="material-symbols-outlined text-3xl text-outline-variant" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>group</span>
+          </div>
+          <p className="font-headline font-bold text-sm text-on-surface">아직 등록된 가족이 없습니다</p>
+          <p className="text-xs text-outline">+ 버튼을 눌러 첫 번째 가족을 추가해보세요</p>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-3 gap-6 py-2">
+          {/* 섹션 헤더 */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1.5 h-5 bg-primary rounded-full" />
+            <p className="text-[10px] tracking-[0.2em] font-bold text-outline uppercase font-headline">
+              Members · {members.length}명
+            </p>
+          </div>
+
+          {/* _3 기준: 2열(mobile) / 4열(sm+) 카드 그리드 */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             {members.map((member) => (
               <FamilyMemberCard
                 key={member.id}
@@ -131,7 +143,21 @@ export default function FamilyPage() {
                 onDelete={() => handleDelete(member.id)}
               />
             ))}
+
+            {/* 구성원 추가 CTA 카드 */}
+            {formMode === 'closed' && (
+              <button
+                onClick={() => setFormMode('add')}
+                className="p-6 rounded-xl border-2 border-dashed border-outline-variant/40 flex flex-col items-center justify-center gap-2 text-outline hover:text-primary hover:border-primary transition-all group"
+              >
+                <div className="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary-container transition-colors">
+                  <span className="material-symbols-outlined text-xl">person_add</span>
+                </div>
+                <p className="text-xs font-bold font-headline">추가</p>
+              </button>
+            )}
           </div>
+
           <SSSKeySetup members={members} onDistributed={refetch} />
         </>
       )}

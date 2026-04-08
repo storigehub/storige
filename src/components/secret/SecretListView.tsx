@@ -61,7 +61,7 @@ export function SecretListView({ selectedCategory = 'all' }: SecretListViewProps
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-6 h-6 border-2 border-[#E91E63] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-pink-accent border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -73,9 +73,9 @@ export function SecretListView({ selectedCategory = 'all' }: SecretListViewProps
   if (codes.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-4 px-4">
-        <span className="material-symbols-outlined text-5xl text-[#E91E63]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>lock</span>
-        <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">중요한 정보를 안전하게 보관하세요</h2>
-        <p className="text-sm text-[#747878]">은행 계좌, 부동산, 법률 정보를 암호화하여 저장합니다</p>
+        <span className="material-symbols-outlined text-5xl text-pink-accent" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>lock</span>
+        <h2 className="text-lg font-semibold text-on-surface font-headline">중요한 정보를 안전하게 보관하세요</h2>
+        <p className="text-sm text-outline">은행 계좌, 부동산, 법률 정보를 암호화하여 저장합니다</p>
       </div>
     )
   }
@@ -83,8 +83,8 @@ export function SecretListView({ selectedCategory = 'all' }: SecretListViewProps
   if (filteredCodes.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[30vh] text-center gap-3 px-4">
-        <span className="material-symbols-outlined text-4xl text-[#c4c7c7]">search_off</span>
-        <p className="text-sm text-[#747878]">이 카테고리에 저장된 항목이 없습니다</p>
+        <span className="material-symbols-outlined text-4xl text-outline-variant">search_off</span>
+        <p className="text-sm text-outline">이 카테고리에 저장된 항목이 없습니다</p>
       </div>
     )
   }

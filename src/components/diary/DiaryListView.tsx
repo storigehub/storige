@@ -33,7 +33,7 @@ export function DiaryListView({ searchQuery, viewMode = 'list' }: DiaryListViewP
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-6 h-6 border-2 border-[#0061A5] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -45,11 +45,11 @@ export function DiaryListView({ searchQuery, viewMode = 'list' }: DiaryListViewP
   if (entries.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
-        <span className="material-symbols-outlined text-5xl text-[#0061A5]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>book_2</span>
-        <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">
+        <span className="material-symbols-outlined text-5xl text-primary" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>book_2</span>
+        <h2 className="text-lg font-semibold text-on-surface font-headline">
           {searchQuery ? '검색 결과가 없습니다' : '첫 번째 일기를 작성해보세요'}
         </h2>
-        <p className="text-sm text-[#747878]">
+        <p className="text-sm text-outline">
           {searchQuery ? '다른 검색어를 시도해보세요' : '우측 하단 + 버튼을 눌러 시작하세요'}
         </p>
       </div>
@@ -69,8 +69,8 @@ export function DiaryListView({ searchQuery, viewMode = 'list' }: DiaryListViewP
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
           <div className="flex items-center gap-3 py-4 mb-1">
-            <span className="w-1.5 h-6 bg-[#0061A5] rounded-full shrink-0" />
-            <h3 className="font-headline text-[11px] font-bold text-[#747878] uppercase tracking-[0.2em]">{month}</h3>
+            <span className="w-1.5 h-6 bg-primary rounded-full shrink-0" />
+            <h3 className="font-headline text-[11px] font-bold text-outline uppercase tracking-[0.2em]">{month}</h3>
           </div>
           <div className="pb-4 space-y-2 pt-1">
             {monthEntries.map((entry) => (
@@ -111,8 +111,8 @@ function DiaryGridView({
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
           <div className="flex items-center gap-3 py-4 mb-1">
-            <span className="w-1.5 h-6 bg-[#0061A5] rounded-full shrink-0" />
-            <h3 className="font-headline text-[11px] font-bold text-[#747878] uppercase tracking-[0.2em]">{month}</h3>
+            <span className="w-1.5 h-6 bg-primary rounded-full shrink-0" />
+            <h3 className="font-headline text-[11px] font-bold text-outline uppercase tracking-[0.2em]">{month}</h3>
           </div>
 
           {/* Mobile: _7 이미지 카드 그리드 */}
@@ -129,7 +129,7 @@ function DiaryGridView({
               return (
                 <article
                   key={entry.id}
-                  className="relative rounded-xl overflow-hidden shadow-sm border border-[#c4c7c7]/20 cursor-pointer"
+                  className="relative rounded-xl overflow-hidden shadow-sm border border-outline-variant/20 cursor-pointer"
                   style={{ minHeight: '200px' }}
                   onClick={() => router.push(`/diary/${entry.id}/edit`)}
                 >
@@ -146,26 +146,26 @@ function DiaryGridView({
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     </>
                   ) : (
-                    <div className="absolute inset-0 bg-[#f3f3f3]" />
+                    <div className="absolute inset-0 bg-surface-container-low" />
                   )}
 
                   <div className="absolute inset-0 flex flex-col justify-end p-5">
                     {/* 날짜 pill */}
                     <div className="flex items-center gap-2 mb-3">
-                      <div className={`px-3 py-1 rounded-full text-xs font-bold ${photoUrl ? 'bg-[#0061A5] text-white' : 'bg-white/80 text-[#0061A5]'}`}>
+                      <div className={`px-3 py-1 rounded-full text-xs font-bold ${photoUrl ? 'bg-primary text-white' : 'bg-white/80 text-primary'}`}>
                         {day} {mon}
                       </div>
                       {entry.location_name && (
-                        <div className={`flex items-center gap-1 text-xs ${photoUrl ? 'text-white/80' : 'text-[#747878]'}`}>
+                        <div className={`flex items-center gap-1 text-xs ${photoUrl ? 'text-white/80' : 'text-outline'}`}>
                           <span className="material-symbols-outlined text-[12px]">location_on</span>
                           <span>{entry.location_name}</span>
                         </div>
                       )}
                     </div>
-                    <h3 className={`font-headline font-bold text-lg leading-tight mb-1 ${photoUrl ? 'text-white' : 'text-[#1a1c1c]'}`}>
+                    <h3 className={`font-headline font-bold text-lg leading-tight mb-1 ${photoUrl ? 'text-white' : 'text-on-surface'}`}>
                       {entry.title || '제목 없음'}
                     </h3>
-                    <p className={`text-sm line-clamp-2 ${photoUrl ? 'text-white/70' : 'text-[#747878]'}`}>
+                    <p className={`text-sm line-clamp-2 ${photoUrl ? 'text-white/70' : 'text-outline'}`}>
                       {entry.content_text}
                     </p>
                   </div>
@@ -184,26 +184,26 @@ function DiaryGridView({
               return (
                 <div
                   key={entry.id}
-                  className="bg-[#f3f3f3] hover:bg-white hover:shadow-sm border border-transparent hover:border-[#c4c7c7]/30 rounded-xl p-5 cursor-pointer transition-all group"
+                  className="bg-surface-container-low hover:bg-white hover:shadow-sm border border-transparent hover:border-outline-variant/30 rounded-xl p-5 cursor-pointer transition-all group"
                   onClick={() => router.push(`/diary/${entry.id}/edit`)}
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <span className="font-headline text-3xl font-extrabold text-[#0061A5] leading-none">{day}</span>
-                      <span className="font-headline text-[9px] uppercase tracking-widest text-[#747878] block mt-0.5">{mon}</span>
+                      <span className="font-headline text-3xl font-extrabold text-primary leading-none">{day}</span>
+                      <span className="font-headline text-[9px] uppercase tracking-widest text-outline block mt-0.5">{mon}</span>
                     </div>
                     {entry.weather && (
-                      <span className="material-symbols-outlined text-[18px] text-[#747878] group-hover:text-[#0061A5] transition-colors">
+                      <span className="material-symbols-outlined text-[18px] text-outline group-hover:text-primary transition-colors">
                         {entry.weather.includes('맑') ? 'wb_sunny' : 'cloud'}
                       </span>
                     )}
                   </div>
-                  <h3 className="font-headline font-bold text-base text-[#1a1c1c] mb-2 group-hover:text-[#0061A5] transition-colors">
+                  <h3 className="font-headline font-bold text-base text-on-surface mb-2 group-hover:text-primary transition-colors">
                     {entry.title || '제목 없음'}
                   </h3>
-                  <p className="text-sm text-[#747878] line-clamp-2 leading-relaxed">{entry.content_text}</p>
+                  <p className="text-sm text-outline line-clamp-2 leading-relaxed">{entry.content_text}</p>
                   {entry.location_name && (
-                    <div className="flex items-center gap-1 mt-3 text-[10px] text-[#747878]">
+                    <div className="flex items-center gap-1 mt-3 text-[10px] text-outline">
                       <span className="material-symbols-outlined text-[12px]">location_on</span>
                       <span>{entry.location_name}</span>
                     </div>
@@ -214,10 +214,10 @@ function DiaryGridView({
 
             {/* 새 일기 CTA (_5 dashed 스타일) */}
             <div
-              className="border-2 border-dashed border-[#c4c7c7]/40 rounded-xl flex flex-col items-center justify-center p-6 text-[#747878] hover:text-[#0061A5] hover:border-[#0061A5] transition-all cursor-pointer group"
+              className="border-2 border-dashed border-outline-variant/40 rounded-xl flex flex-col items-center justify-center p-6 text-outline hover:text-primary hover:border-primary transition-all cursor-pointer group"
               onClick={() => router.push('/diary/new')}
             >
-              <div className="w-12 h-12 rounded-full bg-[#eeeeee] flex items-center justify-center mb-3 group-hover:bg-[#d2e4ff] transition-colors">
+              <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-3 group-hover:bg-primary-container transition-colors">
                 <span className="material-symbols-outlined text-2xl group-hover:scale-125 transition-transform">add_notes</span>
               </div>
               <p className="font-headline font-bold text-sm">새로운 순간 기록하기</p>

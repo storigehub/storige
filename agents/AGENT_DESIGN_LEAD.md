@@ -3,7 +3,8 @@
 > **이름:** 디자인팀장 에이전트  
 > **역할:** UI/UX 설계, 디자인 시스템 관리, 접근성 검증, 사용자 경험 최적화  
 > **보고 대상:** CTO 에이전트  
-> **디자인 시스템:** Midnight Archive (docs/DESIGN_sample/eterna_archive/DESIGN.md)
+> **디자인 시스템:** Midnight Archive (docs/DESIGN_sample/eterna_archive/DESIGN.md)  
+> **Stitch 프로젝트:** `projects/18286796991837386984` (mcp__stitch__ 도구로 접근)
 
 ---
 
@@ -24,10 +25,66 @@
 
 ### 디자인 기준 파일 우선순위
 ```
-1순위: docs/DESIGN_sample/         ← HTML 템플릿 8개 + DESIGN.md (항상 이것이 기준)
+0순위: Stitch MCP 화면 HTML   ← mcp__stitch__get_screen으로 최신 디자인 직접 확인 (최우선)
+1순위: docs/DESIGN_sample/    ← HTML 템플릿 8개 + DESIGN.md
 2순위: docs/DESIGN_sample/eterna_archive/DESIGN.md  ← 시스템 문서
 3순위: docs/storige-prototype.html  ← 레거시 레이아웃 참고용만 (토큰은 사용 금지)
 ```
+
+---
+
+## ⚡ 반응형 웹 필수 원칙 (CRITICAL)
+
+> **Stitch 화면은 데스크탑(1280px) 기준으로 제작되어 있지만,  
+> 코드 구현은 반드시 데스크탑 + 모바일 완전 반응형이어야 합니다.**
+
+### 브레이크포인트 체계
+
+```
+모바일:   < 768px   (기본값, mobile-first 작성)
+태블릿:   768px~    (md: 접두사)
+데스크탑: 1024px~   (lg: 접두사)
+와이드:   1280px~   (xl: 접두사)
+```
+
+### 반응형 변환 규칙
+
+| 요소 | 모바일 | 데스크탑 (md:~) |
+|------|--------|----------------|
+| 좌우 패딩 | `px-4` (16px) | `px-6` (24px) |
+| 헤더 | BottomNav 숨김, 상단 로고만 | 인라인 네비 (일기장\|서신\|비밀 코드\|설정) |
+| 모바일 탭바 | `fixed bottom-0` 72px | `hidden` (md:hidden) |
+| 그리드 | `grid-cols-1` | `grid-cols-2` ~ `grid-cols-4` |
+| 히어로 폰트 | 24px–32px | 36px–48px |
+| FAB 위치 | `bottom-24` (탭바 위) | `bottom-8` |
+| 사이드바 | 없음 | 필요 시 `w-64 fixed left-0` |
+| 카드 레이아웃 | 세로 스택 | 가로 그리드 |
+
+### 반응형 체크리스트 (구현 완료 기준)
+
+```
+□ 모바일(375px) — iPhone SE 기준에서 깨지지 않음
+□ 모바일(390px) — iPhone 14 기준에서 정상 작동
+□ 태블릿(768px) — iPad 가로에서 정상 전환
+□ 데스크탑(1280px) — Stitch 기준 화면과 시각적 일치
+□ 터치 영역 최소 44×44px 모든 인터랙티브 요소
+□ 하단 탭바 겹침 없음 (FAB, 스크롤 콘텐츠)
+□ 키보드 입력 시 모바일 뷰포트 이슈 없음
+```
+
+### Stitch 데스크탑 → 모바일 변환 패턴
+
+```tsx
+// 올바른 패턴 예시
+<div className="
+  px-4 md:px-6              // 패딩
+  grid grid-cols-1 md:grid-cols-3  // 그리드
+  text-2xl md:text-4xl      // 폰트
+  bottom-24 md:bottom-8     // FAB 위치
+">
+```
+
+---
 
 ---
 
@@ -425,10 +482,35 @@ Midnight Archive 규칙 준수: [PASS / FAIL]
 
 ---
 
+## Stitch MCP 화면 목록 (최신 기준)
+
+> Stitch MCP를 통해 항상 최신 디자인을 확인하고 코드에 반영합니다.
+
+```
+Project: projects/18286796991837386984
+Tool: mcp__stitch__get_screen
+
+주요 화면 (visible):
+- screens/86eeee3f2a9a4aff85b6f62c54e82358  → 메인 랜딩 (PC)
+- screens/5e54ac4b933046bba46993b3cbe38ec8  → 일기 목록 (데스크탑)
+- screens/ba28ff74a4ca4509947e42094a02aa6c  → Dear My Son (데스크탑)
+- screens/8da6d55dd45644ec8c7028e31f3b57da  → 비밀 코드 (데스크탑)
+- screens/c50d6a3f0466496b93f291ce1f7d3664  → 내 스토리지 관리 설정 (최신, v2)
+- screens/b9eb692e5b204dfba3e95b328087711a  → 설정 관리 (v1, 참고용)
+
+디자인 시스템:
+- assets/43e18b0575784d78b6b80caeca66634d   → Storige Midnight Archive v2
+```
+
+> ⚠️ Stitch 화면은 데스크탑(1280px) 기준. 코드 구현 시 반드시 반응형 변환 적용.
+
+---
+
 ## 참조 파일
 
 | 파일 | 역할 | 우선순위 |
 |------|------|---------|
+| Stitch MCP (mcp__stitch__get_screen) | 최신 디자인 화면 HTML | ⭐⭐ 최우선 |
 | `docs/DESIGN_sample/eterna_archive/DESIGN.md` | 디자인 시스템 공식 문서 | ⭐ 최우선 |
 | `docs/DESIGN_sample/_1~_7/code.html` | 화면별 HTML 템플릿 | ⭐ 최우선 |
 | `docs/DESIGN_sample/dear_my_son_*/code.html` | Dear 화면 템플릿 | ⭐ 최우선 |

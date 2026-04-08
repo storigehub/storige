@@ -58,7 +58,7 @@ export function DearListView() {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <div className="w-6 h-6 border-2 border-[#006B5F] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-dear border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -70,9 +70,9 @@ export function DearListView() {
   if (entries.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
-        <span className="material-symbols-outlined text-5xl text-[#006B5F]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>mail</span>
-        <h2 className="text-lg font-semibold text-[#1a1c1c] font-headline">첫 번째 편지를 써보세요</h2>
-        <p className="text-sm text-[#747878]">소중한 사람에게 마음을 전해보세요</p>
+        <span className="material-symbols-outlined text-5xl text-dear" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>mail</span>
+        <h2 className="text-lg font-semibold text-on-surface font-headline">첫 번째 편지를 써보세요</h2>
+        <p className="text-sm text-outline">소중한 사람에게 마음을 전해보세요</p>
       </div>
     )
   }
@@ -88,11 +88,11 @@ export function DearListView() {
             onClick={() => setFilterRecipientId(null)}
             className={`flex-shrink-0 px-5 py-2 text-sm font-bold transition-all ${
               filterRecipientId === null
-                ? 'text-[#006B5F] border-b-2 border-[#006B5F]'
-                : 'text-[#747878] border-b-2 border-transparent hover:text-[#1a1c1c]'
+                ? 'text-dear border-b-2 border-dear'
+                : 'text-outline border-b-2 border-transparent hover:text-on-surface'
             }`}
           >
-            전체 <span className="ml-1 text-[11px] text-[#c4c7c7]">({entries.length})</span>
+            전체 <span className="ml-1 text-[11px] text-outline-variant">({entries.length})</span>
           </button>
           {recipientsWithLetters.map((member) => (
             <button
@@ -100,12 +100,12 @@ export function DearListView() {
               onClick={() => setFilterRecipientId(member.id)}
               className={`flex-shrink-0 px-5 py-2 text-sm font-bold transition-all ${
                 filterRecipientId === member.id
-                  ? 'text-[#006B5F] border-b-2 border-[#006B5F]'
-                  : 'text-[#747878] border-b-2 border-transparent hover:text-[#1a1c1c]'
+                  ? 'text-dear border-b-2 border-dear'
+                  : 'text-outline border-b-2 border-transparent hover:text-on-surface'
               }`}
             >
               {member.name ?? member.role}에게
-              <span className="ml-1 text-[11px] text-[#c4c7c7]">({recipientCounts[member.id] ?? 0})</span>
+              <span className="ml-1 text-[11px] text-outline-variant">({recipientCounts[member.id] ?? 0})</span>
             </button>
           ))}
         </div>
@@ -114,8 +114,8 @@ export function DearListView() {
       {/* 필터 결과 없음 */}
       {filteredEntries.length === 0 && (
         <div className="flex flex-col items-center justify-center min-h-[30vh] text-center gap-3 px-4">
-          <span className="material-symbols-outlined text-4xl text-[#c4c7c7]">mail_off</span>
-          <p className="text-sm text-[#747878]">이 수신자에게 작성된 편지가 없습니다</p>
+          <span className="material-symbols-outlined text-4xl text-outline-variant">mail_off</span>
+          <p className="text-sm text-outline">이 수신자에게 작성된 편지가 없습니다</p>
         </div>
       )}
 
@@ -123,8 +123,8 @@ export function DearListView() {
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
           <div className="flex items-center gap-3 py-4 mb-1">
-            <span className="w-1.5 h-6 bg-[#006B5F] rounded-full shrink-0" />
-            <h3 className="font-headline text-[11px] font-bold text-[#747878] uppercase tracking-[0.2em]">{month}</h3>
+            <span className="w-1.5 h-6 bg-dear rounded-full shrink-0" />
+            <h3 className="font-headline text-[11px] font-bold text-outline uppercase tracking-[0.2em]">{month}</h3>
           </div>
           <div className="pb-4 space-y-2 pt-1">
             {monthEntries.map((entry) => (

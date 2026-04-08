@@ -25,7 +25,7 @@ export function SSSKeySetup({ members, onDistributed }: SSSKeySetupProps) {
   if (n === 0) return null
 
   return (
-    <div className="mt-6 bg-[#f0f7ff] rounded-2xl p-4">
+    <div className="mt-6 bg-diary-open rounded-2xl p-4">
       <div className="flex items-start gap-3 mb-3">
         <span className="text-2xl mt-0.5">🔑</span>
         <div>
@@ -53,7 +53,7 @@ export function SSSKeySetup({ members, onDistributed }: SSSKeySetupProps) {
       <button
         onClick={handleDistribute}
         disabled={distributing}
-        className="w-full py-2.5 bg-[#0061A5] text-white rounded-xl text-sm font-semibold disabled:opacity-40"
+        className="w-full py-2.5 bg-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40"
       >
         {distributing ? '배분 중...' : allDistributed ? '🔄 재배분' : '🔑 복구 키 생성 및 배분'}
       </button>

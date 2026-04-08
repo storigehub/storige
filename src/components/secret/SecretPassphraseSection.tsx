@@ -19,7 +19,7 @@ export function SecretPassphraseSection({
   onShowPassToggle,
 }: SecretPassphraseSectionProps) {
   return (
-    <div className="bg-[#fff0f5] rounded-2xl p-4">
+    <div className="bg-pink-container rounded-2xl p-4">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-lg">🔐</span>
         <div>
@@ -34,7 +34,7 @@ export function SecretPassphraseSection({
           value={passphrase}
           onChange={(e) => onPassphraseChange(e.target.value)}
           placeholder="패스프레이즈 (8자 이상)"
-          className="w-full px-4 py-3 pr-16 border border-[#ffc0d4] rounded-xl text-sm font-mono outline-none focus:border-[#E91E63] bg-white"
+          className="w-full px-4 py-3 pr-16 border border-[#ffc0d4] rounded-xl text-sm font-mono outline-none focus:border-pink-accent bg-white"
         />
         <button
           type="button"
@@ -50,7 +50,7 @@ export function SecretPassphraseSection({
         value={passphraseConfirm}
         onChange={(e) => onPassphraseConfirmChange(e.target.value)}
         placeholder="패스프레이즈 확인"
-        className="w-full px-4 py-3 border border-[#ffc0d4] rounded-xl text-sm font-mono outline-none focus:border-[#E91E63] bg-white"
+        className="w-full px-4 py-3 border border-[#ffc0d4] rounded-xl text-sm font-mono outline-none focus:border-pink-accent bg-white"
       />
     </div>
   )

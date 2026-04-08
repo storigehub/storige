@@ -44,8 +44,8 @@ export function DiaryAccordionItem({
     <div
       className={`rounded-xl transition-all duration-300 ${
         isOpen
-          ? 'bg-white border border-[#c4c7c7]/30 shadow-md'
-          : 'group bg-[#f3f3f3] hover:bg-white hover:border hover:border-[#c4c7c7]/30 hover:shadow-sm cursor-pointer'
+          ? 'bg-white border border-outline-variant/30 shadow-md'
+          : 'group bg-surface-container-low hover:bg-white hover:border hover:border-outline-variant/30 hover:shadow-sm cursor-pointer'
       }`}
       id={`entry-${entry.id}`}
     >
@@ -56,19 +56,19 @@ export function DiaryAccordionItem({
       >
         {/* 날짜 블록 — 숫자 크게, month/dow 위아래 */}
         <div className="flex flex-col items-center shrink-0 w-10 md:w-12">
-          <span className={`font-headline font-extrabold text-[#0061A5] leading-none ${isOpen ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
+          <span className={`font-headline font-extrabold text-primary leading-none ${isOpen ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
             {day}
           </span>
-          <span className="font-headline text-[9px] uppercase tracking-widest text-[#747878] mt-1 leading-none">
+          <span className="font-headline text-[9px] uppercase tracking-widest text-outline mt-1 leading-none">
             {monthLabel}
           </span>
-          <span className="font-headline text-[8px] uppercase tracking-widest text-[#c4c7c7] leading-none">
+          <span className="font-headline text-[8px] uppercase tracking-widest text-outline-variant leading-none">
             {dowLabel}
           </span>
         </div>
 
         {/* 수직 구분선 */}
-        <div className={`self-stretch w-px bg-[#e8e8e8] shrink-0 ${isOpen ? 'hidden' : 'block'}`} />
+        <div className={`self-stretch w-px bg-surface-container-high shrink-0 ${isOpen ? 'hidden' : 'block'}`} />
 
         {/* 본문 영역 */}
         <div className="flex-1 min-w-0">
@@ -76,21 +76,21 @@ export function DiaryAccordionItem({
             /* 열린 상태: 제목 + 액션 버튼 */
             <div className="flex justify-between items-start gap-4">
               <div>
-                <h3 className="font-headline font-extrabold text-xl md:text-2xl text-[#1a1c1c] leading-snug mb-1">
+                <h3 className="font-headline font-extrabold text-xl md:text-2xl text-on-surface leading-snug mb-1">
                   {entry.title || '제목 없음'}
                 </h3>
               </div>
               <div className="flex gap-1 shrink-0">
                 <button
                   onClick={(e) => { e.stopPropagation(); router.push(`/diary/${entry.id}/edit`) }}
-                  className="w-9 h-9 flex items-center justify-center hover:bg-[#f3f3f3] rounded-full text-[#747878] transition-colors"
+                  className="w-9 h-9 flex items-center justify-center hover:bg-surface-container-low rounded-full text-outline transition-colors"
                   aria-label="편집"
                 >
                   <span className="material-symbols-outlined text-[18px]">edit</span>
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); onFavoriteToggle() }}
-                  className="w-9 h-9 flex items-center justify-center hover:bg-[#f3f3f3] rounded-full transition-colors"
+                  className="w-9 h-9 flex items-center justify-center hover:bg-surface-container-low rounded-full transition-colors"
                   aria-label="즐겨찾기"
                   style={{ color: entry.is_favorite ? '#f59e0b' : '#747878' }}
                 >
@@ -103,7 +103,7 @@ export function DiaryAccordionItem({
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); router.push(`/publish?entry=${entry.id}`) }}
-                  className="w-9 h-9 flex items-center justify-center hover:bg-[#f3f3f3] rounded-full text-[#747878] transition-colors"
+                  className="w-9 h-9 flex items-center justify-center hover:bg-surface-container-low rounded-full text-outline transition-colors"
                   aria-label="공유"
                 >
                   <span className="material-symbols-outlined text-[18px]">share</span>
@@ -114,14 +114,14 @@ export function DiaryAccordionItem({
             /* 닫힌 상태: 제목 + 미리보기 텍스트 */
             <div className="flex items-center justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <h3 className="font-headline font-bold text-sm md:text-base text-[#1a1c1c] truncate group-hover:text-[#0061A5] transition-colors">
+                <h3 className="font-headline font-bold text-sm md:text-base text-on-surface truncate group-hover:text-primary transition-colors">
                   {entry.title || '제목 없음'}
                 </h3>
-                <p className="text-xs text-[#747878] mt-0.5 truncate">
+                <p className="text-xs text-outline mt-0.5 truncate">
                   {entry.content_text || '내용 없음'}
                 </p>
               </div>
-              <div className="flex items-center gap-2 shrink-0 text-[#c4c7c7]">
+              <div className="flex items-center gap-2 shrink-0 text-outline-variant">
                 {entry.location_name && (
                   <span className="material-symbols-outlined text-[16px]">location_on</span>
                 )}
@@ -132,7 +132,7 @@ export function DiaryAccordionItem({
                   <span className="material-symbols-outlined text-[16px] text-[#f59e0b]"
                     style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                 )}
-                <span className="material-symbols-outlined text-[18px] text-[#c4c7c7] group-hover:text-[#0061A5] transition-colors">
+                <span className="material-symbols-outlined text-[18px] text-outline-variant group-hover:text-primary transition-colors">
                   keyboard_arrow_right
                 </span>
               </div>
@@ -153,9 +153,9 @@ export function DiaryAccordionItem({
             className="overflow-hidden"
           >
             <div className="px-6 md:px-8 pb-6 md:pb-8">
-              <div className="border-t border-[#e8e8e8] pt-5">
+              <div className="border-t border-surface-container-high pt-5">
                 {/* 메타데이터 행 */}
-                <div className="flex flex-wrap gap-4 text-[#747878] text-xs mb-5">
+                <div className="flex flex-wrap gap-4 text-outline text-xs mb-5">
                   {entry.location_name && (
                     <span className="flex items-center gap-1.5">
                       <span className="material-symbols-outlined text-[14px]">location_on</span>
@@ -175,7 +175,7 @@ export function DiaryAccordionItem({
                 </div>
 
                 {/* 본문 */}
-                <p className="text-[#444748] leading-[1.8] text-base whitespace-pre-wrap mb-5 max-w-3xl">
+                <p className="text-on-surface-variant leading-[1.8] text-base whitespace-pre-wrap mb-5 max-w-3xl">
                   {entry.content_text}
                 </p>
 
@@ -183,7 +183,7 @@ export function DiaryAccordionItem({
                 {photoUrls.length > 0 && (
                   <div className="flex gap-3 overflow-x-auto pb-2 mb-5" style={{ WebkitOverflowScrolling: 'touch' }}>
                     {photoUrls.map((url, i) => (
-                      <div key={i} className="flex-shrink-0 w-40 h-28 md:w-56 md:h-36 rounded-xl overflow-hidden shadow-sm border border-[#c4c7c7]/20">
+                      <div key={i} className="flex-shrink-0 w-40 h-28 md:w-56 md:h-36 rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
                         <Image src={url} alt={`사진 ${i + 1}`} width={224} height={144} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                       </div>
                     ))}
@@ -194,7 +194,7 @@ export function DiaryAccordionItem({
                 <div className="flex justify-end">
                   <button
                     onClick={onDelete}
-                    className="flex items-center gap-1.5 text-xs text-[#ba1a1a] hover:bg-[#ffdad6]/40 px-3 py-2 rounded-lg transition-colors"
+                    className="flex items-center gap-1.5 text-xs text-error hover:bg-error-container/40 px-3 py-2 rounded-lg transition-colors"
                   >
                     <span className="material-symbols-outlined text-[14px]">delete</span>
                     삭제

@@ -29,7 +29,7 @@ export function FAB() {
     <button
       onClick={() => router.push(action.href)}
       aria-label={action.label}
-      className="fixed bottom-28 right-6 md:bottom-12 md:right-12 z-50 w-14 h-14 md:w-16 md:h-16 bg-[#0061A5] hover:scale-110 active:scale-95 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300"
+      className="fixed bottom-28 right-6 md:bottom-12 md:right-12 z-50 w-14 h-14 md:w-16 md:h-16 bg-primary hover:scale-110 active:scale-95 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300"
     >
       <span
         className="material-symbols-outlined text-3xl"

@@ -68,7 +68,7 @@ export function DearEditor() {
 
         <button
           onClick={handleDone}
-          className="text-[#006B5F] font-semibold text-sm"
+          className="text-dear font-semibold text-sm"
         >
           완료
         </button>
@@ -112,7 +112,7 @@ export function DearEditor() {
 
             {membersLoading ? (
               <div className="flex justify-center py-4">
-                <div className="w-5 h-5 border-2 border-[#006B5F] border-t-transparent rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-dear border-t-transparent rounded-full animate-spin" />
               </div>
             ) : members.length === 0 ? (
               <div className="text-center py-4">
@@ -139,7 +139,7 @@ export function DearEditor() {
                       <p className="text-xs text-[#888]">{getRoleLabel(member.role)}</p>
                     </div>
                     {selectedRecipientId === member.id && (
-                      <span className="ml-auto text-[#006B5F]">✓</span>
+                      <span className="ml-auto text-dear">✓</span>
                     )}
                   </button>
                 ))}
