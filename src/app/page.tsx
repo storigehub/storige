@@ -8,29 +8,34 @@ import Link from 'next/link'
 /* ── Stitch aida-public 이미지 URL ── */
 const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAoAvpanOPp_2G7L9fiWWbBThpcgenL9CL5-9eyY3jmBEeIyzxeCttJrDKoRy3NM10dM0LzAWRxqKmPUYOdrDn5i_IMtD7F-gej7arIw81D1-QoDILY1P9vqrT0m0vaxggBIkHKV1TjzrNygh5jx82Renkm3LrbD0F8ZFw_63W02mWnJi8veCjJ7yxeZQdRzcPGto8Xq2jKJf-NZ5UP2Rp2Y3djZ0eBxJg9cl8tUlt9Eh_FWcTlqxaRqD3J9jaT9-F8ya5OthAboz2m'
 
+/* ── 서비스 카드 이미지 URL 만료 대비: 각 카드에 테마 그라디언트 fallback 지정 ── */
 const SERVICES = [
   {
     num: '01', title: '디지털 아카이브', subtitle: 'ACTIVE PRESERVATION',
     desc: '일기, 사진, 영상 기록을 고해상도로 영구 보관하세요. 당신의 소중한 역사가 소실되지 않도록 철저한 분산 백업이 지원됩니다.',
     img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCR1nt5keZVdiPF7lbiX8ru9HH7R_JnJprCc6Us1eGxNyLuUqDXli9uBP2qQXydOAuDeMfEjkfKW5Co2CayogGgoV-neU1vfC7-1c77O2tjsPl-2hxzF-vOFq9FBVXz8n6MuGH6xQJBB8IqpZuBo6-aEy1cfrwMgJa7YHG6kVFNEIOBdnyLpdw8Es_4Oi83DefO7vGaA4zMa9JFVPO0fxaqHwmpQnPMZrQT8ixWqrVKSiCRsQUassQJJR9bIB3O5GVMUAicxHQa1VA0',
+    fallback: 'linear-gradient(135deg, #1a0e06 0%, #2d1a0a 50%, #1a1208 100%)',
     href: '/diary',
   },
   {
     num: '02', title: '시크릿 코드', subtitle: 'ULTIMATE SECURITY',
     desc: '암호화된 자산 및 보안 정보 보관. 당신만이 접근할 수 있는 최첨단 디지털 금고 시스템을 제공합니다.',
     img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD9aP94Z7nqAIk859im7r3mKIqu2xNaU8z1YjdpPdlv0bCywlQtYVilOoR4qysPDzhXOizFYf8fvXZo2OSJI59TFGhLjqT0isA9nmN9w2P6X5Ih8hMfGvYokNHSfIwFnaXyOTgGH8N-b370t4R0AX2Y5vxlKg_ypW81jyRP5ChZ_DMxwuOmQXabI2xy2UdELD1xHuho6pmlkt_Yu92EKH7xfuos6CkrnuBfq7YBRJGlzche4EKEzpW-e_9cfHGFAdcKIXiA3MUs4Rak',
+    fallback: 'linear-gradient(135deg, #020a18 0%, #031528 50%, #041e38 100%)',
     href: '/secret',
   },
   {
     num: '03', title: 'Dear My Son', subtitle: 'ETERNAL MESSAGE',
     desc: '가족에게 남기는 특별한 메시지. 시간이 흘러도 변치 않는 진심을 예약된 시점에 안전하게 전송하세요.',
     img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFCaqSlDiH-dQWAaD7GnvKYZNpkCF0X2hMPJ4iqabthzLDGCoJBOZ2Pf8-WVx94q-GaPIL5ZDrhO5AnYROJlf6omQ5HOhF5ZSC3NuuEc8F0ci2y-ECccNRJT95I94mnw3gIG2nfjAZfCv5ww3GBoYcmwTrAEi_lIi83SSzZT1IEeBubHVh54PZZf2IG_oG6eAIC5OlivoKluY4Pt9gJmUyXTAVaOWl7-qP6cU7MGjJDQKmWv5HlH81QClzIA0cDAWTvOkVO6DTylUk',
+    fallback: 'linear-gradient(135deg, #120820 0%, #1c1030 50%, #120820 100%)',
     href: '/dear',
   },
   {
     num: '04', title: '종이책 출판', subtitle: 'PHYSICAL LEGACY',
     desc: '디지털 기록을 품격 있는 실물 책으로 소장하세요. 프리미엄 디자인이 당신의 기록에 특별한 가치를 부여합니다.',
     img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB32qyhXBXBvIzh7urIh6vRieEDIWVePvocgXiJZImOotu1y9RCp36zpLm2-HDgFrcK4OxBraOB3KqhHkN9FTpW2wQevBkxz5HKTs8WLIneJrrb0GNQaYGl3K_bvq-m2rVP4WSu2eCgiYqDY6Jafh9EAwtqRcxlNkTI3n-1m5I-le0ZFWY24cj9wrEH81__ZRjURuxkQcVXkNmmYhKG_a4ze5KqvPY2x_UERd4fnxuhaCCtywYwMTiDB_dQR75KFzdRX2okoFZAhgpo',
+    fallback: 'linear-gradient(135deg, #060f06 0%, #0d1f10 50%, #0a1a0c 100%)',
     href: '/publish',
   },
 ]
@@ -164,18 +169,19 @@ export default function LandingPage() {
 
             {/* 2×2 그리드 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {SERVICES.map(({ num, title, subtitle, desc, img, href }) => (
+              {SERVICES.map(({ num, title, subtitle, desc, img, fallback, href }) => (
                 <Link
                   key={num}
                   href={href}
                   className="service-card group relative rounded-2xl overflow-hidden block"
-                  style={{ aspectRatio: '4/3' }}
+                  style={{ aspectRatio: '4/3', background: fallback }}
                 >
-                  {/* 풀블리드 이미지 */}
+                  {/* 풀블리드 이미지 — 로드 실패 시 fallback 그라디언트 노출 */}
                   <img
                     src={img}
                     alt={title}
                     className="service-card-img absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                   />
                   {/* 다크 그라디언트 오버레이 */}
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%)' }} />
