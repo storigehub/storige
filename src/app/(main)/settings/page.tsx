@@ -7,8 +7,9 @@ import { redirect } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 
 /**
- * 설정 허브 — Midnight Archive / _2 + _3 bento grid 기준
- * 프로필 카드 + 3열 보안 섹션 + 가족 섹션 + 출판 그리드
+ * 설정 허브 — Midnight Archive / Stitch v2 기준
+ * 아카이브 통계 + 프로필 카드 + 보안(tonal) + 가족 + 출판
+ * No-Line Rule: border-l-4 제거 → tonal layering + 아이콘 배지
  */
 export default function SettingsPage() {
   const router = useRouter()
@@ -27,7 +28,8 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-6 pt-6 pb-32">
+    <div className="max-w-2xl mx-auto px-4 md:px-6 pt-6 pb-32">
+
       {/* 페이지 헤더 */}
       <section className="py-4 mb-6">
         <span className="inline-flex items-center gap-2 mb-3">
@@ -38,10 +40,33 @@ export default function SettingsPage() {
         <p className="text-sm text-outline mt-1">기록의 보관과 상속, 가족과의 공유를 관리하세요.</p>
       </section>
 
+      {/* 아카이브 통계 — Stitch v2 stats grid */}
+      <section className="mb-6">
+        <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase mb-3 font-headline">아카이브 현황</h4>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: '전체 일기', icon: 'book_4', iconColor: 'text-primary', bg: 'bg-primary-container', value: '—', unit: '' },
+            { label: '편지',      icon: 'mail',   iconColor: 'text-dear',    bg: 'bg-dear/10',          value: '—', unit: '' },
+            { label: '비밀 코드', icon: 'lock',   iconColor: 'text-pink-accent', bg: 'bg-pink-accent/10', value: '—', unit: '' },
+            { label: '저장 용량', icon: 'storage', iconColor: 'text-primary', bg: 'bg-primary-container', value: '—', unit: '' },
+          ].map(({ label, icon, iconColor, bg, value, unit }) => (
+            <div key={label} className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-2">
+              <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center`}>
+                <span className={`material-symbols-outlined text-[18px] ${iconColor}`} style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
+              </div>
+              <p className="text-[10px] font-bold text-outline uppercase tracking-wider font-headline">{label}</p>
+              <p className="text-2xl font-extrabold text-on-surface font-headline leading-none">
+                {value}<span className="text-xs font-medium text-outline ml-1">{unit}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 프로필 카드 */}
       <button
         onClick={() => router.push('/settings/profile')}
-        className="w-full bg-white p-5 flex items-center justify-between shadow-sm rounded-2xl text-left active:bg-surface-container-low transition-colors mb-6 border border-surface-container-high"
+        className="w-full bg-white p-5 flex items-center justify-between shadow-sm rounded-2xl text-left active:bg-surface-container-low transition-colors mb-6"
       >
         <div className="flex items-center gap-4">
           <div className="relative">
@@ -63,22 +88,26 @@ export default function SettingsPage() {
         <span className="material-symbols-outlined text-outline-variant">chevron_right</span>
       </button>
 
-      {/* 보안 설정 — 3열 border-l-4 카드 */}
+      {/* 보안 설정 — tonal layering (No-Line Rule 준수, border-l-4 제거) */}
       <section className="mb-6">
         <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase mb-3 font-headline">보안 &amp; 인증</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-white p-5 rounded-xl shadow-sm border-l-4 border-primary">
-            <span className="material-symbols-outlined text-primary mb-2 block">fingerprint</span>
-            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">생체 인식</p>
+          <div className="bg-white p-5 rounded-xl shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center mb-3">
+              <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>fingerprint</span>
+            </div>
+            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1 font-headline">생체 인식</p>
             <p className="font-bold text-sm text-on-surface">Face ID / 지문</p>
             <p className="text-[11px] text-primary mt-1.5 flex items-center gap-1">
               <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
               활성화됨
             </p>
           </div>
-          <div className="bg-white p-5 rounded-xl shadow-sm border-l-4 border-outline-variant/50">
-            <span className="material-symbols-outlined text-outline mb-2 block">pin</span>
-            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">보안 코드</p>
+          <div className="bg-white p-5 rounded-xl shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center mb-3">
+              <span className="material-symbols-outlined text-outline text-xl">pin</span>
+            </div>
+            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1 font-headline">보안 코드</p>
             <p className="font-bold text-sm text-on-surface">6자리 해시</p>
             <p className="text-[11px] text-outline mt-1.5 flex items-center gap-1">
               <span className="material-symbols-outlined text-[12px]">info</span>
@@ -87,10 +116,12 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={() => router.push('/secret')}
-            className="bg-white p-5 rounded-xl shadow-sm border-l-4 border-pink-accent text-left active:bg-surface-container-low transition-colors"
+            className="bg-white p-5 rounded-xl shadow-sm text-left active:bg-surface-container-low transition-colors"
           >
-            <span className="material-symbols-outlined text-pink-accent mb-2 block">lock</span>
-            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">비밀 코드</p>
+            <div className="w-10 h-10 rounded-xl bg-pink-accent/10 flex items-center justify-center mb-3">
+              <span className="material-symbols-outlined text-pink-accent text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+            </div>
+            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1 font-headline">비밀 코드</p>
             <p className="font-bold text-sm text-on-surface">E2EE 암호화</p>
             <p className="text-[11px] text-pink-accent mt-1.5 flex items-center gap-1">
               <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
@@ -104,17 +135,12 @@ export default function SettingsPage() {
       <section className="mb-6">
         <div className="flex items-center justify-between mb-3">
           <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase font-headline">가족 구성원</h4>
-          <button
-            onClick={() => router.push('/settings/family')}
-            className="text-xs text-primary font-bold"
-          >
-            관리하기
-          </button>
+          <button onClick={() => router.push('/settings/family')} className="text-xs text-primary font-bold">관리하기</button>
         </div>
-        <div className="bg-white p-5 rounded-2xl shadow-sm border border-surface-container-high">
-          <div className="flex items-center justify-between mb-5">
+        <div className="bg-white p-5 rounded-2xl shadow-sm">
+          <div className="flex items-center justify-between mb-3">
             <p className="text-sm font-bold text-on-surface">가족 구성원 관리</p>
-            <span className="material-symbols-outlined text-primary text-xl">group</span>
+            <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>group</span>
           </div>
           <p className="text-xs text-outline mb-4">열람 권한 및 SSS 복구 키를 가족과 공유합니다.</p>
           <button
@@ -127,13 +153,13 @@ export default function SettingsPage() {
         </div>
       </section>
 
-      {/* 출판 관리 — 2열 그리드 */}
+      {/* 출판 관리 */}
       <section className="mb-6">
         <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase mb-3 font-headline">출판 관리</h4>
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => router.push('/publish')}
-            className="bg-white p-5 rounded-2xl shadow-sm flex flex-col gap-3 text-left active:bg-surface-container-low transition-all hover:shadow-md border border-surface-container-high"
+            className="bg-white p-5 rounded-2xl shadow-sm flex flex-col gap-3 text-left active:bg-surface-container-low transition-all hover:shadow-md"
           >
             <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
               <span className="material-symbols-outlined text-xl text-primary">menu_book</span>
@@ -145,14 +171,14 @@ export default function SettingsPage() {
           </button>
           <button
             onClick={() => router.push('/publish')}
-            className="bg-white p-5 rounded-2xl shadow-sm flex flex-col gap-3 text-left active:bg-surface-container-low transition-all hover:shadow-md border border-surface-container-high"
+            className="bg-white p-5 rounded-2xl shadow-sm flex flex-col gap-3 text-left active:bg-surface-container-low transition-all hover:shadow-md"
           >
             <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
               <span className="material-symbols-outlined text-xl text-primary">auto_stories</span>
             </div>
             <div>
               <p className="font-bold text-sm text-on-surface font-headline">출판 이력</p>
-              <p className="text-[11px] text-outline mt-0.5 leading-tight">지금까지 제작된 기록 책자 리스트</p>
+              <p className="text-[11px] text-outline mt-0.5 leading-tight">지금까지 제작된 기록 책자</p>
             </div>
           </button>
         </div>
@@ -162,7 +188,7 @@ export default function SettingsPage() {
       <section>
         <ul className="space-y-2">
           <li>
-            <button className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors border border-surface-container-high">
+            <button className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-outline text-lg">cloud_sync</span>
                 <span className="text-sm font-bold text-on-surface">데이터 백업 및 복원</span>
@@ -171,10 +197,7 @@ export default function SettingsPage() {
             </button>
           </li>
           <li>
-            <button
-              onClick={handleSignOut}
-              className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors border border-surface-container-high"
-            >
+            <button onClick={handleSignOut} className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-outline text-lg">logout</span>
                 <span className="text-sm font-bold text-on-surface">로그아웃</span>
@@ -183,7 +206,7 @@ export default function SettingsPage() {
             </button>
           </li>
           <li>
-            <button className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-error-container/30 active:bg-error-container/40 transition-colors border border-surface-container-high">
+            <button className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-error-container/30 active:bg-error-container/40 transition-colors">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-error text-lg">delete_forever</span>
                 <span className="text-sm font-bold text-error">계정 탈퇴</span>
