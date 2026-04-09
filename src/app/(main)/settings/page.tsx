@@ -91,40 +91,35 @@ export default function SettingsPage() {
       {/* 보안 설정 — tonal layering (No-Line Rule 준수, border-l-4 제거) */}
       <section className="mb-6">
         <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase mb-3 font-headline">보안 &amp; 인증</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-white p-5 rounded-xl shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center mb-3">
-              <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>fingerprint</span>
-            </div>
-            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1 font-headline">생체 인식</p>
-            <p className="font-bold text-sm text-on-surface">Face ID / 지문</p>
-            <p className="text-[11px] text-primary mt-1.5 flex items-center gap-1">
-              <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-              활성화됨
+        {/* _3 기준: rounded-2xl, p-6, shadow 강화 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white p-6 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+            <span className="material-symbols-outlined text-primary text-2xl mb-3 block" style={{ fontVariationSettings: "'FILL' 1" }}>fingerprint</span>
+            <p className="text-xs font-bold text-outline uppercase tracking-wider mb-1 font-headline">생체 인증</p>
+            <p className="font-bold text-sm text-on-surface">Touch ID / Face ID</p>
+            <p className="text-[11px] text-primary mt-2 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+              암호화됨
             </p>
           </div>
-          <div className="bg-white p-5 rounded-xl shadow-sm">
-            <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center mb-3">
-              <span className="material-symbols-outlined text-outline text-xl">pin</span>
-            </div>
-            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1 font-headline">보안 코드</p>
+          <div className="bg-white p-6 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+            <span className="material-symbols-outlined text-outline text-2xl mb-3 block">pin</span>
+            <p className="text-xs font-bold text-outline uppercase tracking-wider mb-1 font-headline">보안 코드</p>
             <p className="font-bold text-sm text-on-surface">6자리 해시</p>
-            <p className="text-[11px] text-outline mt-1.5 flex items-center gap-1">
+            <p className="text-[11px] text-outline mt-2 flex items-center gap-1">
               <span className="material-symbols-outlined text-[12px]">info</span>
               업데이트 필요
             </p>
           </div>
           <button
             onClick={() => router.push('/secret')}
-            className="bg-white p-5 rounded-xl shadow-sm text-left active:bg-surface-container-low transition-colors"
+            className="bg-white p-6 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.02)] text-left active:bg-surface-container-low transition-colors"
           >
-            <div className="w-10 h-10 rounded-xl bg-pink-accent/10 flex items-center justify-center mb-3">
-              <span className="material-symbols-outlined text-pink-accent text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
-            </div>
-            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mb-1 font-headline">비밀 코드</p>
+            <span className="material-symbols-outlined text-pink-accent text-2xl mb-3 block" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+            <p className="text-xs font-bold text-outline uppercase tracking-wider mb-1 font-headline">비밀 코드</p>
             <p className="font-bold text-sm text-on-surface">E2EE 암호화</p>
-            <p className="text-[11px] text-pink-accent mt-1.5 flex items-center gap-1">
-              <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+            <p className="text-[11px] text-pink-accent mt-2 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
               보호 중
             </p>
           </button>

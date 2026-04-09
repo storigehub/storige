@@ -86,14 +86,14 @@ export default function SecretPage() {
         {/* 사이드바 (col-span-4) */}
         <aside className="md:col-span-4 space-y-5">
           {/* 카테고리 네비 */}
-          <div className="p-6 rounded-2xl bg-surface-container-low border border-surface-container-high">
+          <div className="p-8 rounded-[1.25rem] bg-surface-container-low border border-outline-variant/30">
             <h3 className="font-headline font-bold text-[10px] uppercase tracking-[0.15em] text-outline mb-5">자산 카테고리</h3>
             <nav className="space-y-2">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.key}
                   onClick={() => setSelectedCategory(cat.key)}
-                  className={`w-full flex items-center justify-between p-3.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${
                     selectedCategory === cat.key
                       ? 'bg-white shadow-sm border-l-4 border-pink-accent'
                       : 'hover:bg-white/60'
@@ -117,23 +117,22 @@ export default function SecretPage() {
 
           {/* 금고 쉴드 카드 — _1 bg-on-surface + pink-glow */}
           <div
-            className="p-6 rounded-2xl text-white"
+            className="p-8 rounded-[1.25rem] text-white"
             style={{
               backgroundColor: '#1a1c1c',
-              boxShadow: '0 0 24px rgba(233, 30, 99, 0.12)',
+              boxShadow: '0 0 20px rgba(233, 30, 99, 0.10)',
             }}
           >
-            <div className="bg-pink-accent w-12 h-12 flex items-center justify-center rounded-2xl mb-5">
+            <div className="bg-pink-accent w-12 h-12 flex items-center justify-center rounded-2xl mb-6">
               <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>security</span>
             </div>
-            <h4 className="font-headline font-bold text-xl mb-2">금고 쉴드</h4>
-            <p className="text-white/50 text-sm leading-relaxed mb-6">
-              256비트 AES 암호화 레이어가 활성화되었습니다. 마스킹된 데이터를 확인하려면 패스프레이즈가 필요합니다.
+            <h4 className="font-headline font-bold text-2xl mb-3">금고 쉴드</h4>
+            <p className="text-white/70 text-sm leading-relaxed mb-8">
+              256비트 AES 암호화 레이어가 활성화되었습니다. 마스킹된 데이터를 확인하려면 개인 키가 필요합니다.
             </p>
-            <div className="flex items-center gap-2 text-[11px] text-white/30">
-              <span className="material-symbols-outlined text-[12px]">verified_user</span>
-              <span>Eterna System V4.0</span>
-            </div>
+            <button className="w-full py-4 bg-pink-accent text-white font-bold rounded-[0.625rem] text-sm hover:brightness-110 transition-all active:scale-[0.98]">
+              개인 키 입력
+            </button>
           </div>
         </aside>
 

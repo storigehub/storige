@@ -50,7 +50,7 @@ export function SecretAccordionItem({
 
   const cardContent = (
     <div
-      className={`rounded-xl overflow-hidden transition-all duration-300 ${
+      className={`rounded-[1.25rem] overflow-hidden transition-all duration-300 ${
         isOpen
           ? 'bg-white border border-outline-variant/30 shadow-[0_12px_40px_rgba(233,30,99,0.08)]'
           : 'bg-white border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:translate-y-[-2px] cursor-pointer'
@@ -144,71 +144,83 @@ export function SecretAccordionItem({
           >
             <div className="px-5 md:px-8 pb-6 md:pb-8 border-t border-surface-container-low">
               {decrypted ? (
-                <div className="pt-5 space-y-1">
-                  {/* 알고리즘 정보 행 */}
-                  <div className="flex justify-between items-center py-3 border-b border-outline-variant/20">
-                    <span className="text-outline text-sm font-semibold">암호화 방식</span>
-                    <span className="font-mono text-primary font-bold text-sm">AES-256-GCM</span>
-                  </div>
-
-                  {/* 복호화된 내용 */}
-                  {decrypted.decryptedContent && (
-                    <div className="py-4 border-b border-outline-variant/20">
-                      <p className="text-[10px] text-outline font-bold uppercase tracking-widest mb-3">내용</p>
-                      <p className="font-mono text-on-surface font-bold text-sm leading-relaxed whitespace-pre-wrap bg-[#f9f9f9] rounded-xl p-4">
-                        {decrypted.decryptedContent}
-                      </p>
+                <div className="pt-5">
+                  {/* _1 기준: bg-surface-container-low/50 래퍼 + p-8 */}
+                  <div className="bg-surface-container-low/50 rounded-[1.25rem] p-6 md:p-8 space-y-2">
+                    {/* 알고리즘 정보 행 */}
+                    <div className="flex justify-between items-center py-3 border-b border-outline-variant/20">
+                      <span className="text-outline text-sm font-semibold">암호화 방식</span>
+                      <span className="font-mono text-primary font-bold text-sm">AES-256-GCM</span>
                     </div>
-                  )}
 
-                  {/* 계정 자격증명 테이블 */}
-                  {decrypted.decryptedCredentials && decrypted.decryptedCredentials.length > 0 && (
-                    <div className="pt-2">
-                      <SecretCredentialTable credentials={decrypted.decryptedCredentials} />
+                    {/* 복호화된 내용 */}
+                    {decrypted.decryptedContent && (
+                      <div className="py-4 border-b border-outline-variant/20">
+                        <p className="text-[10px] text-outline font-bold uppercase tracking-widest mb-3">내용</p>
+                        <p className="font-mono text-on-surface font-bold text-sm leading-relaxed whitespace-pre-wrap bg-white rounded-xl p-4">
+                          {decrypted.decryptedContent}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* 계정 자격증명 테이블 */}
+                    {decrypted.decryptedCredentials && decrypted.decryptedCredentials.length > 0 && (
+                      <div className="pt-2">
+                        <SecretCredentialTable credentials={decrypted.decryptedCredentials} />
+                      </div>
+                    )}
+
+                    {/* 액션 버튼 — _1: flex-1 py-4 bg-on-surface + 수정 border */}
+                    <div className="flex gap-3 pt-4">
+                      <button
+                        onClick={() => onDecryptRequest(code)}
+                        className="flex-1 py-4 bg-on-surface text-white rounded-[0.625rem] text-sm font-bold hover:bg-[#2f3131] transition-all active:scale-[0.98]"
+                      >
+                        정보 공개
+                      </button>
+                      <button
+                        onClick={() => router.push(`/secret/${code.id}/edit`)}
+                        className="px-6 py-4 border border-outline-variant rounded-xl text-sm font-bold text-on-surface hover:bg-surface-container-high transition-colors"
+                      >
+                        수정
+                      </button>
+                      <button
+                        onClick={onDelete}
+                        className="px-4 py-4 rounded-xl text-sm font-bold text-error hover:bg-error-container/40 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[16px] align-middle">delete</span>
+                      </button>
                     </div>
-                  )}
-
-                  {/* 액션 버튼 */}
-                  <div className="flex gap-3 pt-4">
-                    <button
-                      onClick={() => router.push(`/secret/${code.id}/edit`)}
-                      className="flex-1 py-3 border border-outline-variant/50 rounded-xl text-sm font-bold text-on-surface-variant hover:bg-surface-container-low transition-colors"
-                    >
-                      수정
-                    </button>
-                    <button
-                      onClick={onDelete}
-                      className="px-5 py-3 rounded-xl text-sm font-bold text-error hover:bg-error-container/40 transition-colors"
-                    >
-                      <span className="material-symbols-outlined text-[16px] align-middle">delete</span>
-                    </button>
                   </div>
                 </div>
               ) : (
-                <div className="pt-5 space-y-4">
-                  <p className="text-sm text-outline leading-relaxed">
-                    이 항목은 AES-256-GCM으로 암호화되어 있습니다.<br />
-                    패스프레이즈를 입력해 내용을 열람하세요.
-                  </p>
-                  <button
-                    onClick={() => onDecryptRequest(code)}
-                    className="w-full py-4 bg-on-surface text-white rounded-xl text-sm font-bold hover:bg-[#2f3131] transition-all active:scale-[0.98]"
-                  >
-                    정보 공개
-                  </button>
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => router.push(`/secret/${code.id}/edit`)}
-                      className="flex-1 py-3 border border-outline-variant/50 rounded-xl text-sm font-bold text-on-surface-variant hover:bg-surface-container-low transition-colors"
-                    >
-                      수정
-                    </button>
-                    <button
-                      onClick={onDelete}
-                      className="px-5 py-3 rounded-xl text-sm font-bold text-error hover:bg-error-container/40 transition-colors"
-                    >
-                      <span className="material-symbols-outlined text-[16px] align-middle">delete</span>
-                    </button>
+                <div className="pt-5">
+                  {/* 미복호화 상태: 래퍼 + CTA */}
+                  <div className="bg-surface-container-low/50 rounded-[1.25rem] p-6 md:p-8 space-y-4">
+                    <p className="text-sm text-outline leading-relaxed">
+                      이 항목은 AES-256-GCM으로 암호화되어 있습니다.<br />
+                      패스프레이즈를 입력해 내용을 열람하세요.
+                    </p>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => onDecryptRequest(code)}
+                        className="flex-1 py-4 bg-on-surface text-white rounded-[0.625rem] text-sm font-bold hover:bg-[#2f3131] transition-all active:scale-[0.98]"
+                      >
+                        정보 공개
+                      </button>
+                      <button
+                        onClick={() => router.push(`/secret/${code.id}/edit`)}
+                        className="px-6 py-4 border border-outline-variant rounded-xl text-sm font-bold text-on-surface hover:bg-surface-container-high transition-colors"
+                      >
+                        수정
+                      </button>
+                      <button
+                        onClick={onDelete}
+                        className="px-4 py-4 rounded-xl text-sm font-bold text-error hover:bg-error-container/40 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[16px] align-middle">delete</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -222,7 +234,7 @@ export function SecretAccordionItem({
   // 열린 상태: 그라디언트 테두리 래퍼 적용 (_1 crypto card 스타일)
   if (isOpen) {
     return (
-      <div className="relative p-[1.5px] rounded-xl bg-gradient-to-br from-pink-accent/20 via-primary/20 to-pink-accent/20">
+      <div className="relative p-[2px] rounded-[1.25rem] bg-gradient-to-br from-pink-accent/20 via-primary/20 to-pink-accent/20">
         {cardContent}
       </div>
     )
