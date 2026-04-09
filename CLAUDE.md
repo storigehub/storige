@@ -336,8 +336,14 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
     Sprint 4-2: Legacy Access (/legacy 열람화면 + /settings/legacy 관리)
     Sprint 4-3: Capacitor 설정 (capacitor.config.ts + camera.ts + 빌드 스크립트)
     Sprint 4-4: 앱스토어 배포 가이드 (docs/appstore-deploy-guide.md)
+  Phase 5:
+    Sprint 5-1: AI 기능 (Claude Haiku API, 일기 요약 + 글감 제안, /api/ai/*)
+    Sprint 5-2: 알림 시스템 (FCM/WebPush, Supabase Edge Function send-reminder)
+    Sprint 5-3: PWA (manifest.json + sw.js Service Worker)
+    Sprint 5-4: E2E 테스트 (Playwright, e2e/*.spec.ts)
+    Sprint 5-5: 성능 최적화 (AVIF/WebP, 보안헤더, optimizePackageImports)
 
-다음: Phase 5 (AI 기능 + PWA + 테스트 + 최적화 + 런칭)
+다음: Phase 6 (나의이야기 통합 + Remember 통합 + 랜딩 리뉴얼)
 
 ⏸ 마지막으로 미룬 작업 (오너 결정 후):
   - 포트원 결제 연동 (API 키 필요)
