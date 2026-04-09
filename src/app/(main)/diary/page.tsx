@@ -9,6 +9,7 @@ import { DiaryMediaView } from '@/components/diary/DiaryMediaView'
 import { DiaryMapView } from '@/components/diary/DiaryMapView'
 import { DiarySearchBar } from '@/components/diary/DiarySearchBar'
 import { useDiaryList } from '@/hooks/useDiaryList'
+import { useWritingSuggestions } from '@/hooks/useAI'
 
 const TABS = ['요약', '목록', '캘린더', '미디어', '지도'] as const
 type Tab = typeof TABS[number]
@@ -101,24 +102,35 @@ export default function DiaryPage() {
   )
 }
 
-// 요약 뷰 — Phase 5 AI 기능 대비 통계 카드
+// 요약 뷰 — AI 글감 제안 + 통계 카드
 function DiarySummaryView({ entries }: { entries: ReturnType<typeof useDiaryList>['entries'] }) {
+  const { prompts, loading: suggestLoading, error: suggestError, suggest } = useWritingSuggestions()
+  const [prompted, setPrompted] = useState(false)
+
   const thisMonth = entries.filter((e) => {
     const d = new Date(e.created_at)
     const now = new Date()
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()
   })
 
+  const recentTitles = entries.slice(0, 5).map(e => e.title ?? '').filter(Boolean)
+
+  const handleSuggest = async () => {
+    setPrompted(true)
+    await suggest(recentTitles)
+  }
+
   return (
     <div className="py-6 space-y-4">
+      {/* 통계 카드 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {[
-          { label: '전체 일기', value: entries.length, color: '#0061A5', border: '#0061A5' },
-          { label: '이번 달', value: thisMonth.length, color: '#006B5F', border: '#006B5F' },
-          { label: '즐겨찾기', value: entries.filter((e) => e.is_favorite).length, color: '#f59e0b', border: '#f59e0b' },
-          { label: '사진', value: entries.reduce((acc, e) => acc + e.media.filter((m) => m.media_type === 'photo').length, 0), color: '#E91E63', border: '#E91E63' },
-        ].map(({ label, value, color, border }) => (
-          <div key={label} className="bg-white rounded-xl p-5 shadow-sm" style={{ borderLeft: `3px solid ${border}` }}>
+          { label: '전체 일기', value: entries.length, color: '#0061A5', bg: 'bg-primary-container' },
+          { label: '이번 달', value: thisMonth.length, color: '#006B5F', bg: 'bg-[#E8F5F3]' },
+          { label: '즐겨찾기', value: entries.filter((e) => e.is_favorite).length, color: '#f59e0b', bg: 'bg-yellow-50' },
+          { label: '사진', value: entries.reduce((acc, e) => acc + e.media.filter((m) => m.media_type === 'photo').length, 0), color: '#E91E63', bg: 'bg-pink-50' },
+        ].map(({ label, value, color, bg }) => (
+          <div key={label} className={`${bg} rounded-xl p-5 shadow-sm`}>
             <p className="font-headline text-[10px] text-outline uppercase tracking-widest mb-2">{label}</p>
             <p className="text-4xl font-extrabold font-headline leading-none" style={{ color }}>
               {value}
@@ -127,13 +139,49 @@ function DiarySummaryView({ entries }: { entries: ReturnType<typeof useDiaryList
           </div>
         ))}
       </div>
-      {/* AI 플레이스홀더 카드 — _5 dashed CTA 스타일 */}
-      <div className="border-2 border-dashed border-outline-variant/40 rounded-xl flex flex-col items-center justify-center p-8 text-outline hover:text-primary hover:border-primary transition-all cursor-pointer group bg-white/50">
-        <div className="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary-container transition-colors">
-          <span className="material-symbols-outlined text-3xl group-hover:scale-125 transition-transform">tips_and_updates</span>
+
+      {/* AI 글감 제안 카드 */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+              <span className="material-symbols-outlined text-[18px] text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+            </div>
+            <div>
+              <p className="font-headline font-bold text-sm text-on-surface">AI 글감 제안</p>
+              <p className="text-[10px] text-outline">오늘 무엇을 기록할까요?</p>
+            </div>
+          </div>
+          <button
+            onClick={handleSuggest}
+            disabled={suggestLoading}
+            className="flex items-center gap-1.5 px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:brightness-110 transition-all disabled:opacity-50"
+          >
+            {suggestLoading
+              ? <span className="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+              : <span className="material-symbols-outlined text-sm">refresh</span>
+            }
+            {prompted ? '다시 제안' : '글감 받기'}
+          </button>
         </div>
-        <p className="font-headline font-bold">AI 자서전 요약</p>
-        <p className="text-[10px] uppercase tracking-widest mt-1">Phase 5에서 추가 예정</p>
+
+        {suggestError && <p className="text-xs text-error">{suggestError}</p>}
+
+        {!prompted && !suggestLoading && prompts.length === 0 && (
+          <p className="text-sm text-outline text-center py-4">버튼을 눌러 오늘의 글감을 받아보세요.</p>
+        )}
+
+        {prompts.length > 0 && (
+          <div className="space-y-2">
+            {prompts.map((prompt, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors cursor-pointer group">
+                <span className="text-xs font-bold text-primary w-5 h-5 rounded-full bg-primary-container flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                <p className="text-sm text-on-surface leading-relaxed flex-1">{prompt}</p>
+                <span className="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity shrink-0">arrow_forward</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

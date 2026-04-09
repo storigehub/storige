@@ -8,6 +8,7 @@ import type { EntryWithMedia } from '@/hooks/useDiaryList'
 import { formatTime } from '@/lib/utils/date'
 import { createClient } from '@/lib/supabase/client'
 import { DiaryLightbox } from './DiaryLightbox'
+import { useDiarySummary } from '@/hooks/useAI'
 
 interface DiaryAccordionItemProps {
   entry: EntryWithMedia
@@ -31,6 +32,8 @@ export function DiaryAccordionItem({
 }: DiaryAccordionItemProps) {
   const router = useRouter()
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [showAISummary, setShowAISummary] = useState(false)
+  const { result: aiSummary, loading: aiLoading, error: aiError, summarize, clear: clearAI } = useDiarySummary()
   const date = new Date(entry.created_at)
   const day = date.getDate()
   // _5 기준: 한국어 "10월 / 목" 형식
@@ -214,8 +217,60 @@ export function DiaryAccordionItem({
                   />
                 )}
 
-                {/* 삭제 버튼 */}
-                <div className="flex justify-end">
+                {/* AI 요약 패널 */}
+                {showAISummary && (
+                  <div className="mb-5 p-4 bg-primary-container/40 rounded-xl border border-primary/10">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[10px] font-bold tracking-[0.2em] text-primary uppercase font-headline flex items-center gap-1.5">
+                        <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+                        AI 요약
+                      </span>
+                      <button onClick={() => { setShowAISummary(false); clearAI() }} className="text-outline hover:text-on-surface">
+                        <span className="material-symbols-outlined text-[16px]">close</span>
+                      </button>
+                    </div>
+                    {aiLoading && (
+                      <div className="flex items-center gap-2 text-sm text-outline">
+                        <span className="material-symbols-outlined text-base animate-spin">progress_activity</span>
+                        분석 중…
+                      </div>
+                    )}
+                    {aiError && <p className="text-xs text-error">{aiError}</p>}
+                    {aiSummary && !aiLoading && (
+                      <div className="space-y-2">
+                        <p className="text-sm text-on-surface leading-relaxed">{aiSummary.summary}</p>
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {aiSummary.mood && (
+                            <span className="text-[10px] font-bold px-2.5 py-1 bg-primary/10 text-primary rounded-full">{aiSummary.mood}</span>
+                          )}
+                          {aiSummary.keywords.map(k => (
+                            <span key={k} className="text-[10px] px-2.5 py-1 bg-surface-container text-outline rounded-full">{k}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 하단 액션 바 */}
+                <div className="flex items-center justify-between">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      if (!showAISummary) {
+                        setShowAISummary(true)
+                        if (!aiSummary) summarize(entry.content_text ?? '')
+                      } else {
+                        setShowAISummary(false)
+                        clearAI()
+                      }
+                    }}
+                    disabled={aiLoading}
+                    className="flex items-center gap-1.5 text-xs text-primary hover:bg-primary-container/40 px-3 py-2 rounded-lg transition-colors disabled:opacity-50"
+                  >
+                    <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+                    {showAISummary && aiSummary ? 'AI 요약 닫기' : 'AI 요약'}
+                  </button>
                   <button
                     onClick={onDelete}
                     className="flex items-center gap-1.5 text-xs text-error hover:bg-error-container/40 px-3 py-2 rounded-lg transition-colors"

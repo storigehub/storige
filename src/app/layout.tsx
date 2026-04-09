@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: '스토리지',
   },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'default',
+  },
 }
 
 export const viewport: Viewport = {
@@ -56,6 +60,18 @@ export default function RootLayout({
       <body className="min-h-full bg-[#f9f9f9]">
         {children}
         <Toaster position="top-center" richColors />
+        {/* Service Worker 등록 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').catch(function() {});
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   )
