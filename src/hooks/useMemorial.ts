@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { scheduleEffectCallback } from '@/lib/utils/deferEffect'
 import type { MemorialPage, MemorialMessage } from '@/types/database'
 
 // 내 추모관 관리 훅 (설정용)
@@ -26,7 +27,9 @@ export function useMyMemorial() {
     setLoading(false)
   }, [supabase])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    scheduleEffectCallback(load)
+  }, [load])
 
   const saveMemorial = useCallback(async (fields: Partial<MemorialPage>) => {
     setSaving(true)
@@ -66,7 +69,7 @@ export function usePublicMemorial(slug: string) {
   const supabase = createClient()
 
   useEffect(() => {
-    async function load() {
+    scheduleEffectCallback(async () => {
       setLoading(true)
       const { data: page } = await supabase
         .from('memorial_pages')
@@ -87,8 +90,7 @@ export function usePublicMemorial(slug: string) {
 
       setMessages((msgs ?? []) as MemorialMessage[])
       setLoading(false)
-    }
-    load()
+    })
   }, [slug, supabase])
 
   const leaveMessage = useCallback(async (
@@ -144,7 +146,9 @@ export function useMemorialAdmin() {
     setLoading(false)
   }, [supabase])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    scheduleEffectCallback(load)
+  }, [load])
 
   const approveMessage = useCallback(async (id: string, approved: boolean) => {
     await supabase

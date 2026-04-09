@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { scheduleEffectCallback } from '@/lib/utils/deferEffect'
 import type { FamilyMember } from '@/types/database'
 
 // 가족 구성원 목록 조회 훅
@@ -25,7 +26,9 @@ export function useFamilyMembers() {
     setLoading(false)
   }, [supabase])
 
-  useEffect(() => { fetchMembers() }, [fetchMembers])
+  useEffect(() => {
+    scheduleEffectCallback(fetchMembers)
+  }, [fetchMembers])
 
   return { members, loading, refetch: fetchMembers }
 }

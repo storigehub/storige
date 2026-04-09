@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { scheduleEffectCallback } from '@/lib/utils/deferEffect'
 import type { AlbumPhoto } from '@/types/database'
 
 // 앨범 사진 목록 + 업로드 훅
@@ -29,7 +30,9 @@ export function useAlbum() {
     setLoading(false)
   }, [supabase])
 
-  useEffect(() => { fetchPhotos() }, [fetchPhotos])
+  useEffect(() => {
+    scheduleEffectCallback(fetchPhotos)
+  }, [fetchPhotos])
 
   // 사진 공개 URL 반환
   const getPhotoUrl = useCallback((storagePath: string): string => {

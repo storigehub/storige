@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import type { LegacySettings, LegacyRequest, Entry, FamilyMember } from '@/types/database'
+import { scheduleEffectCallback } from '@/lib/utils/deferEffect'
+import type { LegacySettings, LegacyRequest, Entry } from '@/types/database'
 
 export interface LegacyAccessState {
   settings: LegacySettings | null
@@ -43,7 +44,9 @@ export function useLegacyRequest(ownerUserId: string, familyMemberId: string) {
     setState({ settings: settings ?? null, request: request ?? null, loading: false, error: null })
   }, [ownerUserId, familyMemberId, supabase])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    scheduleEffectCallback(load)
+  }, [load])
 
   const submitRequest = useCallback(async (documentUrl?: string) => {
     setState(s => ({ ...s, loading: true }))
@@ -89,7 +92,9 @@ export function useLegacyAdmin() {
     setLoading(false)
   }, [supabase])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    scheduleEffectCallback(load)
+  }, [load])
 
   const updateLegacySettings = useCallback(async (update: Partial<LegacySettings>) => {
     const { data: { user } } = await supabase.auth.getUser()

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { useAlbum } from '@/hooks/useAlbum'
 import { AlbumLightbox } from '@/components/album/AlbumLightbox'
 import { isCapacitor, takeCameraPhoto, pickFromGallery } from '@/lib/utils/camera'
@@ -17,9 +17,7 @@ export default function AlbumPage() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editCaption, setEditCaption] = useState('')
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
-  const [nativeCamera, setNativeCamera] = useState(false)
-
-  useEffect(() => { setNativeCamera(isCapacitor()) }, [])
+  const [nativeCamera] = useState(() => isCapacitor())
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

@@ -8,6 +8,7 @@ import type {
   MystorySession,
   MystoryMessage,
 } from '@/types/database'
+import { scheduleEffectCallback } from '@/lib/utils/deferEffect'
 
 type MystoryRow = Database['public']['Tables']['mystory_sessions']['Row']
 
@@ -48,7 +49,9 @@ export function useMystorySessions() {
     setLoading(false)
   }, [supabase])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    scheduleEffectCallback(load)
+  }, [load])
 
   return { sessions, loading, refetch: load }
 }
@@ -108,7 +111,9 @@ export function useMystoryInterview(topicId: string) {
     setLoading(false)
   }, [topicId, supabase])
 
-  useEffect(() => { loadOrCreate() }, [loadOrCreate])
+  useEffect(() => {
+    scheduleEffectCallback(loadOrCreate)
+  }, [loadOrCreate])
 
   // 사용자 답변 전송 → AI 다음 질문 받기
   const sendAnswer = useCallback(async (answer: string) => {

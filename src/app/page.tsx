@@ -261,8 +261,11 @@ export default function LandingPage() {
                   style={{ borderLeft: '3px solid #0061A5' }}
                 >
                   <p className="text-sm text-[#1A1C1C] leading-relaxed font-medium">
-                    "기록되지 않은 삶은 잊혀지지만, Storige와 함께라면<br className="hidden md:block" />
-                    당신의 서사는 영원히 흐릅니다."
+                    <span aria-hidden="true">&ldquo;</span>
+                    기록되지 않은 삶은 잊혀지지만, Storige와 함께라면
+                    <br className="hidden md:block" />
+                    당신의 서사는 영원히 흐릅니다.
+                    <span aria-hidden="true">&rdquo;</span>
                   </p>
                 </blockquote>
               </div>
@@ -274,8 +277,12 @@ export default function LandingPage() {
         <section className="bg-[#1A1C1C] py-20 md:py-28">
           <div className="max-w-3xl mx-auto px-4 md:px-8 text-center">
             <p className="font-headline text-3xl md:text-[2.5rem] font-extrabold text-white leading-snug tracking-tight mb-6">
-              "기억은 우리가 남기는<br />
-              <span className="text-[#D2E4FF]">가장 소중한 유산</span>입니다"
+              <span aria-hidden="true">&ldquo;</span>
+              기억은 우리가 남기는
+              <br />
+              <span className="text-[#D2E4FF]">가장 소중한 유산</span>
+              입니다
+              <span aria-hidden="true">&rdquo;</span>
             </p>
             <p className="text-white/40 text-sm leading-relaxed mb-10 max-w-xl mx-auto">
               Storige는 단순한 저장 공간이 아닙니다. 당신의 삶, 생각, 사랑을 다음 세대에게 온전히 전달하는 디지털 헤리티지 플랫폼입니다.
