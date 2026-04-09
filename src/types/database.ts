@@ -391,6 +391,109 @@ export interface Database {
         }
         Relationships: []
       }
+      // Phase 6 — DB 마이그레이션 적용 후 gen types로 동기화 권장
+      mystory_sessions: {
+        Row: {
+          id: string
+          user_id: string
+          topic_id: string
+          topic_category: string
+          status: string
+          messages: Json
+          generated_text: string | null
+          word_count: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          topic_id: string
+          topic_category: string
+          status?: string
+          messages?: Json
+          generated_text?: string | null
+          word_count?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          topic_id?: string
+          topic_category?: string
+          status?: string
+          messages?: Json
+          generated_text?: string | null
+          word_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      memorial_pages: {
+        Row: {
+          id: string
+          owner_id: string
+          slug: string
+          title: string
+          bio: string | null
+          cover_image: string | null
+          is_public: boolean
+          birth_date: string | null
+          death_date: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          owner_id: string
+          slug: string
+          title?: string
+          bio?: string | null
+          cover_image?: string | null
+          is_public?: boolean
+          birth_date?: string | null
+          death_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          slug?: string
+          title?: string
+          bio?: string | null
+          cover_image?: string | null
+          is_public?: boolean
+          birth_date?: string | null
+          death_date?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      memorial_messages: {
+        Row: {
+          id: string
+          memorial_id: string
+          author_name: string
+          content: string
+          relation: string | null
+          is_approved: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          memorial_id: string
+          author_name: string
+          content: string
+          relation?: string | null
+          is_approved?: boolean
+          created_at?: string
+        }
+        Update: {
+          author_name?: string
+          content?: string
+          relation?: string | null
+          is_approved?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>
@@ -409,6 +512,50 @@ export type LegacyRequest = Database['public']['Tables']['legacy_requests']['Row
 export type PublishOrder = Database['public']['Tables']['publish_orders']['Row']
 export type Tag = Database['public']['Tables']['tags']['Row']
 export type AlbumPhoto = Database['public']['Tables']['album_photos']['Row']
+
+// Phase 6 타입 (DB 외부 정의 — Supabase 타입 자동생성 전 임시)
+export interface MystorySession {
+  id: string
+  user_id: string
+  topic_id: string
+  topic_category: string
+  status: 'in_progress' | 'completed' | 'published'
+  messages: MystoryMessage[]
+  generated_text: string | null
+  word_count: number
+  created_at: string
+  updated_at: string
+}
+
+export interface MystoryMessage {
+  role: 'assistant' | 'user'
+  content: string
+  ts: string
+}
+
+export interface MemorialPage {
+  id: string
+  owner_id: string
+  slug: string
+  title: string
+  bio: string | null
+  cover_image: string | null
+  is_public: boolean
+  birth_date: string | null
+  death_date: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface MemorialMessage {
+  id: string
+  memorial_id: string
+  author_name: string
+  content: string
+  relation: string | null
+  is_approved: boolean
+  created_at: string
+}
 
 // Insert 타입
 export type ProfileInsert = Database['public']['Tables']['profiles']['Insert']
