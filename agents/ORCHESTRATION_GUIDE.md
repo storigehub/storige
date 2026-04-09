@@ -226,3 +226,55 @@ storige/
 4. 우회 불가 → CEO에게 일정 영향 보고
 5. CEO가 스코프 조정 또는 일정 변경 결정
 ```
+
+---
+
+## ⛔ 사고 교훈 — 에이전트 필수 행동 원칙
+
+> 2026-04-09 Vercel-GitHub 자동배포 연결 실패 → 1시간 낭비 사고에서 도출
+
+### 원칙 1: 2회 실패 즉시 전환
+
+같은 접근법(또는 그 변형)이 **2회 연속 실패하면 즉시 다른 경로로 전환**한다.  
+같은 방법을 6번 변형해서 시도하는 것은 시간 낭비다.
+
+```
+실패 1회 → 원인 분석
+실패 2회 → 다른 방법 선택 또는 오너에게 즉시 보고
+```
+
+### 원칙 2: 외부 서비스 구조적 한계 판단
+
+OAuth, 외부 API, 서드파티 연동 문제는 **5분 안에 구조적 한계인지 판단**한다.  
+구조적 한계라면 우회로(GitHub Actions, webhook, API 직접 호출 등)를 즉시 선택한다.  
+"왜 안 되는가"를 파악하는 데 5분 이상 쓰지 않는다.
+
+### 원칙 3: 오너 시간 우선
+
+에이전트가 혼자 1시간 소비하는 것보다 **5분 만에 오너에게 보고하고 결정받는 것**이 낫다.  
+막히면 즉시 보고: "이 방법은 구조적으로 안 됩니다. A/B 중 어떤 방향으로 갈까요?"
+
+### 원칙 4: 배포 관련 — 확정된 방법만 사용
+
+Storige 배포는 **GitHub Actions만 사용**한다. (`docs/deploy_vercel_git_supabase.md` 참조)  
+아래는 **재시도 금지** 목록이다:
+
+| 금지 방법 | 이유 |
+|----------|------|
+| `npx vercel git connect` | `storigehub` OAuth 접근 불가 |
+| Vercel Dashboard Git 연결 | 타 계정 레포 연결 구조적 불가 |
+| Vercel GitHub App 재설치 | Dashboard가 설치 인식 못 함 |
+| Vercel "Add GitHub Account" | OAuth 루프 발생 |
+
+### 배포 표준 명령 (기억할 것)
+
+```bash
+# 자동 배포 (표준)
+git push origin main
+
+# 긴급 수동
+npx vercel deploy --prod
+
+# 배포 확인
+gh run list --repo storigehub/storige --limit 3
+```

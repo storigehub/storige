@@ -346,6 +346,60 @@ Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 
 ---
 
+## 배포 인프라 (필독)
+
+> 상세 내용: `docs/deploy_vercel_git_supabase.md`
+
+### 배포 방식: GitHub Actions (확정, 변경 금지)
+
+```
+git push origin main → GitHub Actions → Vercel 프로덕션 배포 (~1분)
+```
+
+**Vercel 계정(`papas-yohan`)과 GitHub 레포 소유자(`storigehub`)가 다른 계정이다.**  
+Vercel Dashboard/CLI를 통한 Git 자동연결은 구조적으로 불가능하다.  
+→ `.github/workflows/deploy.yml` + GitHub Secrets 3개로 운영 중.
+
+### ⛔ 절대 재시도 금지 — 1시간 낭비한 방법들
+
+아래 방법들은 모두 구조적으로 실패한다. 다시 시도하지 않는다:
+- `npx vercel git connect` — `storigehub` 접근 불가
+- Vercel Dashboard → Settings → Git → Namespace 연결 시도
+- Vercel GitHub App을 `storigehub`에 재설치
+- Vercel Dashboard → "Add GitHub Account"
+- Vercel Deploy Hook 생성 (Git 연결 없으면 생성 불가)
+
+### 배포 명령
+
+```bash
+# 표준 (자동)
+git push origin main
+
+# 긴급 수동
+npx vercel deploy --prod
+
+# 배포 상태 확인
+gh run list --repo storigehub/storige --limit 3
+```
+
+### 핵심 ID
+
+| 항목 | 값 |
+|------|-----|
+| Vercel Team ID | `team_dOpgsAqfLyl4qNlVgSiFVm6B` |
+| Vercel Project ID | `prj_KOfHRMjPd7VhuBWhC5Xhz2qb4k7t` |
+| Supabase Project ID | `uobbgxwuukwptqtywxxj` (ap-northeast-2) |
+
+---
+
+## 에이전트 행동 원칙 (사고 교훈)
+
+> **같은 접근법이 2회 연속 실패하면 즉시 다른 경로로 전환한다.**  
+> **외부 서비스 연동 문제 → "왜 안 되는가" 파악에 5분, 넘으면 우회로를 선택한다.**  
+> **블로커 발생 시 오너에게 즉시 보고하고 결정을 받는다. 혼자 1시간 소비하지 않는다.**
+
+---
+
 ## 참조 문서
 
 | 문서 | 내용 |
@@ -355,6 +409,7 @@ Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 | `STORIGE_INTEGRATION_GUIDE.md` | 나의이야기+Remember+랜딩 통합 계획 |
 | `agents/AUTOPILOT.md` | 자동 오케스트레이션 파이프라인 |
 | `agents/ORCHESTRATION_GUIDE.md` | 에이전트 수동 운용 가이드 |
+| `docs/deploy_vercel_git_supabase.md` | **배포 인프라 가이드** (Vercel+GitHub Actions+Supabase) |
 | `docs/DESIGN_sample/` | **디자인 기준 (최우선)** — Midnight Archive 시스템 + 화면별 HTML 템플릿 |
 | `docs/DESIGN_sample/eterna_archive/DESIGN.md` | Midnight Archive 디자인 시스템 공식 문서 |
 | `docs/storige-prototype.html` | 레거시 레이아웃 참고 (토큰 사용 금지) |
