@@ -11,7 +11,13 @@ import { PublishSelectStep } from '@/components/publish/PublishSelectStep'
 type Step = 'select' | 'preview' | 'order'
 type PublishType = 'diary' | 'dear' | 'album'
 
-// 출판 메인 페이지 — 3단계: 선택 → 미리보기 → 주문
+const STEP_LABELS: Record<Step, string> = {
+  select: '1. 글 선택',
+  preview: '2. 미리보기',
+  order: '3. 주문 / 결제',
+}
+
+// 출판 메인 페이지 — Midnight Archive / 3단계 위저드
 export default function PublishPage() {
   const [step, setStep] = useState<Step>('select')
   const [publishType, setPublishType] = useState<PublishType>('diary')
@@ -46,86 +52,142 @@ export default function PublishPage() {
   }
 
   const STEPS: Step[] = ['select', 'preview', 'order']
+  const currentStepIdx = STEPS.indexOf(step)
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9]">
-      {/* 헤더 */}
-      <div className="px-4 py-4 bg-white/80 backdrop-blur-md border-b border-surface-container sticky top-0 z-10">
-        <div className="flex items-center gap-3">
+    <div className="min-h-screen bg-[#F9F9F9]">
+      {/* ── Sticky 헤더 (Backdrop Blur Rule) ── */}
+      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-xl border-b border-[#E2E2E2]/50">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center gap-4">
+          {/* 뒤로 가기 */}
           {step !== 'select' && (
             <button
               onClick={() => setStep(step === 'order' ? 'preview' : 'select')}
-              className="text-[#888]"
+              className="w-8 h-8 rounded-xl bg-[#F3F3F3] flex items-center justify-center hover:bg-[#E8E8E8] transition-colors"
+              aria-label="이전 단계"
             >
-              ←
+              <span className="material-symbols-outlined text-[18px] text-on-surface">arrow_back</span>
             </button>
           )}
-          <div>
-            <h1 className="text-lg font-bold text-[#1A1A1A]">출판</h1>
-            <p className="text-xs text-[#888]">
-              {step === 'select' && '출판할 글을 선택하세요'}
-              {step === 'preview' && '책 미리보기'}
-              {step === 'order' && '배송 및 결제'}
-            </p>
+
+          {/* 타이틀 */}
+          <div className="flex-1">
+            <h1 className="text-sm font-extrabold text-on-surface font-headline">종이책 출판</h1>
           </div>
-          <div className="ml-auto flex gap-1.5">
+
+          {/* 스텝 인디케이터 */}
+          <div className="flex items-center gap-2">
             {STEPS.map((s, i) => (
-              <div
-                key={s}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  step === s ? 'bg-primary' : i < STEPS.indexOf(step) ? 'bg-primary/40' : 'bg-[#e0e0e0]'
-                }`}
-              />
+              <div key={s} className="flex items-center gap-1.5">
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
+                  i < currentStepIdx
+                    ? 'bg-primary text-white'
+                    : i === currentStepIdx
+                      ? 'bg-primary text-white ring-4 ring-primary/20'
+                      : 'bg-[#E8E8E8] text-outline'
+                }`}>
+                  {i < currentStepIdx
+                    ? <span className="material-symbols-outlined text-[12px]">check</span>
+                    : i + 1
+                  }
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div className={`w-6 h-px transition-colors ${i < currentStepIdx ? 'bg-primary' : 'bg-[#E2E2E2]'}`} />
+                )}
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="px-4 py-4">
+      <div className="max-w-6xl mx-auto">
+        {/* ── 히어로 (선택 단계에서만) ── */}
         {step === 'select' && (
-          <PublishSelectStep
-            publishType={publishType}
-            setPublishType={setPublishType}
-            entries={sourceEntries}
-            selectedIds={selectedIds}
-            onToggle={toggleSelect}
-            onSelectAll={handleSelectAll}
-            onNext={() => {
-              if (selectedIds.length === 0) {
-                alert('하나 이상의 글을 선택하세요')
-                return
-              }
-              setStep('preview')
-            }}
-          />
+          <section className="px-6 pt-10 pb-6 md:pt-14 md:pb-8">
+            <span className="inline-flex items-center gap-2 mb-3">
+              <span className="w-5 h-px bg-primary" />
+              <p className="font-headline text-primary uppercase tracking-[0.25em] text-[10px] font-bold">POD Publishing</p>
+            </span>
+            <h2 className="font-headline text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-[1.1] mb-2">
+              나의 이야기를<br className="md:hidden" /> 책으로
+            </h2>
+            <p className="text-sm text-outline leading-relaxed max-w-md">
+              기록한 일기와 편지를 한 권의 아름다운 종이책으로 만들어드립니다.
+            </p>
+
+            {/* 통계 배너 */}
+            <div className="flex flex-wrap items-center gap-6 mt-6">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-sm text-outline">선택된 글 <strong className="text-on-surface">{selectedIds.length}편</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary/40" />
+                <span className="text-sm text-outline">예상 페이지 <strong className="text-on-surface">{pageCount}p</strong></span>
+              </div>
+            </div>
+          </section>
         )}
 
-        {step === 'preview' && (
-          <div className="space-y-6">
-            <BookPreview
-              entries={selectedEntries}
-              title={publishType === 'dear' ? '편지 모음집' : '나의 이야기'}
-            />
-            <div className="text-center text-xs text-[#888]">
-              총 {pageCount}페이지 예상 · {selectedEntries.length}편 수록
-            </div>
-            <button
-              onClick={() => setStep('order')}
-              className="w-full py-3 bg-primary text-white rounded-xl text-sm font-semibold"
-            >
-              출판 신청하기
-            </button>
+        {/* ── 단계별 헤더 (미리보기·주문) ── */}
+        {step !== 'select' && (
+          <div className="px-6 pt-8 pb-4">
+            <p className="text-[10px] tracking-[0.22em] font-bold text-outline uppercase font-headline mb-1">
+              {STEP_LABELS[step]}
+            </p>
+            <h2 className="text-2xl font-bold text-on-surface font-headline">
+              {step === 'preview' ? '책 미리보기' : '주문 / 결제'}
+            </h2>
           </div>
         )}
 
-        {step === 'order' && (
-          <PublishOrderForm
-            selectedEntryIds={selectedIds}
-            publishType={publishType}
-            pageCount={pageCount}
-            onBack={() => setStep('preview')}
-          />
-        )}
+        {/* ── 콘텐츠 ── */}
+        <div className="px-6 pb-32">
+          {step === 'select' && (
+            <PublishSelectStep
+              publishType={publishType}
+              setPublishType={setPublishType}
+              entries={sourceEntries}
+              selectedIds={selectedIds}
+              onToggle={toggleSelect}
+              onSelectAll={handleSelectAll}
+              onNext={() => {
+                if (selectedIds.length === 0) {
+                  alert('하나 이상의 글을 선택하세요')
+                  return
+                }
+                setStep('preview')
+              }}
+            />
+          )}
+
+          {step === 'preview' && (
+            <div className="space-y-6">
+              <BookPreview
+                entries={selectedEntries}
+                title={publishType === 'dear' ? '편지 모음집' : '나의 이야기'}
+              />
+              <div className="text-center text-xs text-outline">
+                총 {pageCount}페이지 예상 · {selectedEntries.length}편 수록
+              </div>
+              <button
+                onClick={() => setStep('order')}
+                className="w-full py-3.5 bg-primary text-white rounded-xl text-sm font-bold hover:bg-[#004c82] transition-colors"
+              >
+                출판 신청하기
+              </button>
+            </div>
+          )}
+
+          {step === 'order' && (
+            <PublishOrderForm
+              selectedEntryIds={selectedIds}
+              publishType={publishType}
+              pageCount={pageCount}
+              onBack={() => setStep('preview')}
+            />
+          )}
+        </div>
       </div>
     </div>
   )

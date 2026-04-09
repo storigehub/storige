@@ -38,6 +38,13 @@ const SERVICES = [
     fallback: 'linear-gradient(135deg, #060f06 0%, #0d1f10 50%, #0a1a0c 100%)',
     href: '/publish',
   },
+  {
+    num: '05', title: 'AI 자서전', subtitle: 'YOUR LIFE STORY',
+    desc: 'AI와 대화하며 당신의 삶을 한 편의 자서전으로 완성하세요. 13개 주제 × 67개 질문이 당신이 미처 기억 못한 소중한 기억을 되살려 드립니다.',
+    img: '',
+    fallback: 'linear-gradient(135deg, #0a0f1a 0%, #0d1a2e 40%, #0a1520 100%)',
+    href: '/mystory',
+  },
 ]
 
 export default function LandingPage() {
@@ -163,18 +170,18 @@ export default function LandingPage() {
             <div className="mb-14">
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 font-headline">Core Services</p>
               <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-[#1A1C1C] tracking-tight">
-                당신의 기록을 위한<br />가장 우아한 4가지 방식
+                당신의 기록을 위한<br />가장 우아한 5가지 방식
               </h2>
             </div>
 
-            {/* 2×2 그리드 */}
+            {/* 2×2+1 그리드 — 5번째 카드는 전체 너비 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {SERVICES.map(({ num, title, subtitle, desc, img, fallback, href }) => (
                 <Link
                   key={num}
                   href={href}
-                  className="service-card group relative rounded-2xl overflow-hidden block"
-                  style={{ aspectRatio: '4/3', background: fallback }}
+                  className={`service-card group relative rounded-2xl overflow-hidden block${num === '05' ? ' sm:col-span-2' : ''}`}
+                  style={{ aspectRatio: num === '05' ? '16/5' : '4/3', background: fallback }}
                 >
                   {/* 풀블리드 이미지 — 로드 실패 시 fallback 그라디언트 노출 */}
                   <img

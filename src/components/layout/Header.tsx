@@ -23,6 +23,7 @@ const SIDE_ITEMS = [
   { href: '/dear',     label: '편지',       icon: 'mail' },
   { href: '/secret',   label: '비밀 코드',  icon: 'lock' },
   { href: '/album',    label: '포토앨범',   icon: 'photo_library' },
+  { href: '/mystory',  label: 'AI 자서전',  icon: 'history_edu' },
   { href: '/publish',  label: '출판하기',   icon: 'menu_book' },
   { href: '/settings', label: '관리',       icon: 'manage_accounts' },
 ]

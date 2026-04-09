@@ -46,7 +46,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 md:px-6 pt-6 pb-32">
+    <div className="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
 
       {/* 페이지 헤더 */}
       <section className="py-4 mb-6">
