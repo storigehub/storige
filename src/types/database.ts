@@ -359,6 +359,38 @@ export interface Database {
         Update: Record<string, never>
         Relationships: []
       }
+      album_photos: {
+        Row: {
+          id: string
+          user_id: string
+          storage_path: string
+          caption: string | null
+          taken_at: string | null
+          file_size: number | null
+          width: number | null
+          height: number | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          storage_path: string
+          caption?: string | null
+          taken_at?: string | null
+          file_size?: number | null
+          width?: number | null
+          height?: number | null
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          caption?: string | null
+          taken_at?: string | null
+          sort_order?: number
+        }
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>
@@ -376,6 +408,7 @@ export type LegacySettings = Database['public']['Tables']['legacy_settings']['Ro
 export type LegacyRequest = Database['public']['Tables']['legacy_requests']['Row']
 export type PublishOrder = Database['public']['Tables']['publish_orders']['Row']
 export type Tag = Database['public']['Tables']['tags']['Row']
+export type AlbumPhoto = Database['public']['Tables']['album_photos']['Row']
 
 // Insert 타입
 export type ProfileInsert = Database['public']['Tables']['profiles']['Insert']

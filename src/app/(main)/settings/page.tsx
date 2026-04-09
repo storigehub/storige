@@ -197,6 +197,26 @@ export default function SettingsPage() {
         </div>
       </section>
 
+      {/* 유고 열람 관리 */}
+      <section className="mb-6">
+        <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase mb-3 font-headline">유고 &amp; 헤리티지</h4>
+        <button
+          onClick={() => router.push('/settings/legacy')}
+          className="w-full bg-white p-5 flex items-center justify-between shadow-sm rounded-2xl text-left active:bg-surface-container-low transition-colors"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+              <span className="material-symbols-outlined text-xl text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>lock_open</span>
+            </div>
+            <div>
+              <p className="font-bold text-sm text-on-surface font-headline">유고 열람 관리</p>
+              <p className="text-xs text-outline mt-0.5">열람 공개 예약 · 가족 요청 승인</p>
+            </div>
+          </div>
+          <span className="material-symbols-outlined text-outline-variant">chevron_right</span>
+        </button>
+      </section>
+
       {/* 기타 옵션 */}
       <section>
         <ul className="space-y-2">
