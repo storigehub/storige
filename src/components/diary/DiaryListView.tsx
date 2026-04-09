@@ -17,6 +17,7 @@ interface DiaryListViewProps {
 export function DiaryListView({ searchQuery, viewMode = 'list' }: DiaryListViewProps) {
   const { entries, loading, error, toggleFavorite, deleteEntry } = useDiaryList({ searchQuery })
   const [openId, setOpenId] = useState<string | null>(null)
+  const [favoritesOnly, setFavoritesOnly] = useState(false)
 
   const handleToggle = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id))
@@ -56,16 +57,65 @@ export function DiaryListView({ searchQuery, viewMode = 'list' }: DiaryListViewP
     )
   }
 
-  const grouped = groupByMonth(entries)
+  const filtered = favoritesOnly ? entries.filter((e) => e.is_favorite) : entries
+  const grouped = groupByMonth(filtered)
+
+  // 즐겨찾기 필터 결과 없음
+  const favoriteCount = entries.filter((e) => e.is_favorite).length
+
+  // 즐겨찾기 필터 바
+  const FavoriteFilter = (
+    <div className="flex items-center gap-2 py-2 mb-1">
+      <button
+        onClick={() => setFavoritesOnly((v) => !v)}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+          favoritesOnly
+            ? 'bg-[#f59e0b] text-white shadow-sm'
+            : 'bg-surface-container-low text-outline hover:text-on-surface'
+        }`}
+      >
+        <span
+          className="material-symbols-outlined text-[14px]"
+          style={{ fontVariationSettings: favoritesOnly ? "'FILL' 1" : "'FILL' 0" }}
+        >
+          star
+        </span>
+        즐겨찾기
+        {favoriteCount > 0 && (
+          <span className={`ml-0.5 ${favoritesOnly ? 'text-white/80' : 'text-outline-variant'}`}>
+            ({favoriteCount})
+          </span>
+        )}
+      </button>
+    </div>
+  )
+
+  if (favoritesOnly && filtered.length === 0) {
+    return (
+      <div>
+        {FavoriteFilter}
+        <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-3 px-4">
+          <span className="material-symbols-outlined text-4xl text-outline-variant" style={{ fontVariationSettings: "'FILL' 0" }}>star</span>
+          <p className="text-sm text-outline">즐겨찾기한 일기가 없습니다<br />일기를 열어 별표를 눌러보세요</p>
+        </div>
+      </div>
+    )
+  }
 
   // 그리드 뷰
   if (viewMode === 'grid') {
-    return <DiaryGridView entries={entries} grouped={grouped} />
+    return (
+      <div>
+        {FavoriteFilter}
+        <DiaryGridView entries={filtered} grouped={grouped} />
+      </div>
+    )
   }
 
   // 리스트 뷰 (기본)
   return (
     <div>
+      {FavoriteFilter}
       {grouped.map(({ month, entries: monthEntries }) => (
         <div key={month}>
           <div className="flex items-center gap-3 py-4 mb-1">

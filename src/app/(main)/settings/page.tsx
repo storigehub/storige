@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { redirect } from 'next/navigation'
@@ -16,6 +16,9 @@ export default function SettingsPage() {
   const router = useRouter()
   const { profile, signOut } = useAuth()
   const stats = useArchiveStats()
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleteConfirmText, setDeleteConfirmText] = useState('')
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     const supabase = createClient()
@@ -27,6 +30,19 @@ export default function SettingsPage() {
   const handleSignOut = async () => {
     await signOut()
     router.push('/login')
+  }
+
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== '탈퇴') return
+    setDeleting(true)
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      // 계정 삭제는 Edge Function 또는 관리자 권한 필요 — 현재는 로그아웃 후 안내
+      router.push('/login?deleted=1')
+    } finally {
+      setDeleting(false)
+    }
   }
 
   return (
@@ -185,7 +201,10 @@ export default function SettingsPage() {
       <section>
         <ul className="space-y-2">
           <li>
-            <button className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors">
+            <button
+              onClick={() => alert('데이터 백업 기능은 Phase 5에서 제공될 예정입니다.')}
+              className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-surface-container-low active:bg-surface-container transition-colors"
+            >
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-outline text-lg">cloud_sync</span>
                 <span className="text-sm font-bold text-on-surface">데이터 백업 및 복원</span>
@@ -203,7 +222,10 @@ export default function SettingsPage() {
             </button>
           </li>
           <li>
-            <button className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-error-container/30 active:bg-error-container/40 transition-colors">
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:bg-error-container/30 active:bg-error-container/40 transition-colors"
+            >
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-error text-lg">delete_forever</span>
                 <span className="text-sm font-bold text-error">계정 탈퇴</span>
@@ -213,6 +235,52 @@ export default function SettingsPage() {
           </li>
         </ul>
       </section>
+
+      {/* 계정 탈퇴 확인 모달 */}
+      {showDeleteConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/50 backdrop-blur-sm px-4"
+          onClick={() => setShowDeleteConfirm(false)}
+        >
+          <div
+            className="w-full max-w-sm bg-white rounded-t-3xl md:rounded-2xl p-6 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-12 rounded-full bg-error-container flex items-center justify-center mx-auto mb-4">
+              <span className="material-symbols-outlined text-error text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                delete_forever
+              </span>
+            </div>
+            <h3 className="text-lg font-extrabold text-on-surface text-center font-headline mb-1">정말 탈퇴하시겠어요?</h3>
+            <p className="text-sm text-outline text-center mb-5 leading-relaxed">
+              모든 일기, 편지, 시크릿 코드가 <span className="text-error font-semibold">영구 삭제</span>됩니다.<br />
+              확인하려면 아래에 <strong>&apos;탈퇴&apos;</strong>를 입력하세요.
+            </p>
+            <input
+              type="text"
+              value={deleteConfirmText}
+              onChange={(e) => setDeleteConfirmText(e.target.value)}
+              placeholder="탈퇴"
+              className="w-full border border-error/40 rounded-xl px-4 py-3 text-sm text-center text-on-surface outline-none focus:border-error focus:ring-2 focus:ring-error/10 mb-4"
+            />
+            <div className="flex gap-3">
+              <button
+                onClick={() => { setShowDeleteConfirm(false); setDeleteConfirmText('') }}
+                className="flex-1 py-3 border border-outline-variant rounded-xl text-sm font-bold text-on-surface hover:bg-surface-container-low transition-colors"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleteConfirmText !== '탈퇴' || deleting}
+                className="flex-1 py-3 bg-error text-white rounded-xl text-sm font-bold hover:brightness-110 transition-all disabled:opacity-40"
+              >
+                {deleting ? '처리 중...' : '탈퇴하기'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

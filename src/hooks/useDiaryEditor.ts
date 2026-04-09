@@ -10,6 +10,14 @@ interface UseDiaryEditorOptions {
   journalType?: string    // 'diary' | 'dear'
 }
 
+interface LocationMeta {
+  locationName: string
+  lat: number
+  lng: number
+  weather: string
+  temperature: number
+}
+
 // 일기 에디터 상태 및 자동저장 로직
 export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEditorOptions = {}) {
   const [id, setId] = useState<string | undefined>(entryId)
@@ -18,6 +26,7 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
   const [isSaving, setIsSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [locationMeta, setLocationMeta] = useState<LocationMeta | null>(null)
 
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const supabase = useMemo(() => createClient(), [])
@@ -40,6 +49,15 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
       // content에서 평문 추출 (검색용)
       const contentText = extractText(contentVal)
 
+      // 위치/날씨 메타
+      const locationFields = locationMeta
+        ? {
+            location_name: locationMeta.locationName,
+            weather: locationMeta.weather || null,
+            temperature: locationMeta.temperature || null,
+          }
+        : {}
+
       if (id) {
         // 수정 — 기존 ID 반환
         await supabase.from('entries').update({
@@ -47,6 +65,7 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
           content: contentVal as unknown as Json,
           content_text: contentText,
           updated_at: new Date().toISOString(),
+          ...locationFields,
         }).eq('id', id)
         setLastSaved(new Date())
         return id
@@ -58,6 +77,7 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
           title: titleVal,
           content: contentVal as unknown as Json,
           content_text: contentText,
+          ...locationFields,
         }).select('id').single()
 
         if (data) {
@@ -73,7 +93,7 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
     } finally {
       setIsSaving(false)
     }
-  }, [id, journalType, supabase])
+  }, [id, journalType, locationMeta, supabase])
 
   // 자동저장 — 2초 디바운스
   useEffect(() => {
@@ -109,6 +129,8 @@ export function useDiaryEditor({ entryId, journalType = 'diary' }: UseDiaryEdito
     lastSaved,
     error,
     saveNow,
+    locationMeta,
+    setLocationMeta,
   }
 }
 
