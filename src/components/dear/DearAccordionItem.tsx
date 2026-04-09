@@ -30,23 +30,24 @@ export function DearAccordionItem({
   const router = useRouter()
   const date = new Date(entry.created_at)
   const day = date.getDate()
-  const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-  const month = monthNames[date.getMonth()]
+  const monthLabels = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+  const dowLabels = ['일', '월', '화', '수', '목', '금', '토']
+  const monthLabel = monthLabels[date.getMonth()]
+  const dowLabel = dowLabels[date.getDay()]
   const badgeColor = recipient ? getBadgeColor(recipient.role) : '#006B5F'
 
   return (
     <div
-      className={`rounded-none md:rounded-xl transition-all duration-300 overflow-hidden ${
+      className={`rounded-xl transition-all duration-300 overflow-hidden ${
         isOpen
-          ? 'bg-dear-open-bg shadow-md border-l-4'
-          : 'group bg-surface-container-low hover:bg-white border-l-4 border-transparent hover:border-dear/30 hover:shadow-sm cursor-pointer'
+          ? 'bg-surface-container-lowest border border-outline-variant/30 shadow-sm'
+          : 'group bg-surface-container-low hover:bg-surface-container-highest border border-transparent hover:border-outline-variant/30 cursor-pointer'
       }`}
-      style={isOpen ? { borderLeftColor: '#006B5F' } : undefined}
       id={`dear-${entry.id}`}
     >
       {/* 카드 헤더 */}
       <div
-        className={`flex items-center gap-5 ${isOpen ? 'px-6 md:px-8 pt-6 pb-4' : 'px-5 py-4'} cursor-pointer`}
+        className={`flex items-center gap-5 md:gap-8 ${isOpen ? 'p-6 md:p-8' : 'p-6'} cursor-pointer`}
         onClick={onToggle}
       >
         {/* 날짜 블록 */}
@@ -54,13 +55,13 @@ export function DearAccordionItem({
           <span className={`font-headline font-extrabold text-dear leading-none ${isOpen ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
             {day}
           </span>
-          <span className="font-headline text-[9px] uppercase tracking-widest text-outline mt-1 leading-none">
-            {month}
+          <span className="font-headline text-[9px] tracking-widest text-outline mt-1 leading-none whitespace-nowrap">
+            {monthLabel} / {dowLabel}
           </span>
         </div>
 
         {/* 수직 구분선 */}
-        <div className="self-stretch w-px bg-surface-container-high shrink-0" />
+        <div className={`self-stretch w-px bg-surface-container-high shrink-0 ${isOpen ? 'hidden' : 'block'}`} />
 
         {/* 제목 영역 */}
         <div className="flex-1 min-w-0">
@@ -106,13 +107,15 @@ export function DearAccordionItem({
             <div className="px-6 md:px-8 pb-6 md:pb-8">
               {/* 편지지 영역 — letter-texture 라인 배경 */}
               <div
-                className="relative p-6 md:p-8 rounded-xl border border-surface-container-high shadow-inner mb-5"
+                className="relative p-8 md:p-10 rounded-xl border border-surface-container-high shadow-inner mb-5 overflow-hidden"
                 style={{
                   backgroundImage: 'linear-gradient(#e8e8e8 1px, transparent 1px)',
                   backgroundSize: '100% 2.5rem',
-                  backgroundColor: '#fefefe',
+                  backgroundColor: '#fdfcf8',
                 }}
               >
+                {/* 상단 틸 바 */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-dear/20" />
                 {/* 인용 워터마크 */}
                 <span
                   className="material-symbols-outlined absolute top-4 right-4 text-dear/10 text-5xl pointer-events-none"

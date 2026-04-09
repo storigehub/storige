@@ -30,10 +30,11 @@ export function DiaryAccordionItem({
   const router = useRouter()
   const date = new Date(entry.created_at)
   const day = date.getDate()
-  const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-  const dowNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-  const monthLabel = monthNames[date.getMonth()]
-  const dowLabel = dowNames[date.getDay()]
+  // _5 기준: 한국어 "10월 / 목" 형식
+  const monthLabels = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+  const dowLabels = ['일', '월', '화', '수', '목', '금', '토']
+  const monthLabel = monthLabels[date.getMonth()]
+  const dowLabel = dowLabels[date.getDay()]
 
   const supabase = createClient()
   const photoUrls = entry.media
@@ -44,14 +45,14 @@ export function DiaryAccordionItem({
     <div
       className={`rounded-xl transition-all duration-300 ${
         isOpen
-          ? 'bg-white border border-outline-variant/30 shadow-md'
-          : 'group bg-surface-container-low hover:bg-white hover:border hover:border-outline-variant/30 hover:shadow-sm cursor-pointer'
+          ? 'bg-surface-container-lowest border border-outline-variant/30 shadow-sm'
+          : 'group bg-surface-container-low hover:bg-surface-container-highest border border-transparent hover:border-outline-variant/30 cursor-pointer'
       }`}
       id={`entry-${entry.id}`}
     >
       {/* 아코디언 헤더 */}
       <div
-        className={`flex items-center gap-5 md:gap-8 ${isOpen ? 'p-6 md:p-8' : 'px-5 py-4'} transition-all cursor-pointer`}
+        className={`flex items-center gap-5 md:gap-8 ${isOpen ? 'p-6 md:p-8' : 'p-6'} transition-all cursor-pointer`}
         onClick={onToggle}
       >
         {/* 날짜 블록 — 숫자 크게, month/dow 위아래 */}
@@ -59,11 +60,9 @@ export function DiaryAccordionItem({
           <span className={`font-headline font-extrabold text-primary leading-none ${isOpen ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
             {day}
           </span>
-          <span className="font-headline text-[9px] uppercase tracking-widest text-outline mt-1 leading-none">
-            {monthLabel}
-          </span>
-          <span className="font-headline text-[8px] uppercase tracking-widest text-outline-variant leading-none">
-            {dowLabel}
+          {/* _5: "10월 / 목" 한 줄로 */}
+          <span className="font-headline text-[9px] tracking-widest text-outline mt-1 leading-none whitespace-nowrap">
+            {monthLabel} / {dowLabel}
           </span>
         </div>
 
