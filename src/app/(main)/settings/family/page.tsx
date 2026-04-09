@@ -72,7 +72,7 @@ export default function FamilyPage() {
   )
 
   return (
-    <div className="px-4 py-4">
+    <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 pb-32">
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-[10px] tracking-[0.2em] font-bold text-outline uppercase mb-1">계정 관리</p>

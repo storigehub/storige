@@ -42,7 +42,7 @@ export default function ProfileEditPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-4 md:px-6 pt-6 pb-32">
+    <div className="max-w-2xl mx-auto px-4 md:px-6 pt-6 pb-32">
       {/* 헤더 */}
       <div className="flex items-center gap-3 mb-8">
         <button

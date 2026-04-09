@@ -25,7 +25,8 @@ export default function MystoryInterviewPage({ params }: Props) {
   return (
     <div className="flex flex-col h-screen bg-[#F9F9F9]">
       {/* 헤더 */}
-      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/80 px-4 py-3 flex items-center gap-3 border-b border-[#C4C7C7]/20">
+      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/80 border-b border-[#C4C7C7]/20">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
         <button
           onClick={() => router.back()}
           className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F3F3]"
@@ -41,10 +42,11 @@ export default function MystoryInterviewPage({ params }: Props) {
           </div>
           <h1 className="text-base font-bold text-[#1A1C1C] truncate">{topic.title}</h1>
         </div>
+        </div>
       </header>
 
       {/* 인터뷰 챗 */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden max-w-3xl mx-auto w-full">
         <InterviewChat topic={topic} />
       </div>
     </div>

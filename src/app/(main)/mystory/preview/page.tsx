@@ -23,7 +23,8 @@ export default function MystoryPreviewPage() {
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
       {/* 헤더 */}
-      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/80 px-6 py-4 flex items-center gap-3 border-b border-[#C4C7C7]/20">
+      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/80 border-b border-[#C4C7C7]/20">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-3">
         <button
           onClick={() => router.back()}
           className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F3F3]"
@@ -34,8 +35,10 @@ export default function MystoryPreviewPage() {
           <p className="text-[10px] uppercase tracking-widest text-[#747878] font-medium">나의 자서전</p>
           <h1 className="text-lg font-bold text-[#1A1C1C]">완성된 원고</h1>
         </div>
+        </div>
       </header>
 
+      <div className="max-w-4xl mx-auto">
       {completedSessions.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-64 px-8 text-center">
           <span className="material-symbols-outlined text-[#C4C7C7] text-5xl mb-4">menu_book</span>
@@ -99,6 +102,7 @@ export default function MystoryPreviewPage() {
           })}
         </div>
       )}
+      </div>
     </div>
   )
 }
