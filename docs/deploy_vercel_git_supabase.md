@@ -47,7 +47,7 @@ git push origin main
         ↓
 GitHub: .github/workflows/deploy.yml 실행
         ↓
-ubuntu-latest에서 Node.js 20 설치
+ubuntu-latest에서 Node.js 22 설치 (actions/checkout@v5, setup-node@v5)
         ↓
 npx vercel deploy --prod --token=$VERCEL_TOKEN
         ↓
@@ -70,12 +70,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
