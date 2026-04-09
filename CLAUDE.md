@@ -296,12 +296,17 @@ FAB:                50% (원형)
 ## 개발 순서
 
 ```
-Phase 1 (2주):  프로젝트 설정 + Auth + 기본 레이아웃
-Phase 2 (3주):  Diary 핵심 (에디터, 아코디언, 5개 뷰, 미디어)
-Phase 3 (4주):  Dear My Son + Secret Code + Family + 출판
-Phase 4 (3주):  포토앨범(Capacitor camera 연동) + Legacy Access + Capacitor 네이티브 + 앱스토어
-Phase 5 (2주):  AI 기능 + PWA + 테스트 + 최적화 + 런칭
-Phase 6 (이후): 나의이야기 통합 + Remember 통합 + 랜딩 리뉴얼
+Phase 1 (2주):  ✅ 프로젝트 설정 + Auth + 기본 레이아웃
+Phase 2 (3주):  ✅ Diary 핵심 (에디터, 아코디언, 5개 뷰, 미디어)
+Phase 3 (4주):  ✅ Dear My Son + Secret Code + Family + 출판
+Phase 4 (3주):  ✅ 포토앨범(Capacitor camera 연동) + Legacy Access + Capacitor 네이티브 + 앱스토어
+Phase 5 (2주):  ✅ AI 기능 + PWA + 테스트 + 최적화 + 런칭
+
+⏭ 다음 (결제 우선):
+  결제 연동:     포트원 구독/단건 결제 + 파파스 POD API (API 키·계약 필요)
+
+Phase 6 (대기): 나의이야기 통합(50% 착수) + Remember 통합(25% 착수) + 랜딩 리뉴얼(미착수)
+               → 결제 연동 완료 후 재개 | 상세: docs/sprint6-status.md
 ```
 
 ---
@@ -325,9 +330,9 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 ## 현재 진행 상태 (자동 업데이트)
 
 ```
-최종 업데이트: 2026-04-09
-현재 Phase: 4 완료 / Phase 5 진행 예정
-빌드: ✅ 클린 (20 pages) | 커밋: 7c3b82e
+최종 업데이트: 2026-04-10
+현재 Phase: Phase 5 완료 / Phase 6 일부 착수 후 중단
+빌드: ✅ 클린 (에러 0) | 커밋: f206c61
 
 완료 Phase:
   Phase 1~3: 전체 완료 (Auth, Diary, Dear, Secret, Family, Publish, Settings, 디자인 마이그레이션)
@@ -342,12 +347,28 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
     Sprint 5-3: PWA (manifest.json + sw.js Service Worker)
     Sprint 5-4: E2E 테스트 (Playwright, e2e/*.spec.ts)
     Sprint 5-5: 성능 최적화 (AVIF/WebP, 보안헤더, optimizePackageImports)
+  Phase 6 (일부 착수, 중단):
+    Sprint 6-1: AI 자서전(MyStory) 50% — 코어 동작, 앱 진입점 미연결
+      완료: questions.ts, useMystory.ts, interview/manuscript API, mystory 전체 페이지, DB 적용
+      미완: BottomNav/Header 진입점, 음성입력, 출판연결, 질문풀 완성
+    Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅만, UI 전체 미구현
+    Sprint 6-3: 랜딩 리뉴얼 0% — 미착수
+    → 상세: docs/sprint6-status.md
 
-다음: Phase 6 (나의이야기 통합 + Remember 통합 + 랜딩 리뉴얼)
+⏭ 다음 작업 (결제 연동 우선):
+  1. 포트원(PortOne) 결제 연동 — API 키 필요 (오너 제공)
+     - 구독 결제: 월 9,900 / 연 99,000원
+     - 출판 단건 결제: 39,000원~
+     - 관련 파일: src/app/(main)/publish/, src/app/(main)/settings/
+  2. 파파스컴퍼니 POD API 연동 — 계약 필요 (오너 결정)
+
+⏸ 이후 재개 예정:
+  - Phase 6 Sprint 6-1 마무리 (Header 진입점 추가 → 30분 즉시 가능)
+  - Phase 6 Sprint 6-2 (추모관 UI 구현)
+  - Phase 6 Sprint 6-3 (랜딩 리뉴얼)
+  → 재개 가이드: docs/sprint6-status.md
 
 ⏸ 마지막으로 미룬 작업 (오너 결정 후):
-  - 포트원 결제 연동 (API 키 필요)
-  - 파파스 POD API (계약 필요)
   - iOS 앱스토어 제출 (Apple Dev 계정 + Mac + Xcode)
   - Android Play Store 제출 (Google Play 계정)
   → Capacitor 빌드는 준비 완료: npm run cap:ios 로 즉시 시작 가능

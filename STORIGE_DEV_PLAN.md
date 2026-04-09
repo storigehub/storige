@@ -1432,17 +1432,31 @@ Phase 6: Agent 6 (QA) → 전체 테스트 (각 Phase마다 TDD로 병행)
 
 **Phase 5 완료 기준:** 웹 + iOS + Android 동시 런칭
 
-### Phase 6: 서비스 통합 + 확장 (진행중)
+### ⏭ 결제 연동 (Phase 6 이전 최우선)
 
-| 단계 | 작업 | 참조 문서 |
+> Phase 5까지 완료 후 결제 연동을 Phase 6 서비스 통합보다 먼저 진행한다.
+
+| 단계 | 작업 | 필요 조건 |
 |------|------|----------|
-| 6-1 | 나의이야기(MyStory) AI 자서전 모듈 통합 | `STORIGE_INTEGRATION_GUIDE.md` Step 1 |
-| 6-2 | Remember Storige 추모관 모듈 통합 | `STORIGE_INTEGRATION_GUIDE.md` Step 2 |
-| 6-3 | 가족 커뮤니티 (H 그룹) | 본 문서 그룹 H |
-| 6-4 | 영상 인터뷰 패키지 (I 그룹) | 본 문서 그룹 I |
-| 6-5 | storige.co.kr 랜딩 리뉴얼 | `STORIGE_INTEGRATION_GUIDE.md` Step 3 |
-| 6-6 | 음성 녹음 + STT | 본 문서 B-3 |
-| 6-7 | 템플릿 시스템 | 본 문서 B-7 |
+| 결제-1 | 포트원(PortOne) SDK 연동 — 구독 결제 (월/연) | 포트원 API 키 (오너 제공) |
+| 결제-2 | 포트원 — 출판 단건 결제 + Webhook 처리 | 포트원 API 키 |
+| 결제-3 | 파파스컴퍼니 POD API 연동 | POD API 계약 (오너 결정) |
+
+---
+
+### Phase 6: 서비스 통합 + 확장 (일부 착수 후 대기)
+
+> 결제 연동 완료 후 재개. 상세 진척 상태: `docs/sprint6-status.md`
+
+| 단계 | 작업 | 상태 | 참조 문서 |
+|------|------|------|----------|
+| 6-1 | 나의이야기(MyStory) AI 자서전 모듈 통합 | **50% — 코어 완성, 진입점 미연결** | `docs/sprint6-status.md` |
+| 6-2 | Remember Storige 추모관 모듈 통합 | **25% — DB+훅 완성, UI 미구현** | `docs/sprint6-status.md` |
+| 6-3 | storige.co.kr 랜딩 리뉴얼 | **0% — 미착수** | `STORIGE_INTEGRATION_GUIDE.md` Step 3 |
+| 6-4 | 가족 커뮤니티 (H 그룹) | 미착수 | 본 문서 그룹 H |
+| 6-5 | 영상 인터뷰 패키지 (I 그룹) | 미착수 | 본 문서 그룹 I |
+| 6-6 | 음성 녹음 + STT | 미착수 | 본 문서 B-3 |
+| 6-7 | 템플릿 시스템 | 미착수 | 본 문서 B-7 |
 
 ---
 
