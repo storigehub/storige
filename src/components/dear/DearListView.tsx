@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { useDiaryList } from '@/hooks/useDiaryList'
 import { useFamilyMembers } from '@/hooks/useFamilyMembers'
 import { DearAccordionItem } from './DearAccordionItem'
@@ -12,6 +13,7 @@ import type { FamilyMember } from '@/types/database'
  * 수신자 필터 탭 (전체 / 구성원별) + 월별 그룹 + 아코디언
  */
 export function DearListView() {
+  const router = useRouter()
   const { entries, loading, error, deleteEntry } = useDiaryList({ journalType: 'dear' })
   const { members } = useFamilyMembers()
   const [openId, setOpenId] = useState<string | null>(null)
@@ -69,10 +71,36 @@ export function DearListView() {
 
   if (entries.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-4 px-4">
-        <span className="material-symbols-outlined text-5xl text-dear" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>mail</span>
-        <h2 className="text-lg font-semibold text-on-surface font-headline">첫 번째 편지를 써보세요</h2>
-        <p className="text-sm text-outline">소중한 사람에게 마음을 전해보세요</p>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-5 px-4">
+        {/* 워터마크 아이콘 */}
+        <div className="w-20 h-20 rounded-full bg-dear/10 flex items-center justify-center">
+          <span
+            className="material-symbols-outlined text-4xl text-dear"
+            style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}
+          >
+            mail
+          </span>
+        </div>
+        {/* 캡션 */}
+        <div className="space-y-1.5">
+          <span className="block text-[10px] font-bold tracking-[0.2em] text-outline uppercase font-headline">
+            No Letters Yet
+          </span>
+          <h2 className="text-xl font-extrabold text-on-surface font-headline">
+            첫 번째 편지를 써보세요
+          </h2>
+          <p className="text-sm text-outline leading-relaxed max-w-xs">
+            소중한 가족에게 마음을 담은 편지를 작성하면<br />이곳에 보관됩니다.
+          </p>
+        </div>
+        {/* CTA */}
+        <button
+          onClick={() => router.push('/dear/new')}
+          className="flex items-center gap-2 px-6 py-3 bg-dear text-white rounded-[0.625rem] text-sm font-bold shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all"
+        >
+          <span className="material-symbols-outlined text-[18px]">edit</span>
+          편지 작성하기
+        </button>
       </div>
     )
   }
@@ -113,9 +141,21 @@ export function DearListView() {
 
       {/* 필터 결과 없음 */}
       {filteredEntries.length === 0 && (
-        <div className="flex flex-col items-center justify-center min-h-[30vh] text-center gap-3 px-4">
-          <span className="material-symbols-outlined text-4xl text-outline-variant">mail_off</span>
-          <p className="text-sm text-outline">이 수신자에게 작성된 편지가 없습니다</p>
+        <div className="flex flex-col items-center justify-center min-h-[30vh] text-center gap-4 px-4">
+          <div className="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center">
+            <span className="material-symbols-outlined text-2xl text-outline-variant">mail_off</span>
+          </div>
+          <div className="space-y-1">
+            <p className="text-sm font-bold text-on-surface">해당 수신자에게 보낸 편지가 없어요</p>
+            <p className="text-xs text-outline">다른 수신자를 선택하거나 새 편지를 작성해보세요</p>
+          </div>
+          <button
+            onClick={() => router.push('/dear/new')}
+            className="flex items-center gap-1.5 px-5 py-2.5 border border-dear/30 text-dear rounded-[0.625rem] text-xs font-bold hover:bg-dear/5 transition-colors"
+          >
+            <span className="material-symbols-outlined text-[16px]">edit</span>
+            편지 작성
+          </button>
         </div>
       )}
 

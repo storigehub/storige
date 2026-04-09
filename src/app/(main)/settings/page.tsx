@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { redirect } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import { useArchiveStats } from '@/hooks/useArchiveStats'
 
 /**
  * 설정 허브 — Midnight Archive / Stitch v2 기준
@@ -14,6 +15,7 @@ import { useAuth } from '@/hooks/useAuth'
 export default function SettingsPage() {
   const router = useRouter()
   const { profile, signOut } = useAuth()
+  const stats = useArchiveStats()
 
   useEffect(() => {
     const supabase = createClient()
@@ -45,10 +47,10 @@ export default function SettingsPage() {
         <h4 className="text-[10px] font-bold tracking-[0.2em] text-outline uppercase mb-3 font-headline">아카이브 현황</h4>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: '전체 일기', icon: 'book_4', iconColor: 'text-primary', bg: 'bg-primary-container', value: '—', unit: '' },
-            { label: '편지',      icon: 'mail',   iconColor: 'text-dear',    bg: 'bg-dear/10',          value: '—', unit: '' },
-            { label: '비밀 코드', icon: 'lock',   iconColor: 'text-pink-accent', bg: 'bg-pink-accent/10', value: '—', unit: '' },
-            { label: '저장 용량', icon: 'storage', iconColor: 'text-primary', bg: 'bg-primary-container', value: '—', unit: '' },
+            { label: '전체 일기', icon: 'book_4',  iconColor: 'text-primary',     bg: 'bg-primary-container', value: stats.loading ? '…' : String(stats.diaryCount),   unit: '개' },
+            { label: '편지',      icon: 'mail',    iconColor: 'text-dear',        bg: 'bg-dear/10',           value: stats.loading ? '…' : String(stats.dearCount),    unit: '개' },
+            { label: '비밀 코드', icon: 'lock',    iconColor: 'text-pink-accent', bg: 'bg-pink-accent/10',    value: stats.loading ? '…' : String(stats.secretCount),  unit: '개' },
+            { label: '저장 용량', icon: 'storage', iconColor: 'text-primary',     bg: 'bg-primary-container', value: stats.loading ? '…' : String(stats.storageMB),    unit: 'MB' },
           ].map(({ label, icon, iconColor, bg, value, unit }) => (
             <div key={label} className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-2">
               <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center`}>

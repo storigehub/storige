@@ -1,11 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { EntryWithMedia } from '@/hooks/useDiaryList'
 import { formatTime } from '@/lib/utils/date'
 import { createClient } from '@/lib/supabase/client'
+import { DiaryLightbox } from './DiaryLightbox'
 
 interface DiaryAccordionItemProps {
   entry: EntryWithMedia
@@ -28,6 +30,7 @@ export function DiaryAccordionItem({
   onDelete,
 }: DiaryAccordionItemProps) {
   const router = useRouter()
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const date = new Date(entry.created_at)
   const day = date.getDate()
   // _5 기준: 한국어 "10월 / 목" 형식
@@ -178,15 +181,37 @@ export function DiaryAccordionItem({
                   {entry.content_text}
                 </p>
 
-                {/* 사진 갤러리 — 가로 스크롤 */}
+                {/* 사진 갤러리 — 가로 스크롤, 클릭 시 라이트박스 */}
                 {photoUrls.length > 0 && (
                   <div className="flex gap-3 overflow-x-auto pb-2 mb-5" style={{ WebkitOverflowScrolling: 'touch' }}>
                     {photoUrls.map((url, i) => (
-                      <div key={i} className="flex-shrink-0 w-40 h-28 md:w-56 md:h-36 rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
-                        <Image src={url} alt={`사진 ${i + 1}`} width={224} height={144} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                      </div>
+                      <button
+                        key={i}
+                        onClick={() => setLightboxIndex(i)}
+                        className="flex-shrink-0 w-40 h-28 md:w-56 md:h-36 rounded-xl overflow-hidden shadow-sm border border-outline-variant/20 group/img"
+                        aria-label={`사진 ${i + 1} 크게 보기`}
+                      >
+                        <Image
+                          src={url}
+                          alt={`사진 ${i + 1}`}
+                          width={224}
+                          height={144}
+                          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                        />
+                      </button>
                     ))}
                   </div>
+                )}
+
+                {/* 라이트박스 */}
+                {lightboxIndex !== null && (
+                  <DiaryLightbox
+                    urls={photoUrls}
+                    currentIndex={lightboxIndex}
+                    onClose={() => setLightboxIndex(null)}
+                    onPrev={() => setLightboxIndex((i) => ((i ?? 0) - 1 + photoUrls.length) % photoUrls.length)}
+                    onNext={() => setLightboxIndex((i) => ((i ?? 0) + 1) % photoUrls.length)}
+                  />
                 )}
 
                 {/* 삭제 버튼 */}
