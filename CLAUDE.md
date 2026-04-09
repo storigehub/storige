@@ -325,22 +325,28 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 ## 현재 진행 상태 (자동 업데이트)
 
 ```
-최종 업데이트: 2026-04-07
-현재 Phase: 3 (디자인 마이그레이션 전용 스프린트 완료)
-현재 Sprint: 3-7 대기 중 (오너 Go 확인 후 시작)
-완료 이슈:
-  Phase 1~2: 전체 완료
-  Phase 3: Sprint 3-1~3-6 + QC P0~P2 완료
-  디자인 마이그레이션 스프린트 완료:
-    P0: Header(데스크탑 인라인 nav) / BottomNav(라벨 일기·편지·비밀·관리, md:hidden) / FAB(bottom-28 md:bottom-12)
-    P2: /settings/page.tsx 신설(_6 기반 허브), /album/page.tsx 플레이스홀더(Phase 4 예정)
-    P3-Diary: 히어로 "오늘의 성찰", 탭 border-b-2 cobalt, DiaryAccordionItem p-6~8 open card
-    P3-Dear: 히어로 "마음을 담은 영원한 기록", 월별 teal 섹션 헤더, 편지지 스타일 열린 카드
-    P3-Secret: "Archive Section 08" 히어로, fingerprint 보안 배너, "Encrypted Records" 라벨
-    레거시 #4A90D9/#00C9B7/#FF6B9D 전역 치환, Plus Jakarta Sans + Material Symbols Outlined 추가
-  총 테스트: 40개 통과 | 빌드: ✅ | Vercel 배포: ✅
-다음: Sprint 3-7 (포트원 결제 + 파파스 POD API)
-블로커: 포트원 API 키 + 파파스 POD API 계약 필요 (오너 확인)
+최종 업데이트: 2026-04-09
+현재 Phase: 4 완료 / Phase 5 진행 예정
+빌드: ✅ 클린 (20 pages) | 커밋: 7c3b82e
+
+완료 Phase:
+  Phase 1~3: 전체 완료 (Auth, Diary, Dear, Secret, Family, Publish, Settings, 디자인 마이그레이션)
+  Phase 4:
+    Sprint 4-1: 포토앨범 (useAlbum + AlbumLightbox + album_photos Supabase 테이블)
+    Sprint 4-2: Legacy Access (/legacy 열람화면 + /settings/legacy 관리)
+    Sprint 4-3: Capacitor 설정 (capacitor.config.ts + camera.ts + 빌드 스크립트)
+    Sprint 4-4: 앱스토어 배포 가이드 (docs/appstore-deploy-guide.md)
+
+다음: Phase 5 (AI 기능 + PWA + 테스트 + 최적화 + 런칭)
+
+⏸ 마지막으로 미룬 작업 (오너 결정 후):
+  - 포트원 결제 연동 (API 키 필요)
+  - 파파스 POD API (계약 필요)
+  - iOS 앱스토어 제출 (Apple Dev 계정 + Mac + Xcode)
+  - Android Play Store 제출 (Google Play 계정)
+  → Capacitor 빌드는 준비 완료: npm run cap:ios 로 즉시 시작 가능
+  → 가이드: docs/appstore-deploy-guide.md
+
 Supabase 프로젝트 ID: uobbgxwuukwptqtywxxj (ap-northeast-2)
 ```
 
