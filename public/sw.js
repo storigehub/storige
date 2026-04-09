@@ -5,8 +5,19 @@
  * - 오프라인 fallback
  */
 
-const CACHE_NAME = 'storige-v1'
+const CACHE_NAME = 'storige-v2'
 const OFFLINE_URL = '/offline'
+
+/** Next.js App Router RSC/프리패치 요청은 캐시하면 HTML과 섞여 네비게이션이 완료되지 않음 */
+function isNextAppRouterDataRequest(request) {
+  const h = request.headers
+  if (h.get('rsc')) return true
+  if (h.get('next-router-state-tree')) return true
+  if (h.get('next-router-prefetch')) return true
+  if (h.get('next-router-segment-prefetch')) return true
+  if (h.get('next-hmr-refresh')) return true
+  return false
+}
 
 // 사전 캐시할 자산
 const PRECACHE_URLS = [
@@ -55,6 +66,18 @@ self.addEventListener('fetch', (event) => {
 
   // Supabase 요청: Network-Only (캐시하지 않음)
   if (url.hostname.includes('supabase.co')) {
+    event.respondWith(fetch(request))
+    return
+  }
+
+  // Next 빌드 산출물 — 배포마다 해시가 바뀌므로 캐시하면 청크 불일치
+  if (url.pathname.startsWith('/_next/')) {
+    event.respondWith(fetch(request))
+    return
+  }
+
+  // RSC Flight / 라우터 프리패치 — HTML 캐시와 동일 URL로 충돌하지 않음
+  if (isNextAppRouterDataRequest(request) || url.searchParams.has('_rsc')) {
     event.respondWith(fetch(request))
     return
   }
