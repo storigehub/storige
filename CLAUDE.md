@@ -331,8 +331,8 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 
 ```
 최종 업데이트: 2026-04-10
-현재 Phase: Phase 6 진행 중 (6-1 완료, 6-2 진행 대기, 6-3 완료)
-빌드: ✅ 클린 (에러 0) | 커밋: 1636594
+현재 Phase: Phase 6 완료 / Auth 보완 완료 / 결제 연동 대기
+빌드: ✅ 클린 (에러 0) | 커밋: 706dbfc
 
 완료 Phase:
   Phase 1~3: 전체 완료 (Auth, Diary, Dear, Secret, Family, Publish, Settings, 디자인 마이그레이션)
@@ -347,13 +347,27 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
     Sprint 5-3: PWA (manifest.json + sw.js Service Worker)
     Sprint 5-4: E2E 테스트 (Playwright, e2e/*.spec.ts)
     Sprint 5-5: 성능 최적화 (AVIF/WebP, 보안헤더, optimizePackageImports)
-  Phase 6 (일부 착수, 중단):
-    Sprint 6-1: AI 자서전(MyStory) 60% — 코어 동작, BottomNav 진입점 추가
-      완료: questions.ts, useMystory.ts, interview/manuscript API, mystory 전체 페이지, DB 적용, BottomNav 5번째 탭(프로필사진)
-      미완: 음성입력, 출판연결, 질문풀 완성
-    Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅만, UI 전체 미구현 (⏸ 마일스톤 최후순위로 보류)
-    Sprint 6-3: 랜딩 리뉴얼 ✅ — 추모관 서비스카드, 가격/플랜 섹션, 앱 다운로드 CTA, 헤더 nav 개선 완료
+  Phase 6:
+    Sprint 6-1: AI 자서전(MyStory) ✅ — 코어 완성, BottomNav 5번째 탭, Header 사이드메뉴 진입점
+      미완(낮은 우선순위): 음성입력, 출판연결, 질문풀 완성
+    Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅 완성, UI 미구현
+      ⏸ 마일스톤 최후순위 보류 | 기획서: docs/sprint6-memorial-plan.md
+    Sprint 6-3: 랜딩 리뉴얼 ✅ — 6개 서비스카드(추모관 포함), 가격/플랜, 앱 다운로드 CTA, 헤더 nav
     → 상세: docs/sprint6-status.md
+
+  Auth 보완 (2026-04-10):
+    ✅ middleware.ts 루트 생성 — 경로 보호 실제 작동 (Critical 보안 수정)
+       보호 경로: /diary /dear /secret /album /publish /settings /mystory
+    ✅ 비밀번호 찾기 (/forgot-password) + 재설정 (/reset-password) 페이지 추가
+    ✅ 로그인 폼: URL 에러 파라미터 표시 + 비밀번호 찾기 링크
+    ✅ Auth 화면 브랜드 패널 로고 이미지 교체 (LoginForm, SignupForm)
+    ✅ Google OAuth 연동 완료 (Supabase Dashboard 설정 완료)
+    ✅ 카카오 OAuth 연동 완료 (scope: profile_nickname + profile_image, 이메일 제외)
+       → 카카오 비즈앱 미인증 상태. 인증 후 account_email scope 추가 가능
+    ✅ 사이트 로고 이미지 교체 (storige_logo2.png → public/logo.png)
+
+  기타 (2026-04-10):
+    ✅ 로고 사이즈 2배 확대 (36px → 72px), 헤더 높이 h-16 → h-20
 
 ⏭ 다음 작업 (결제 연동 우선):
   1. 포트원(PortOne) 결제 연동 — API 키 필요 (오너 제공)
@@ -363,10 +377,9 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
   2. 파파스컴퍼니 POD API 연동 — 계약 필요 (오너 결정)
 
 ⏸ 이후 재개 예정:
-  - Phase 6 Sprint 6-1 마무리 (Header 진입점 추가 → 30분 즉시 가능)
-  - Phase 6 Sprint 6-2 (추모관 UI 구현)
-  - Phase 6 Sprint 6-3 (랜딩 리뉴얼)
-  → 재개 가이드: docs/sprint6-status.md
+  - Phase 6 Sprint 6-2 (추모관 UI 구현) — 마일스톤 최후순위
+  - 카카오 비즈앱 인증 후 이메일 scope 추가
+  → 추모관 기획서: docs/sprint6-memorial-plan.md
 
 ⏸ 마지막으로 미룬 작업 (오너 결정 후):
   - iOS 앱스토어 제출 (Apple Dev 계정 + Mac + Xcode)
