@@ -50,7 +50,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]">
-      <div className="flex justify-between items-center h-16 px-6 max-w-6xl mx-auto">
+      <div className="flex justify-between items-center h-20 px-6 max-w-6xl mx-auto">
 
         {/* 왼쪽: 햄버거(모바일) + 브랜드 */}
         <div className="flex items-center gap-4">
@@ -118,7 +118,7 @@ export function Header() {
 
           {/* 브랜드 */}
           <button onClick={() => router.push('/diary')} aria-label="홈으로">
-            <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-9 w-auto object-contain" priority />
+            <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-[4.5rem] w-auto object-contain" priority />
           </button>
 
           {/* 데스크탑 인라인 nav */}

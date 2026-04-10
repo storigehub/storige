@@ -111,8 +111,8 @@ export default function LandingPage() {
 
         {/* ── 헤더 ── */}
         <header className="sticky top-0 z-50 glass-card border-b border-white/30">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-            <Link href="/"><Image src="/logo.png" alt="Storige" width={120} height={36} className="h-9 w-auto object-contain" priority /></Link>
+          <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <Link href="/"><Image src="/logo.png" alt="Storige" width={120} height={36} className="h-[4.5rem] w-auto object-contain" priority /></Link>
             <nav className="hidden md:flex items-center gap-8">
               {[['아카이브','/diary'],['서신','/dear'],['AI 자서전','/mystory'],['출판','/publish']].map(([label, href]) => (
                 <Link key={label} href={href} className="text-sm font-semibold text-[#747878] hover:text-on-surface transition-colors">{label}</Link>
@@ -322,7 +322,7 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
               <div className="col-span-2 md:col-span-1">
-                <Image src="/logo.png" alt="Storige" width={100} height={30} className="h-8 w-auto object-contain mb-3" />
+                <Image src="/logo.png" alt="Storige" width={100} height={30} className="h-16 w-auto object-contain mb-3" />
                 <p className="text-xs text-[#747878] leading-relaxed">기억을 저장하고,<br />내일을 준비하는<br />디지털 헤리티지 플랫폼</p>
               </div>
               {[
