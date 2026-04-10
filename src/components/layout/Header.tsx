@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import Image from 'next/image'
 import { useAuth } from '@/hooks/useAuth'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
@@ -116,12 +117,9 @@ export function Header() {
           </Sheet>
 
           {/* 브랜드 */}
-          <h1
-            className="text-xl font-extrabold tracking-tighter text-on-surface font-headline cursor-pointer"
-            onClick={() => router.push('/diary')}
-          >
-            Storige
-          </h1>
+          <button onClick={() => router.push('/diary')} aria-label="홈으로">
+            <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-9 w-auto object-contain" priority />
+          </button>
 
           {/* 데스크탑 인라인 nav */}
           <nav className="hidden md:flex items-center ml-4">
