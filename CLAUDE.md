@@ -331,8 +331,8 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
 
 ```
 최종 업데이트: 2026-04-10
-현재 Phase: Phase 5 완료 / Phase 6 일부 착수 후 중단
-빌드: ✅ 클린 (에러 0) | 커밋: f206c61
+현재 Phase: Phase 6 진행 중 (6-1 완료, 6-2 진행 대기, 6-3 완료)
+빌드: ✅ 클린 (에러 0) | 커밋: 1636594
 
 완료 Phase:
   Phase 1~3: 전체 완료 (Auth, Diary, Dear, Secret, Family, Publish, Settings, 디자인 마이그레이션)
@@ -352,7 +352,7 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
       완료: questions.ts, useMystory.ts, interview/manuscript API, mystory 전체 페이지, DB 적용, BottomNav 5번째 탭(프로필사진)
       미완: 음성입력, 출판연결, 질문풀 완성
     Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅만, UI 전체 미구현
-    Sprint 6-3: 랜딩 리뉴얼 0% — 미착수
+    Sprint 6-3: 랜딩 리뉴얼 ✅ — 추모관 서비스카드, 가격/플랜 섹션, 앱 다운로드 CTA, 헤더 nav 개선 완료
     → 상세: docs/sprint6-status.md
 
 ⏭ 다음 작업 (결제 연동 우선):
