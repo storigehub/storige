@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
+import { LandingPricing } from '@/components/landing/LandingPricing'
+import { LandingAppDownload } from '@/components/landing/LandingAppDownload'
 
 /* ── Stitch aida-public 이미지 URL ── */
 const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAoAvpanOPp_2G7L9fiWWbBThpcgenL9CL5-9eyY3jmBEeIyzxeCttJrDKoRy3NM10dM0LzAWRxqKmPUYOdrDn5i_IMtD7F-gej7arIw81D1-QoDILY1P9vqrT0m0vaxggBIkHKV1TjzrNygh5jx82Renkm3LrbD0F8ZFw_63W02mWnJi8veCjJ7yxeZQdRzcPGto8Xq2jKJf-NZ5UP2Rp2Y3djZ0eBxJg9cl8tUlt9Eh_FWcTlqxaRqD3J9jaT9-F8ya5OthAboz2m'
@@ -44,6 +46,13 @@ const SERVICES = [
     img: '',
     fallback: 'linear-gradient(135deg, #0a0f1a 0%, #0d1a2e 40%, #0a1520 100%)',
     href: '/mystory',
+  },
+  {
+    num: '06', title: '디지털 추모관', subtitle: 'ETERNAL MEMORY',
+    desc: 'QR 코드 하나로 언제 어디서나 추모할 수 있는 아름다운 온라인 공간. 고인의 삶을 사진, 글, 방명록으로 영원히 기억합니다.',
+    img: '',
+    fallback: 'linear-gradient(135deg, #0a1520 0%, #0f2030 40%, #0a1a1a 100%)',
+    href: '/memorial',
   },
 ]
 
@@ -104,7 +113,7 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
             <Link href="/" className="font-headline text-xl font-extrabold text-on-surface tracking-tight">Storige</Link>
             <nav className="hidden md:flex items-center gap-8">
-              {[['아카이브','/diary'],['서신','/dear'],['출판','/publish'],['유산','/diary']].map(([label, href]) => (
+              {[['아카이브','/diary'],['서신','/dear'],['AI 자서전','/mystory'],['출판','/publish']].map(([label, href]) => (
                 <Link key={label} href={href} className="text-sm font-semibold text-[#747878] hover:text-on-surface transition-colors">{label}</Link>
               ))}
             </nav>
@@ -170,18 +179,18 @@ export default function LandingPage() {
             <div className="mb-14">
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 font-headline">Core Services</p>
               <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-[#1A1C1C] tracking-tight">
-                당신의 기록을 위한<br />가장 우아한 5가지 방식
+                당신의 기록을 위한<br />가장 우아한 6가지 방식
               </h2>
             </div>
 
-            {/* 2×2+1 그리드 — 5번째 카드는 전체 너비 */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* 2×3 그리드 — 균등 배치 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {SERVICES.map(({ num, title, subtitle, desc, img, fallback, href }) => (
                 <Link
                   key={num}
                   href={href}
-                  className={`service-card group relative rounded-2xl overflow-hidden block${num === '05' ? ' sm:col-span-2' : ''}`}
-                  style={{ aspectRatio: num === '05' ? '16/5' : '4/3', background: fallback }}
+                  className="service-card group relative rounded-2xl overflow-hidden block"
+                  style={{ aspectRatio: '4/3', background: fallback }}
                 >
                   {/* 풀블리드 이미지 — 로드 실패 시 fallback 그라디언트 노출 */}
                   <img
@@ -280,6 +289,12 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ── 가격/플랜 ── */}
+        <LandingPricing />
+
+        {/* ── 앱 다운로드 ── */}
+        <LandingAppDownload />
+
         {/* ── 철학 CTA ── */}
         <section className="bg-[#1A1C1C] py-20 md:py-28">
           <div className="max-w-3xl mx-auto px-4 md:px-8 text-center">
@@ -310,7 +325,7 @@ export default function LandingPage() {
                 <p className="text-xs text-[#747878] leading-relaxed">기억을 저장하고,<br />내일을 준비하는<br />디지털 헤리티지 플랫폼</p>
               </div>
               {[
-                { title: 'Service', items: ['일기장','서신','비밀 코드','출판'] },
+                { title: 'Service', items: ['일기장','서신','비밀 코드','AI 자서전','추모관','출판'] },
                 { title: 'Company', items: ['소개','블로그','채용','문의'] },
                 { title: 'Connect', items: ['개인정보처리방침','이용약관','고객센터'] },
               ].map(({ title, items }) => (
