@@ -1,8 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { redirect } from 'next/navigation'
+import { useState } from 'react'
 import { DiaryListView } from '@/components/diary/DiaryListView'
 import { DiaryCalendarView } from '@/components/diary/DiaryCalendarView'
 import { DiaryMediaView } from '@/components/diary/DiaryMediaView'
@@ -23,13 +21,6 @@ export default function DiaryPage() {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
   const [searchQuery, setSearchQuery] = useState('')
   const { entries } = useDiaryList()
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) redirect('/login')
-    })
-  }, [])
 
   return (
     <div className="max-w-6xl mx-auto">

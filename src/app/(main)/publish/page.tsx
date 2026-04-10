@@ -1,8 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { redirect } from 'next/navigation'
+import { useState } from 'react'
 import { useDiaryList } from '@/hooks/useDiaryList'
 import { BookPreview } from '@/components/publish/BookPreview'
 import { PublishOrderForm } from '@/components/publish/PublishOrderForm'
@@ -26,12 +24,7 @@ export default function PublishPage() {
   const { entries: diaryEntries } = useDiaryList({ journalType: 'diary' })
   const { entries: dearEntries } = useDiaryList({ journalType: 'dear' })
 
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) redirect('/login')
-    })
-  }, [])
+
 
   const sourceEntries = publishType === 'dear' ? dearEntries : diaryEntries
   const selectedEntries = sourceEntries.filter((e) => selectedIds.includes(e.id))

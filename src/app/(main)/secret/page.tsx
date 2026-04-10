@@ -1,8 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { redirect } from 'next/navigation'
+import { useState } from 'react'
 import { SecretListView } from '@/components/secret/SecretListView'
 
 // _1 템플릿 기준 카테고리 정의
@@ -22,13 +20,6 @@ const CATEGORIES = [
  */
 export default function SecretPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) redirect('/login')
-    })
-  }, [])
 
   return (
     <div className="max-w-6xl mx-auto px-5 pb-32">

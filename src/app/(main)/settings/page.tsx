@@ -1,9 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
-import { redirect } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { useArchiveStats } from '@/hooks/useArchiveStats'
 
@@ -19,13 +17,6 @@ export default function SettingsPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [deleteConfirmText, setDeleteConfirmText] = useState('')
   const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) redirect('/login')
-    })
-  }, [])
 
   const handleSignOut = async () => {
     await signOut()

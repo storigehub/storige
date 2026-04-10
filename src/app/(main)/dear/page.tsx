@@ -1,21 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { redirect } from 'next/navigation'
 import { DearListView } from '@/components/dear/DearListView'
 
 /**
  * Dear My Son 편지 메인 페이지 — Midnight Archive / dear_my_son_1 템플릿 기준
  * 히어로: "마음을 담은 영원한 기록" + 설명 텍스트
+ * 인증: (main)/layout.tsx 서버사이드에서 처리
  */
 export default function DearPage() {
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) redirect('/login')
-    })
-  }, [])
 
   return (
     <div className="max-w-6xl mx-auto">
