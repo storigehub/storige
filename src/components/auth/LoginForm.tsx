@@ -1,19 +1,29 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+// URL 에러 파라미터 → 사용자 메시지 매핑
+const URL_ERRORS: Record<string, string> = {
+  auth_callback_error: '소셜 로그인 중 오류가 발생했습니다. 다시 시도해주세요.',
+  session_expired: '세션이 만료되었습니다. 다시 로그인해주세요.',
+}
+
 // 로그인 폼 — PC: 2분할(브랜드 패널 + 폼), 모바일: 전체화면
 export function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { signIn, signInWithGoogle, signInWithKakao } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(
+    URL_ERRORS[searchParams.get('error') ?? ''] ?? null
+  )
   const [loading, setLoading] = useState(false)
   const [oauthLoading, setOauthLoading] = useState<'google' | 'kakao' | null>(null)
 
@@ -42,8 +52,8 @@ export function LoginForm() {
         <div className="relative z-10 w-full max-w-sm space-y-10">
           {/* 로고 */}
           <div>
-            <h1 className="text-4xl font-extrabold text-white font-headline tracking-tight">Storige</h1>
-            <p className="mt-1.5 text-[10px] tracking-[0.22em] font-semibold text-white/35 uppercase">Stories + Storage</p>
+            <Image src="/logo.png" alt="Storige" width={160} height={48} className="h-12 w-auto brightness-0 invert" priority />
+            <p className="mt-2 text-[10px] tracking-[0.22em] font-semibold text-white/35 uppercase">Stories + Storage</p>
           </div>
 
           {/* 메인 카피 */}
@@ -109,7 +119,10 @@ export function LoginForm() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-xs font-medium text-outline uppercase tracking-wider">비밀번호</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-xs font-medium text-outline uppercase tracking-wider">비밀번호</Label>
+                <a href="/forgot-password" className="text-xs text-primary hover:underline">비밀번호 찾기</a>
+              </div>
               <Input
                 id="password"
                 type="password"

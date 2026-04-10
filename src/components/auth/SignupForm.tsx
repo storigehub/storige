@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -87,8 +88,8 @@ export function SignupForm() {
 
         <div className="relative z-10 w-full max-w-sm space-y-10">
           <div>
-            <h1 className="text-4xl font-extrabold text-white font-headline tracking-tight">Storige</h1>
-            <p className="mt-1.5 text-[10px] tracking-[0.22em] font-semibold text-white/35 uppercase">Stories + Storage</p>
+            <Image src="/logo.png" alt="Storige" width={160} height={48} className="h-12 w-auto brightness-0 invert" priority />
+            <p className="mt-2 text-[10px] tracking-[0.22em] font-semibold text-white/35 uppercase">Stories + Storage</p>
           </div>
 
           <div>
