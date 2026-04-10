@@ -10,15 +10,15 @@ import { SecretCredentialFields } from './SecretCredentialFields'
 import { SecretPassphraseSection } from './SecretPassphraseSection'
 
 const CATEGORIES: { value: SecretCategory; label: string; icon: string }[] = [
-  { value: 'finance', label: '금융', icon: '💳' },
-  { value: 'real_estate', label: '부동산', icon: '🏠' },
-  { value: 'legal', label: '법률', icon: '⚖️' },
-  { value: 'crypto', label: '가상자산', icon: '₿' },
-  { value: 'business', label: '사업', icon: '💼' },
-  { value: 'other', label: '기타', icon: '🔐' },
+  { value: 'finance',      label: '금융',   icon: 'account_balance' },
+  { value: 'real_estate',  label: '부동산',  icon: 'domain' },
+  { value: 'legal',        label: '법률',   icon: 'gavel' },
+  { value: 'crypto',       label: '가상자산', icon: 'currency_bitcoin' },
+  { value: 'business',     label: '사업',   icon: 'business_center' },
+  { value: 'other',        label: '기타',   icon: 'category' },
 ]
 
-// 시크릿 코드 등록 폼
+// 시크릿 코드 등록 폼 — Midnight Archive / Secret 디자인 시스템 기준
 export function SecretCodeForm() {
   const router = useRouter()
   const [category, setCategory] = useState<SecretCategory>('finance')
@@ -72,42 +72,93 @@ export function SecretCodeForm() {
   }, [title, content, importance, passphrase, passphraseConfirm, credentials, category, router])
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      {/* 상단 바 */}
-      <div className="flex items-center justify-between px-4 h-14 border-b border-outline-variant/30">
-        <button onClick={() => router.back()} className="text-[#888] text-sm">취소</button>
-        <h2 className="text-sm font-semibold text-[#1A1A1A]">시크릿 코드 등록</h2>
+    <div className="min-h-screen bg-[#F9F9F9]">
+      {/* 상단 바 — backdrop blur */}
+      <div className="sticky top-0 z-10 flex items-center justify-between px-5 h-16 bg-white/80 backdrop-blur-xl border-b border-[#C4C7C7]/20">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-1.5 text-[#747878] hover:text-[#1A1C1C] transition-colors"
+        >
+          <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>
+            arrow_back
+          </span>
+          <span className="text-sm">돌아가기</span>
+        </button>
+
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="text-pink-accent font-semibold text-sm disabled:opacity-40"
+          className="flex items-center gap-2 bg-[#E91E63] text-white text-sm font-bold px-5 py-2 rounded-[10px] disabled:opacity-40 hover:brightness-110 transition-all active:scale-[0.97]"
         >
-          {isSaving ? '저장 중...' : '저장'}
+          {isSaving ? (
+            <>
+              <span className="material-symbols-outlined text-base animate-spin" style={{ fontVariationSettings: "'FILL' 0" }}>
+                progress_activity
+              </span>
+              저장 중
+            </>
+          ) : (
+            <>
+              <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+                lock
+              </span>
+              암호화하여 저장
+            </>
+          )}
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+      {/* 다크 히어로 패널 */}
+      <div className="bg-[#1A1C1C] px-6 pt-8 pb-7">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="bg-[#E91E63]/15 px-3 py-1 rounded-full flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-[#E91E63] text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+              lock
+            </span>
+            <span className="text-[#E91E63] text-[10px] uppercase tracking-[0.2em] font-bold">Secure Access Only</span>
+          </div>
+        </div>
+        <h1 className="font-headline text-3xl font-extrabold text-white tracking-tight leading-tight">
+          새 시크릿 등록
+        </h1>
+        <p className="text-white/40 text-sm mt-2 leading-relaxed">
+          저장 전 클라이언트에서 AES-256 암호화됩니다
+        </p>
+      </div>
+
+      {/* 폼 본문 */}
+      <div className="max-w-2xl mx-auto px-5 py-6 space-y-7">
+
+        {/* 에러 메시지 */}
         {error && (
-          <div className="bg-[#ffeef0] border border-[#FF4757] rounded-xl p-3">
-            <p className="text-xs text-[#FF4757]">{error}</p>
+          <div className="flex items-center gap-3 bg-[#FFDAD6] rounded-xl px-4 py-3">
+            <span className="material-symbols-outlined text-[#BA1A1A] text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
+              error
+            </span>
+            <p className="text-sm text-[#BA1A1A] font-medium">{error}</p>
           </div>
         )}
 
         {/* 카테고리 */}
         <div>
-          <p className="text-xs text-[#888] mb-2">카테고리</p>
-          <div className="grid grid-cols-3 gap-2">
+          <p className="text-[10px] text-[#747878] uppercase tracking-[0.2em] font-bold mb-3">카테고리</p>
+          <div className="flex gap-2 flex-wrap">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setCategory(cat.value)}
-                className={`flex flex-col items-center gap-1 py-3 rounded-xl border text-xs transition-colors ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${
                   category === cat.value
-                    ? 'border-pink-accent bg-pink-container text-pink-accent'
-                    : 'border-outline-variant/30 text-[#555]'
+                    ? 'bg-[#1A1C1C] text-white shadow-sm'
+                    : 'bg-[#EEEEEE] text-[#444748] hover:bg-[#E2E2E2]'
                 }`}
               >
-                <span className="text-xl">{cat.icon}</span>
+                <span
+                  className="material-symbols-outlined text-[16px]"
+                  style={{ fontVariationSettings: category === cat.value ? "'FILL' 1" : "'FILL' 0, 'wght' 300" }}
+                >
+                  {cat.icon}
+                </span>
                 {cat.label}
               </button>
             ))}
@@ -115,51 +166,74 @@ export function SecretCodeForm() {
         </div>
 
         {/* 제목 */}
-        <div>
-          <p className="text-xs text-[#888] mb-2">제목 <span className="text-[#FF4757]">*</span></p>
+        <div className="border-b border-[#C4C7C7]/40 pb-4">
+          <p className="text-[10px] text-[#747878] uppercase tracking-[0.2em] font-bold mb-3">
+            제목 <span className="text-[#E91E63] normal-case tracking-normal">필수</span>
+          </p>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="예: 신한은행 계좌 정보"
-            className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-pink-accent"
+            className="w-full bg-transparent text-xl font-headline font-bold text-[#1A1C1C] placeholder:text-[#C4C7C7] placeholder:font-normal outline-none"
           />
         </div>
 
         {/* 중요도 */}
         <div>
-          <p className="text-xs text-[#888] mb-2">중요도</p>
+          <p className="text-[10px] text-[#747878] uppercase tracking-[0.2em] font-bold mb-3">중요도</p>
           <div className="flex gap-2">
-            {(['important', 'reference'] as Importance[]).map((imp) => (
-              <button
-                key={imp}
-                onClick={() => setImportance(imp)}
-                className={`flex-1 py-2 rounded-xl border text-xs font-medium transition-colors ${
-                  importance === imp
-                    ? imp === 'important'
-                      ? 'border-pink-accent bg-pink-container text-pink-accent'
-                      : 'border-[#B0B0B0] bg-[#f5f5f5] text-[#555]'
-                    : 'border-outline-variant/30 text-[#888]'
-                }`}
+            <button
+              onClick={() => setImportance('important')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                importance === 'important'
+                  ? 'bg-[#FFDAD6] text-[#BA1A1A]'
+                  : 'bg-[#EEEEEE] text-[#747878] hover:bg-[#E2E2E2]'
+              }`}
+            >
+              <span
+                className="material-symbols-outlined text-[16px]"
+                style={{ fontVariationSettings: importance === 'important' ? "'FILL' 1" : "'FILL' 0, 'wght' 300" }}
               >
-                {imp === 'important' ? '★ 중요' : '참고'}
-              </button>
-            ))}
+                grade
+              </span>
+              중요
+            </button>
+            <button
+              onClick={() => setImportance('reference')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                importance === 'reference'
+                  ? 'bg-[#E8E8E8] text-[#444748]'
+                  : 'bg-[#EEEEEE] text-[#747878] hover:bg-[#E2E2E2]'
+              }`}
+            >
+              <span
+                className="material-symbols-outlined text-[16px]"
+                style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}
+              >
+                bookmark
+              </span>
+              참고
+            </button>
           </div>
         </div>
 
         {/* 내용 */}
-        <div>
-          <p className="text-xs text-[#888] mb-2">내용 (암호화됨)</p>
+        <div className="bg-white rounded-[1.25rem] px-5 py-4 shadow-sm">
+          <p className="text-[10px] text-[#747878] uppercase tracking-[0.2em] font-bold mb-3">
+            내용
+            <span className="ml-2 text-[#C4C7C7] normal-case tracking-normal font-normal">암호화됨</span>
+          </p>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="보관할 정보를 입력하세요&#10;예: 계좌번호, 주소, 계약 내용 등"
-            rows={4}
-            className="w-full px-4 py-3 border border-[#e0e0e0] rounded-xl text-sm outline-none focus:border-pink-accent resize-none font-mono"
+            placeholder={"보관할 정보를 자유롭게 입력하세요\n계좌번호, 주소, 계약 내용 등"}
+            rows={5}
+            className="w-full bg-transparent text-sm text-[#1A1C1C] placeholder:text-[#C4C7C7] outline-none resize-none font-mono leading-relaxed"
           />
         </div>
 
+        {/* 계정 정보 */}
         <SecretCredentialFields
           credentials={credentials}
           onAdd={() => setCredentials((prev) => [...prev, { service: '', username: '', password: '', memo: '' }])}
@@ -169,6 +243,7 @@ export function SecretCodeForm() {
           onRemove={(idx) => setCredentials((prev) => prev.filter((_, i) => i !== idx))}
         />
 
+        {/* 패스프레이즈 */}
         <SecretPassphraseSection
           passphrase={passphrase}
           passphraseConfirm={passphraseConfirm}
@@ -178,7 +253,7 @@ export function SecretCodeForm() {
           onShowPassToggle={() => setShowPass((v) => !v)}
         />
 
-        <div className="h-4" />
+        <div className="h-8" />
       </div>
     </div>
   )
