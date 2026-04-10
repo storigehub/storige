@@ -16,7 +16,7 @@ Storige 앱은 베이스 플랫폼. 아래 서비스를 Phase 6 이후 단계적
 | 서비스 | 현재 상태 | 통합 후 역할 |
 |--------|----------|-------------|
 | **Storige 앱** | 본 프로젝트 | 메인 플랫폼 (일기/편지/시크릿/가족/출판/유고) |
-| 나의이야기 (bookmoa-mobile) | 코드탭 개발중 | → "AI 자서전" 모듈로 통합 |
+| 나의이야기 (mystory-khaki) | 코드탭 개발중 | → "AI 자서전" 모듈로 통합 |
 | Remember Storige | 프로토타입 | → "디지털 추모관" 모듈로 통합 |
 | storige.co.kr | 랜딩 운영중 | 브랜드 랜딩 + 앱 진입점 (유지) |
 
@@ -348,9 +348,9 @@ CTO 역할로 전환해. agents/AGENT_CTO.md 참조해.
     Sprint 5-4: E2E 테스트 (Playwright, e2e/*.spec.ts)
     Sprint 5-5: 성능 최적화 (AVIF/WebP, 보안헤더, optimizePackageImports)
   Phase 6 (일부 착수, 중단):
-    Sprint 6-1: AI 자서전(MyStory) 50% — 코어 동작, 앱 진입점 미연결
-      완료: questions.ts, useMystory.ts, interview/manuscript API, mystory 전체 페이지, DB 적용
-      미완: BottomNav/Header 진입점, 음성입력, 출판연결, 질문풀 완성
+    Sprint 6-1: AI 자서전(MyStory) 60% — 코어 동작, BottomNav 진입점 추가
+      완료: questions.ts, useMystory.ts, interview/manuscript API, mystory 전체 페이지, DB 적용, BottomNav 5번째 탭(프로필사진)
+      미완: 음성입력, 출판연결, 질문풀 완성
     Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅만, UI 전체 미구현
     Sprint 6-3: 랜딩 리뉴얼 0% — 미착수
     → 상세: docs/sprint6-status.md

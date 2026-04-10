@@ -40,13 +40,13 @@ Sprint 6-2(추모관), 6-3(랜딩) 미착수.
 
 | 항목 | 중요도 | 비고 |
 |------|--------|------|
-| **BottomNav / Header 사이드 메뉴에 `/mystory` 진입점 추가** | 🔴 최우선 | 현재 URL 직접 입력만 접근 가능 |
-| 질문 풀 완성 (13→14 카테고리, 67→100개) | 🟡 중간 | 원본 bookmoa-mobile 질문 1개 카테고리 미이관 |
+| **BottomNav 5번째 탭 + Header 사이드 메뉴에 `/mystory` 진입점 추가** | ✅ 완료 | BottomNav 프로필사진 탭 추가, Header 사이드메뉴는 기존에 포함 |
+| 질문 풀 완성 (13→14 카테고리, 67→100개) | 🟡 중간 | 원본 mystory-khaki.vercel.app 질문 1개 카테고리 미이관 |
 | `VoiceInput.tsx` — Capacitor 음성 입력 | 🟡 중간 | 계획에 있었으나 미구현 |
 | `/mystory/publish/page.tsx` — 기존 출판 모듈 연결 | 🟡 중간 | 수익화 연결 필요 |
 | 일기 데이터 → 자서전 소스 활용 시너지 | 🟢 낮음 | 고도화 기능 |
-| 기존 MyStory(bookmoa-mobile) 사용자 데이터 가져오기 | 🟢 낮음 | JSON 가져오기 |
-| bookmoa-mobile.vercel.app 리다이렉트 설정 | 🟢 낮음 | 외부 서비스 설정 |
+| 기존 MyStory(mystory-khaki.vercel.app) 사용자 데이터 가져오기 | 🟢 낮음 | JSON 가져오기 |
+| mystory-khaki.vercel.app 리다이렉트 설정 | 🟢 낮음 | 외부 서비스 설정 |
 | mystory 전용 E2E 테스트 | 🟢 낮음 | `e2e/mystory.spec.ts` |
 
 ### 1.3 재개 시 최소 작업 (배포 가능 기준)
@@ -134,7 +134,7 @@ Sprint 6-3 랜딩 리뉴얼   ░░░░░░░░░░░░░░░░  
 [P1] 6-2 UI 구현: memorial 공개 페이지 + 설정 페이지
 [P2] 6-1 심화: 음성 입력, 출판 연결, 질문 풀 보완
 [P3] 6-3 랜딩: 전체 서비스 소개 페이지
-[P4] 리다이렉트: bookmoa-mobile → /mystory, remember-storige → /memorial
+[P4] 리다이렉트: mystory-khaki.vercel.app → /mystory, remember-storige → /memorial
 ```
 
 ---
