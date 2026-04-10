@@ -80,10 +80,14 @@ export function useAuth() {
   }
 
   // 카카오 소셜 로그인 — PKCE flow, /auth/callback 으로 리다이렉트
+  // 비즈 앱 미인증 상태이므로 이메일 scope 제외 (profile_nickname + profile_image만 요청)
   const signInWithKakao = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'kakao',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+        scopes: 'profile_nickname profile_image',
+      },
     })
     return { error }
   }
