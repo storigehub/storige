@@ -72,6 +72,25 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* ChunkLoadError 자동 새로고침 — 배포 후 구 청크 참조 실패 시 한 번만 reload */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('error', function(e) {
+                var msg = e.message || '';
+                if (msg.indexOf('Loading chunk') !== -1 || msg.indexOf('ChunkLoadError') !== -1) {
+                  var key = 'chunkReloadAt';
+                  var last = sessionStorage.getItem(key);
+                  var now = Date.now();
+                  if (!last || now - parseInt(last) > 10000) {
+                    sessionStorage.setItem(key, now.toString());
+                    window.location.reload();
+                  }
+                }
+              }, true);
+            `,
+          }}
+        />
       </body>
     </html>
   )
