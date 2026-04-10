@@ -95,7 +95,7 @@ export default function SecretPage() {
                   onClick={() => setSelectedCategory(cat.key)}
                   className={`w-full flex items-center justify-between p-4 rounded-xl transition-all ${
                     selectedCategory === cat.key
-                      ? 'bg-white shadow-sm border-l-4 border-pink-accent'
+                      ? 'bg-white shadow-sm border-l-[3px] border-pink-accent/80'
                       : 'hover:bg-white/60'
                   }`}
                 >

@@ -72,7 +72,7 @@ export function DiaryMapView({ entries }: DiaryMapViewProps) {
                   position={{ lat: entry.location_lat!, lng: entry.location_lng! }}
                   yAnchor={1.2}
                 >
-                  <div className="bg-white rounded-xl shadow-lg border border-[#f0f0f0] p-3 w-48 mb-2 z-10 cursor-pointer"
+                  <div className="bg-white rounded-xl shadow-lg border border-outline-variant/20 p-3 w-48 mb-2 z-10 cursor-pointer"
                        onClick={() => router.push(`/diary/${entry.id}`)}>
                     <div className="text-[10px] text-primary font-medium mb-1">
                       {format(new Date(entry.created_at), 'yyyy년 M월 d일 (E)', { locale: ko })}

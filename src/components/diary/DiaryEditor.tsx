@@ -84,7 +84,7 @@ export function DiaryEditor({ entryId, initialTitle }: DiaryEditorProps) {
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* 상단 바 */}
-      <div className="flex items-center justify-between px-4 h-14 border-b border-[#f0f0f0]">
+      <div className="flex items-center justify-between px-4 h-14 border-b border-outline-variant/30">
         <button onClick={() => router.back()} className="text-[#888] text-sm">
           취소
         </button>
@@ -144,7 +144,7 @@ export function DiaryEditor({ entryId, initialTitle }: DiaryEditorProps) {
 
         {/* 업로드된 이미지 미리보기 */}
         {previewUrls.length > 0 && (
-          <div className="flex gap-2 flex-wrap mt-4 pt-4 border-t border-[#f0f0f0]">
+          <div className="flex gap-2 flex-wrap mt-4 pt-4 border-t border-outline-variant/30">
             {previewUrls.map((url, i) => (
               <div key={i} className="relative w-24 h-24 rounded-xl overflow-hidden border border-outline-variant/20">
                 <Image src={url} alt={`첨부 ${i + 1}`} fill className="object-cover" />
@@ -162,7 +162,7 @@ export function DiaryEditor({ entryId, initialTitle }: DiaryEditorProps) {
       </div>
 
       {/* 하단 액션 바 — 미디어 업로드 + 위치/날씨 */}
-      <div className="border-t border-[#f0f0f0] px-4 py-3 flex items-center gap-1">
+      <div className="border-t border-outline-variant/30 px-4 py-3 flex items-center gap-1">
         {/* 사진 첨부 */}
         <button
           onClick={() => fileInputRef.current?.click()}

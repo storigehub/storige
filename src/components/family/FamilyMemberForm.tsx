@@ -61,7 +61,7 @@ export function FamilyMemberForm({
                 style={
                   selected
                     ? { borderColor: color, backgroundColor: `${color}15`, color }
-                    : { borderColor: '#f0f0f0', color: '#555' }
+                    : { borderColor: '#C4C7C7', color: '#444748' }
                 }
               >
                 {getRoleLabel(r)}

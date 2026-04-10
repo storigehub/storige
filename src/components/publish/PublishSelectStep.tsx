@@ -43,7 +43,7 @@ export function PublishSelectStep({
               className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors ${
                 publishType === t.value
                   ? 'border-primary bg-diary-open'
-                  : 'border-[#f0f0f0] bg-white'
+                  : 'border-outline-variant/30 bg-white'
               }`}
             >
               <span className="text-2xl">{t.icon}</span>
@@ -81,7 +81,7 @@ export function PublishSelectStep({
                   key={entry.id}
                   onClick={() => onToggle(entry.id)}
                   className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-colors ${
-                    selected ? 'border-primary bg-diary-open' : 'border-[#f0f0f0] bg-white'
+                    selected ? 'border-primary bg-diary-open' : 'border-outline-variant/30 bg-white'
                   }`}
                 >
                   <div

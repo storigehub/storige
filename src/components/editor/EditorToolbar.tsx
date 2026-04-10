@@ -49,7 +49,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
   ]
 
   return (
-    <div className="flex items-center gap-1 px-2 py-1 border-b border-[#f0f0f0] bg-white">
+    <div className="flex items-center gap-1 px-2 py-1 border-b border-outline-variant/30 bg-white">
       {tools.map((tool) => (
         <button
           key={tool.label}

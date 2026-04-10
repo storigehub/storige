@@ -143,7 +143,7 @@ function PageContent({ page }: { page: BookPage }) {
   return (
     <div className="h-full flex flex-col px-4 py-5 overflow-hidden">
       {/* 페이지 헤더 */}
-      <div className="flex items-baseline justify-between mb-3 pb-2 border-b border-[#f0f0f0]">
+      <div className="flex items-baseline justify-between mb-3 pb-2 border-b border-outline-variant/30">
         <h2 className="text-sm font-bold text-[#1A1A1A] truncate flex-1">
           {entry.title || '제목 없음'}
         </h2>

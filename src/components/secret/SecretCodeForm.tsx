@@ -74,7 +74,7 @@ export function SecretCodeForm() {
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* 상단 바 */}
-      <div className="flex items-center justify-between px-4 h-14 border-b border-[#f0f0f0]">
+      <div className="flex items-center justify-between px-4 h-14 border-b border-outline-variant/30">
         <button onClick={() => router.back()} className="text-[#888] text-sm">취소</button>
         <h2 className="text-sm font-semibold text-[#1A1A1A]">시크릿 코드 등록</h2>
         <button
@@ -104,7 +104,7 @@ export function SecretCodeForm() {
                 className={`flex flex-col items-center gap-1 py-3 rounded-xl border text-xs transition-colors ${
                   category === cat.value
                     ? 'border-pink-accent bg-pink-container text-pink-accent'
-                    : 'border-[#f0f0f0] text-[#555]'
+                    : 'border-outline-variant/30 text-[#555]'
                 }`}
               >
                 <span className="text-xl">{cat.icon}</span>
@@ -139,7 +139,7 @@ export function SecretCodeForm() {
                     ? imp === 'important'
                       ? 'border-pink-accent bg-pink-container text-pink-accent'
                       : 'border-[#B0B0B0] bg-[#f5f5f5] text-[#555]'
-                    : 'border-[#f0f0f0] text-[#888]'
+                    : 'border-outline-variant/30 text-[#888]'
                 }`}
               >
                 {imp === 'important' ? '★ 중요' : '참고'}

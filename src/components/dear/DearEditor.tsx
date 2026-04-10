@@ -23,6 +23,9 @@ export function DearEditor() {
   const { title, setTitle, handleContentChange, isSaving, lastSaved, saveNow, id } =
     useDiaryEditor({ journalType: 'dear' })
 
+  // 발송 예약 날짜 (null = 유고 시 자동 전달)
+  const [scheduledDate, setScheduledDate] = useState<string>('')
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -44,10 +47,13 @@ export function DearEditor() {
     // saveNow()가 저장 완료 후 확정된 ID를 반환
     const savedId = await saveNow()
 
-    // 수신자가 선택되어 있으면 recipient_id 업데이트
-    if (savedId && selectedRecipientId) {
+    // 수신자 + 발송 예약일 업데이트
+    if (savedId && (selectedRecipientId || scheduledDate)) {
       const supabase = createClient()
-      await supabase.from('entries').update({ recipient_id: selectedRecipientId }).eq('id', savedId)
+      await supabase.from('entries').update({
+        ...(selectedRecipientId ? { recipient_id: selectedRecipientId } : {}),
+        ...(scheduledDate ? { scheduled_send_at: new Date(scheduledDate).toISOString() } : {}),
+      }).eq('id', savedId)
     }
     router.push('/dear')
   }
@@ -57,7 +63,7 @@ export function DearEditor() {
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* 상단 바 */}
-      <div className="flex items-center justify-between px-4 h-14 border-b border-[#f0f0f0]">
+      <div className="flex items-center justify-between px-4 h-14 border-b border-outline-variant/30">
         <button onClick={() => router.back()} className="text-[#888] text-sm">
           취소
         </button>
@@ -125,7 +131,7 @@ export function DearEditor() {
                   <button
                     key={member.id}
                     onClick={() => handleSelectRecipient(member.id)}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-[#f0f0f0] active:bg-[#fafafa] text-left"
+                    className="flex items-center gap-3 p-3 rounded-xl border border-outline-variant/30 active:bg-[#fafafa] text-left"
                   >
                     {/* 역할 색상 도트 */}
                     <span
@@ -148,6 +154,31 @@ export function DearEditor() {
           </div>
         </div>
       )}
+
+      {/* 발송 예약 날짜 */}
+      <div className="px-4 pb-2 flex items-center gap-2">
+        <span className="material-symbols-outlined text-[16px] text-dear">schedule_send</span>
+        <label className="text-xs text-outline shrink-0">발송 예약일</label>
+        <input
+          type="date"
+          value={scheduledDate}
+          min={new Date().toISOString().split('T')[0]}
+          onChange={(e) => setScheduledDate(e.target.value)}
+          className="flex-1 text-xs text-on-surface bg-transparent outline-none border-b border-outline-variant/30 pb-0.5 focus:border-dear"
+        />
+        {scheduledDate && (
+          <button
+            onClick={() => setScheduledDate('')}
+            className="text-outline hover:text-error transition-colors"
+            aria-label="예약 취소"
+          >
+            <span className="material-symbols-outlined text-[14px]">close</span>
+          </button>
+        )}
+        {!scheduledDate && (
+          <span className="text-[10px] text-outline/60 shrink-0">미설정 시 유고 시 전달</span>
+        )}
+      </div>
 
       {/* 제목 입력 */}
       <div className="px-4 pb-2">

@@ -17,8 +17,9 @@ interface DearAccordionItemProps {
 
 /**
  * Dear My Son 편지 아코디언 — dear_my_son_2 editorial style
- * 닫힘: border-l-4 border-transparent, hover:border-dear/40
- * 열림: border-l-4 border-dear, letter-texture 배경, shadow-md
+ * 닫힘: bg-surface-container-low, hover:bg-surface-container-highest + border-outline-variant/30
+ * 열림: bg-surface-container-lowest + border-outline-variant/30, 편지지(letter-texture) 배경, shadow-sm
+ * No-Line Rule 준수: border-l 없음, tonal layering으로 상태 구분
  */
 export function DearAccordionItem({
   entry,
@@ -127,6 +128,22 @@ export function DearAccordionItem({
                   {entry.content_text}
                 </p>
               </div>
+
+              {/* 발송 예약일 뱃지 */}
+              {entry.scheduled_send_at && (
+                <div className="flex items-center gap-1.5 mb-4 px-3 py-1.5 bg-dear/8 rounded-full w-fit">
+                  <span className="material-symbols-outlined text-[13px] text-dear">schedule_send</span>
+                  <span className="text-[11px] font-medium text-dear">
+                    {new Date(entry.scheduled_send_at).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })} 발송 예정
+                  </span>
+                </div>
+              )}
+              {!entry.scheduled_send_at && (
+                <div className="flex items-center gap-1.5 mb-4 px-3 py-1.5 bg-surface-container-low rounded-full w-fit">
+                  <span className="material-symbols-outlined text-[13px] text-outline">lock_clock</span>
+                  <span className="text-[11px] text-outline">유고 시 자동 전달</span>
+                </div>
+              )}
 
               {/* 시간 + 액션 버튼 */}
               <div className="flex items-center justify-between">

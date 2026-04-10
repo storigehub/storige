@@ -39,7 +39,7 @@ export function BottomNav() {
             }`}>
               <span
                 className={`material-symbols-outlined text-[22px] transition-colors ${
-                  isActive ? 'text-primary' : 'text-[#a0a3a3]'
+                  isActive ? 'text-primary' : 'text-outline'
                 }`}
                 style={{
                   fontVariationSettings: isActive
@@ -51,7 +51,7 @@ export function BottomNav() {
               </span>
             </div>
             <span className={`font-headline text-[9px] uppercase tracking-wider font-bold transition-colors ${
-              isActive ? 'text-primary' : 'text-[#a0a3a3]'
+              isActive ? 'text-primary' : 'text-outline'
             }`}>
               {tab.label}
             </span>
@@ -70,7 +70,7 @@ export function BottomNav() {
           <div className={`w-[26px] h-[26px] rounded-full overflow-hidden flex items-center justify-center text-[10px] font-bold transition-all ${
             mystoryActive
               ? 'ring-2 ring-primary ring-offset-1 text-white bg-primary'
-              : 'ring-2 ring-[#d0d0d0] text-[#a0a3a3] bg-[#f0f0f0]'
+              : 'ring-2 ring-outline-variant text-outline bg-surface-container-low'
           }`}>
             {profile?.avatar_url ? (
               <Image
@@ -81,14 +81,14 @@ export function BottomNav() {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className={`font-headline font-bold ${mystoryActive ? 'text-white' : 'text-[#a0a3a3]'}`}>
+              <span className={`font-headline font-bold ${mystoryActive ? 'text-white' : 'text-outline'}`}>
                 {initials}
               </span>
             )}
           </div>
         </div>
         <span className={`font-headline text-[9px] uppercase tracking-wider font-bold transition-colors ${
-          mystoryActive ? 'text-primary' : 'text-[#a0a3a3]'
+          mystoryActive ? 'text-primary' : 'text-outline'
         }`}>
           이야기
         </span>
