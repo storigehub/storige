@@ -1,6 +1,11 @@
+import { Suspense } from 'react'
 import { LoginForm } from '@/components/auth/LoginForm'
 
-// 로그인 페이지
+// useSearchParams() 사용으로 Suspense 경계 필수
 export default function LoginPage() {
-  return <LoginForm />
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
+  )
 }
