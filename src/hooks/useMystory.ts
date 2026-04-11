@@ -115,15 +115,16 @@ export function useMystoryInterview(topicId: string) {
     scheduleEffectCallback(loadOrCreate)
   }, [loadOrCreate])
 
-  // 사용자 답변 전송 → AI 다음 질문 받기
-  const sendAnswer = useCallback(async (answer: string) => {
-    if (!session || !answer.trim()) return
+  // 사용자 답변 전송 → AI 다음 질문 받기 (photo_url 선택적)
+  const sendAnswer = useCallback(async (answer: string, photoUrl?: string) => {
+    if (!session || (!answer.trim() && !photoUrl)) return
 
     setSending(true)
     const userMsg: MystoryMessage = {
       role: 'user',
       content: answer.trim(),
       ts: new Date().toISOString(),
+      ...(photoUrl ? { photo_url: photoUrl } : {}),
     }
 
     const updatedMessages = [...session.messages, userMsg]

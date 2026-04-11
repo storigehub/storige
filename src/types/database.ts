@@ -534,6 +534,7 @@ export interface MystoryMessage {
   role: 'assistant' | 'user'
   content: string
   ts: string
+  photo_url?: string // 사진 첨부 URL (optional)
 }
 
 export interface MemorialPage {
