@@ -1,12 +1,12 @@
 /**
- * AI 자서전 질문 풀 — 나의이야기(MyStory) 이관
- * 14개 카테고리 × 평균 6개 질문
+ * AI 자서전 질문 풀 — 나의이야기(MyStory)
+ * 14개 카테고리 × 평균 5~6개 질문
  */
 
 export interface TopicQuestion {
   id: string
   category: string
-  categoryEmoji: string
+  categoryIcon: string // Material Symbols Outlined 아이콘명
   title: string
   questions: string[]
 }
@@ -15,7 +15,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'birth-story',
     category: '탄생과 뿌리',
-    categoryEmoji: '🌱',
+    categoryIcon: 'eco',
     title: '나의 탄생 이야기',
     questions: [
       '어디에서 태어나셨나요? 그 고장의 특별한 점은 무엇인가요?',
@@ -28,7 +28,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'childhood-home',
     category: '유년시절',
-    categoryEmoji: '🏡',
+    categoryIcon: 'cottage',
     title: '어린 시절의 집',
     questions: [
       '어린 시절을 보낸 집이나 동네를 떠올리면 가장 먼저 생각나는 것은 무엇인가요?',
@@ -41,7 +41,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'family-memories',
     category: '가족',
-    categoryEmoji: '👨‍👩‍👧‍👦',
+    categoryIcon: 'family_restroom',
     title: '가족과의 추억',
     questions: [
       '부모님의 모습 중 가장 기억에 남는 장면이 있나요?',
@@ -54,7 +54,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'school-days',
     category: '학창시절',
-    categoryEmoji: '🎒',
+    categoryIcon: 'school',
     title: '학교 시절',
     questions: [
       '학창시절 중 가장 기억에 남는 선생님이 계신가요?',
@@ -67,7 +67,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'first-love',
     category: '청춘',
-    categoryEmoji: '💌',
+    categoryIcon: 'favorite',
     title: '청춘과 첫사랑',
     questions: [
       '청춘 시절 가장 설레었던 순간이 있었나요?',
@@ -80,7 +80,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'career-path',
     category: '직업과 일',
-    categoryEmoji: '💼',
+    categoryIcon: 'work',
     title: '나의 직업 이야기',
     questions: [
       '처음 사회에 나왔을 때의 이야기를 들려주세요.',
@@ -93,7 +93,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'marriage-family',
     category: '결혼과 가정',
-    categoryEmoji: '💍',
+    categoryIcon: 'diamond',
     title: '결혼과 가정 이야기',
     questions: [
       '배우자를 어떻게 만나셨나요?',
@@ -106,7 +106,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'hardships',
     category: '시련과 극복',
-    categoryEmoji: '💪',
+    categoryIcon: 'fitness_center',
     title: '시련을 이겨낸 이야기',
     questions: [
       '살면서 가장 힘들었던 시기는 언제였나요?',
@@ -119,7 +119,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'hobbies-interests',
     category: '취미와 관심사',
-    categoryEmoji: '🎨',
+    categoryIcon: 'palette',
     title: '좋아하는 것들',
     questions: [
       '살면서 가장 즐겼던 취미나 활동은 무엇인가요?',
@@ -132,7 +132,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'faith-values',
     category: '신념과 가치관',
-    categoryEmoji: '🌟',
+    categoryIcon: 'auto_awesome',
     title: '나의 신념과 철학',
     questions: [
       '삶에서 가장 중요하게 생각하는 가치는 무엇인가요?',
@@ -145,7 +145,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'social-history',
     category: '시대와 역사',
-    categoryEmoji: '📰',
+    categoryIcon: 'history_edu',
     title: '내가 살아온 시대',
     questions: [
       '어린 시절 기억하는 나라의 모습은 어떠했나요?',
@@ -158,7 +158,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'proud-moments',
     category: '자랑스러운 순간',
-    categoryEmoji: '🏆',
+    categoryIcon: 'emoji_events',
     title: '내 인생 최고의 순간',
     questions: [
       '삶에서 가장 자랑스러웠던 순간은 언제인가요?',
@@ -170,7 +170,7 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
   {
     id: 'letters-to-future',
     category: '미래와 유언',
-    categoryEmoji: '✉️',
+    categoryIcon: 'mail',
     title: '사랑하는 이들에게',
     questions: [
       '자녀나 손자녀에게 꼭 전하고 싶은 말이 있나요?',
@@ -178,6 +178,98 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
       '내가 세상을 떠난 후 어떻게 기억되고 싶으신가요?',
       '사랑하는 사람들에게 감사하다고 말하고 싶은 것이 있나요?',
       '내 인생을 한 문장으로 표현한다면 어떻게 하시겠어요?',
+    ],
+  },
+  // --- Sprint MyStory-2 추가 토픽 ---
+  {
+    id: 'food-memories',
+    category: '음식과 맛',
+    categoryIcon: 'restaurant',
+    title: '잊을 수 없는 맛',
+    questions: [
+      '살면서 가장 맛있게 먹었던 음식이 기억나시나요?',
+      '어머니나 할머니가 해주시던 음식 중 그리운 것이 있나요?',
+      '특별한 날마다 먹었던 음식이 있었나요?',
+      '음식과 연관된 재미있는 에피소드가 있나요?',
+      '요리를 직접 하셨다면, 자신 있는 음식이 있었나요?',
+    ],
+  },
+  {
+    id: 'health-journey',
+    category: '건강과 몸',
+    categoryIcon: 'monitor_heart',
+    title: '건강을 지켜온 이야기',
+    questions: [
+      '건강을 위해 꾸준히 해왔던 습관이 있나요?',
+      '아팠던 기억이나 건강 때문에 힘들었던 시기가 있나요?',
+      '건강 때문에 생활 방식을 바꾼 경험이 있나요?',
+      '나이 들면서 몸이 변화하는 것을 어떻게 받아들이셨나요?',
+      '건강에 대해 젊은 세대에게 해주고 싶은 조언이 있나요?',
+    ],
+  },
+  {
+    id: 'role-models',
+    category: '롤모델',
+    categoryIcon: 'person_celebrate',
+    title: '내 삶의 스승과 영웅',
+    questions: [
+      '살면서 가장 존경했던 인물은 누구인가요?',
+      '그 분에게서 무엇을 배우셨나요?',
+      '나에게 결정적인 영향을 준 한 마디가 있나요?',
+      '직접 만난 적은 없지만 삶의 지표가 된 인물이 있나요?',
+      '나 자신도 누군가의 롤모델이 된 적이 있다면 이야기해 주세요.',
+    ],
+  },
+  {
+    id: 'turning-points',
+    category: '인생 전환점',
+    categoryIcon: 'fork_right',
+    title: '삶을 바꾼 결정들',
+    questions: [
+      '인생에서 가장 중요한 선택의 순간은 언제였나요?',
+      '그 선택을 어떻게 내리셨나요?',
+      '만약 다른 선택을 했다면 어떻게 달라졌을까 생각해보신 적 있나요?',
+      '우연한 만남이나 사건이 삶의 방향을 바꾼 적이 있나요?',
+      '지금 돌아보면 잘한 결정이라고 느끼는 것은 무엇인가요?',
+    ],
+  },
+  {
+    id: 'social-life',
+    category: '사람들과의 인연',
+    categoryIcon: 'group',
+    title: '소중한 인연들',
+    questions: [
+      '평생 잊지 못할 친구가 있나요?',
+      '우연히 만났지만 큰 도움을 받은 인연이 있나요?',
+      '멀어졌지만 지금도 그리운 사람이 있나요?',
+      '공동체(동호회, 종교모임, 동창회)에서 소중한 추억이 있나요?',
+      '사람들과 어울리는 것에서 배운 것이 있다면 무엇인가요?',
+    ],
+  },
+  {
+    id: 'my-treasures',
+    category: '나의 보물',
+    categoryIcon: 'local_florist',
+    title: '소중히 간직한 것들',
+    questions: [
+      '지금까지 간직하고 있는 물건이 있나요? 그 사연은 무엇인가요?',
+      '사진, 편지, 일기 등 기록으로 남긴 것이 있나요?',
+      '가족에게 물려주고 싶은 것이 있나요?',
+      '돈으로 살 수 없는 가장 소중한 것은 무엇인가요?',
+      '언젠가 꼭 하고 싶은 버킷리스트가 있나요?',
+    ],
+  },
+  {
+    id: 'faith-religion',
+    category: '신앙과 영성',
+    categoryIcon: 'self_improvement',
+    title: '마음의 평안을 찾아서',
+    questions: [
+      '신앙이나 종교가 삶에 어떤 영향을 미쳤나요?',
+      '기도나 명상, 수양을 통해 힘을 얻은 경험이 있나요?',
+      '인생의 의미에 대해 깊이 생각하게 된 계기가 있나요?',
+      '마음이 흔들릴 때 의지하는 것이 있나요?',
+      '영성이나 내면의 성장에 대해 나누고 싶은 이야기가 있나요?',
     ],
   },
 ]
@@ -191,4 +283,6 @@ export const CATEGORY_GROUPS = [
   { label: '청춘과 사회', ids: ['school-days', 'first-love', 'career-path'] },
   { label: '가정과 삶', ids: ['marriage-family', 'hardships', 'hobbies-interests'] },
   { label: '정신과 유산', ids: ['faith-values', 'social-history', 'proud-moments', 'letters-to-future'] },
+  { label: '기억과 인연', ids: ['food-memories', 'health-journey', 'role-models', 'turning-points'] },
+  { label: '관계와 보물', ids: ['social-life', 'my-treasures', 'faith-religion'] },
 ]

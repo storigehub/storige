@@ -2,21 +2,55 @@
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMystorySessions } from '@/hooks/useMystory'
+import { useMystorySessions, useMystoryShare } from '@/hooks/useMystory'
 import { getTopicById } from '@/lib/mystory/questions'
 import type { MystorySession } from '@/types/database'
 import type { TopicQuestion } from '@/lib/mystory/questions'
 
 export default function MystoryPreviewPage() {
   const router = useRouter()
-  const { sessions, loading } = useMystorySessions()
+  const { sessions, loading, refetch } = useMystorySessions()
+  const { sharing, createShareLink, revokeShareLink } = useMystoryShare()
   const [view, setView] = useState<'scroll' | 'accordion'>('scroll')
+  const [shareUrl, setShareUrl] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
   const printRef = useRef<HTMLDivElement>(null)
 
   const completedSessions = sessions.filter(s => s.status === 'completed' && s.generated_text)
+  // 이미 공유 토큰이 있는 경우 기존 URL 표시
+  const existingToken = completedSessions.find(s => s.share_token)?.share_token ?? null
 
   const handlePrint = () => {
     window.print()
+  }
+
+  const handleShare = async () => {
+    if (existingToken) {
+      // 이미 공유 중 → URL 표시
+      setShareUrl(`${window.location.origin}/mystory/share/${existingToken}`)
+      return
+    }
+    const ids = completedSessions.map(s => s.id)
+    const token = await createShareLink(ids)
+    if (token) {
+      const url = `${window.location.origin}/mystory/share/${token}`
+      setShareUrl(url)
+      await refetch()
+    }
+  }
+
+  const handleRevokeShare = async () => {
+    const ids = completedSessions.map(s => s.id)
+    await revokeShareLink(ids)
+    setShareUrl(null)
+    await refetch()
+  }
+
+  const handleCopy = async () => {
+    if (!shareUrl) return
+    await navigator.clipboard.writeText(shareUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   if (loading) {
@@ -118,18 +152,58 @@ export default function MystoryPreviewPage() {
                 </button>
               </div>
               {completedSessions.length > 0 && (
-                <button
-                  onClick={handlePrint}
-                  title="PDF로 저장 / 인쇄"
-                  className="flex items-center gap-1.5 px-3 py-2 bg-[#0061A5] text-white rounded-xl text-xs font-semibold hover:bg-[#004c82] transition-colors"
-                >
-                  <span className="material-symbols-outlined text-base">picture_as_pdf</span>
-                  PDF
-                </button>
+                <>
+                  <button
+                    onClick={handleShare}
+                    disabled={sharing}
+                    title="공유 링크 생성"
+                    className="flex items-center gap-1.5 px-3 py-2 bg-[#F3F3F3] hover:bg-[#E8E8E8] text-[#444748] rounded-xl text-xs font-semibold transition-colors disabled:opacity-50"
+                  >
+                    <span className="material-symbols-outlined text-base">share</span>
+                    공유
+                  </button>
+                  <button
+                    onClick={handlePrint}
+                    title="PDF로 저장 / 인쇄"
+                    className="flex items-center gap-1.5 px-3 py-2 bg-[#0061A5] text-white rounded-xl text-xs font-semibold hover:bg-[#004c82] transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-base">picture_as_pdf</span>
+                    PDF
+                  </button>
+                </>
               )}
             </div>
           </div>
         </header>
+
+        {/* 공유 링크 패널 */}
+        {shareUrl && (
+          <div className="max-w-4xl mx-auto px-4 md:px-8 pt-4">
+            <div className="bg-[#F0F7FF] border border-[#0061A5]/20 rounded-[1.25rem] p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <span className="material-symbols-outlined text-[#0061A5] shrink-0">link</span>
+              <p className="flex-1 text-[#1A1C1C] text-sm font-mono break-all">{shareUrl}</p>
+              <div className="flex gap-2 shrink-0">
+                <button
+                  onClick={handleCopy}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-[#0061A5] text-white rounded-lg text-xs font-semibold"
+                >
+                  <span className="material-symbols-outlined text-sm">
+                    {copied ? 'check' : 'content_copy'}
+                  </span>
+                  {copied ? '복사됨' : '복사'}
+                </button>
+                <button
+                  onClick={handleRevokeShare}
+                  disabled={sharing}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-[#F3F3F3] text-[#747878] rounded-lg text-xs font-semibold hover:bg-[#E8E8E8]"
+                >
+                  <span className="material-symbols-outlined text-sm">link_off</span>
+                  해제
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div ref={printRef} className="max-w-4xl mx-auto">
           {completedSessions.length === 0 ? (
@@ -155,6 +229,25 @@ export default function MystoryPreviewPage() {
                 </h2>
                 <p className="text-[#747878] text-sm mt-3">{completedSessions.length}개 챕터 완성</p>
               </div>
+
+              {/* 출판 CTA */}
+              {completedSessions.length >= 3 && (
+                <div className="bg-gradient-to-br from-[#0061A5] to-[#004c82] rounded-[1.5rem] p-6 md:p-8 text-white text-center shadow-lg">
+                  <span className="material-symbols-outlined text-4xl mb-3 block opacity-90">menu_book</span>
+                  <h3 className="font-headline text-xl font-bold mb-2">종이책으로 출판하기</h3>
+                  <p className="text-white/80 text-sm mb-4 max-w-sm mx-auto">
+                    완성된 자서전을 실제 종이책으로 만들어보세요.<br />
+                    가족에게 드리는 세상에 하나뿐인 선물입니다.
+                  </p>
+                  <button
+                    onClick={() => router.push('/publish')}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#0061A5] rounded-xl font-bold text-sm hover:bg-[#F0F7FF] transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-base">local_shipping</span>
+                    출판 신청하기 — 39,000원~
+                  </button>
+                </div>
+              )}
 
               {/* 챕터별 본문 */}
               {completedSessions.map((session, idx) => {

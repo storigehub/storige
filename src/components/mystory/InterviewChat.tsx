@@ -175,13 +175,19 @@ export default function InterviewChat({ topic }: InterviewChatProps) {
           <div className="flex gap-2 items-end">
             <textarea
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={e => {
+                setInput(e.target.value)
+                // auto-grow: 내용에 맞게 높이 자동 조절
+                e.target.style.height = 'auto'
+                e.target.style.height = `${Math.min(e.target.scrollHeight, 160)}px`
+              }}
               onKeyDown={handleKeyDown}
               onCompositionStart={() => { composingRef.current = true }}
               onCompositionEnd={() => { composingRef.current = false }}
               placeholder={isRecording ? '듣는 중...' : '이야기를 들려주세요...'}
               rows={2}
-              className="flex-1 resize-none bg-[#F3F3F3] rounded-[0.625rem] px-4 py-3 text-sm text-[#1A1C1C] placeholder-[#747878] outline-none focus:ring-2 focus:ring-[#0061A5]/20"
+              className="flex-1 resize-none bg-[#F3F3F3] rounded-[0.625rem] px-4 py-3 text-sm text-[#1A1C1C] placeholder-[#747878] outline-none focus:ring-2 focus:ring-[#0061A5]/20 overflow-y-auto"
+              style={{ minHeight: '64px', maxHeight: '160px' }}
             />
 
             {/* 사진 첨부 버튼 */}

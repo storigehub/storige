@@ -21,6 +21,7 @@ function parseMystorySession(row: MystoryRow): MystorySession {
     ...row,
     messages,
     status: row.status as MystorySession['status'],
+    share_token: (row as MystoryRow & { share_token?: string | null }).share_token ?? null,
   }
 }
 
@@ -200,4 +201,55 @@ export function useMystoryInterview(topicId: string) {
   }, [session, supabase])
 
   return { session, loading, sending, generating, sendAnswer, generateManuscript }
+}
+
+// 자서전 공유 훅 — 완성된 세션들의 공유 토큰 일괄 관리
+export function useMystoryShare() {
+  const [sharing, setSharing] = useState(false)
+  const supabase = createClient()
+
+  // 공유 토큰 생성 (user_id의 모든 completed 세션에 동일 토큰 부여)
+  const createShareLink = useCallback(async (sessionIds: string[]): Promise<string | null> => {
+    if (sessionIds.length === 0) return null
+    setSharing(true)
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return null
+
+      // crypto.randomUUID()로 공유 토큰 생성
+      const token = crypto.randomUUID()
+
+      const { error } = await supabase
+        .from('mystory_sessions')
+        .update({ share_token: token })
+        .in('id', sessionIds)
+        .eq('user_id', user.id)
+
+      if (error) return null
+      return token
+    } finally {
+      setSharing(false)
+    }
+  }, [supabase])
+
+  // 공유 취소 (토큰 제거)
+  const revokeShareLink = useCallback(async (sessionIds: string[]) => {
+    if (sessionIds.length === 0) return
+    setSharing(true)
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      await supabase
+        .from('mystory_sessions')
+        .update({ share_token: null })
+        .in('id', sessionIds)
+        .eq('user_id', user.id)
+    } finally {
+      setSharing(false)
+    }
+  }, [supabase])
+
+  return { sharing, createShareLink, revokeShareLink }
 }

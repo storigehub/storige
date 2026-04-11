@@ -35,7 +35,7 @@ export default function MystoryInterviewPage({ params }: Props) {
         </button>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="text-base">{topic.categoryEmoji}</span>
+            <span className="material-symbols-outlined text-[#0061A5] text-[18px]">{topic.categoryIcon}</span>
             <p className="text-[10px] uppercase tracking-widest text-[#747878] font-medium">
               {topic.category}
             </p>

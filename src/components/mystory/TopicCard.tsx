@@ -30,7 +30,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xl">{topic.categoryEmoji}</span>
+            <span className="material-symbols-outlined text-[#0061A5] text-[18px]">{topic.categoryIcon}</span>
             <span className="text-[10px] font-medium uppercase tracking-widest text-[#747878]">
               {topic.category}
             </span>

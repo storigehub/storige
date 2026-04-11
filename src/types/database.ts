@@ -526,6 +526,7 @@ export interface MystorySession {
   messages: MystoryMessage[]
   generated_text: string | null
   word_count: number
+  share_token: string | null
   created_at: string
   updated_at: string
 }

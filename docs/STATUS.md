@@ -53,6 +53,13 @@
   - 카카오 비즈앱 미인증 상태. 인증 후 account_email scope 추가 가능
 - ✅ 로고 교체 (storige_logo2.png → public/logo.png), 헤더 h-16 → h-20
 
+### MyStory Sprint-1 (2026-04-11)
+- ✅ InterviewChat 한글 IME composingRef 버그 수정
+- ✅ 음성 입력(Web Speech API, ko-KR) — useSpeechSTT 훅 + 마이크 버튼
+- ✅ 사진 첨부 — useMystoryPhoto + compressImage(Canvas 3MB) + Supabase Storage
+- ✅ MystoryMessage.photo_url 타입 추가
+- ✅ 자서전 미리보기 고도화 — 스크롤 북리더 뷰 + 아코디언 뷰 전환 + PDF 인쇄
+
 ### 기타 (2026-04-10~11)
 - ✅ secret/new 페이지 Midnight Archive 리디자인 (이모지 제거, Material Symbols, dark 패스프레이즈 패널)
 - ✅ ChunkLoadError 자동 새로고침 처리 (error.tsx + global-error.tsx + layout.tsx 스크립트)
