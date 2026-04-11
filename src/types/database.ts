@@ -405,6 +405,7 @@ export interface Database {
           messages: Json
           generated_text: string | null
           word_count: number
+          share_token: string | null
           created_at: string
           updated_at: string
         }
@@ -417,6 +418,7 @@ export interface Database {
           messages?: Json
           generated_text?: string | null
           word_count?: number
+          share_token?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -427,6 +429,7 @@ export interface Database {
           messages?: Json
           generated_text?: string | null
           word_count?: number
+          share_token?: string | null
           updated_at?: string
         }
         Relationships: []

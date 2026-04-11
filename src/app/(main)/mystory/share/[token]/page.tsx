@@ -2,7 +2,6 @@ import { createClient } from '@/lib/supabase/server'
 import { getTopicById } from '@/lib/mystory/questions'
 import { notFound } from 'next/navigation'
 import type { MystorySession, MystoryMessage } from '@/types/database'
-import type { Json } from '@/types/database'
 
 interface Props {
   params: Promise<{ token: string }>
@@ -29,7 +28,6 @@ export default async function MystorySharePage({ params }: Props) {
       ? (row.messages as unknown as MystoryMessage[])
       : [],
     status: row.status as MystorySession['status'],
-    share_token: (row as typeof row & { share_token?: string | null }).share_token ?? null,
   })) as MystorySession[]
 
   const totalWords = sessions.reduce((acc, s) => acc + s.word_count, 0)

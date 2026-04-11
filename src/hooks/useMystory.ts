@@ -21,7 +21,6 @@ function parseMystorySession(row: MystoryRow): MystorySession {
     ...row,
     messages,
     status: row.status as MystorySession['status'],
-    share_token: (row as MystoryRow & { share_token?: string | null }).share_token ?? null,
   }
 }
 
