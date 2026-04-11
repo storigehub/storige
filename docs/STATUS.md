@@ -7,8 +7,8 @@
 
 ## 최종 업데이트: 2026-04-11
 
-**현재 Phase:** Phase 1~6 완료 / Auth 보완 완료 / 결제 연동 대기  
-**빌드:** 클린 (에러 0) | 최신 커밋: `7bfc5df`  
+**현재 Phase:** Phase 1~6 완료 / Auth 보완 완료 / MyStory Sprint 1~2 완료 / 결제 연동 대기  
+**빌드:** 클린 (에러 0) | 최신 커밋: `21b8780`  
 **배포:** https://storige.vercel.app
 
 ---
@@ -40,7 +40,6 @@
 
 ### Phase 6 (완료 / 일부 보류)
 - Sprint 6-1: AI 자서전(MyStory) ✅ — 코어 완성, BottomNav 5번째 탭, Header 사이드메뉴
-  - 미완(낮은 우선순위): 음성입력, 출판연결, 질문풀 완성
 - Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅 완성, UI 미구현
   - ⏸ 마일스톤 최후순위 보류 | 기획서: docs/sprint6-memorial-plan.md
 - Sprint 6-3: 랜딩 리뉴얼 ✅ — 6개 서비스카드, 가격/플랜, 앱 다운로드 CTA
@@ -56,9 +55,22 @@
 ### MyStory Sprint-1 (2026-04-11)
 - ✅ InterviewChat 한글 IME composingRef 버그 수정
 - ✅ 음성 입력(Web Speech API, ko-KR) — useSpeechSTT 훅 + 마이크 버튼
-- ✅ 사진 첨부 — useMystoryPhoto + compressImage(Canvas 3MB) + Supabase Storage
+- ✅ 사진 첨부 — useMystoryPhoto + compressImage(Canvas 3MB) + Supabase Storage 'mystory-photos' 버킷
 - ✅ MystoryMessage.photo_url 타입 추가
 - ✅ 자서전 미리보기 고도화 — 스크롤 북리더 뷰 + 아코디언 뷰 전환 + PDF 인쇄
+
+### MyStory Sprint-2 (2026-04-11)
+- ✅ categoryEmoji → categoryIcon (Material Symbols) 전면 교체 (디자인 규칙 준수)
+- ✅ 질문풀 13 → 20개 토픽 확장, 카테고리 그룹 4 → 6개
+  - 신규: 음식/맛, 건강, 롤모델, 인생전환점, 사람인연, 나의보물, 신앙·영성
+- ✅ DB: mystory_sessions.share_token (uuid) 컬럼 + RLS 공개 정책
+  - 마이그레이션: supabase/migrations/20260411130000_mystory_share_token.sql
+- ✅ useMystoryShare 훅 — 공유 토큰 생성/취소
+- ✅ /mystory/share/[token] — 비인증 공개 열람 서버 컴포넌트 신규
+- ✅ preview 페이지: 공유 버튼 + URL 패널 + 복사/해제 기능
+- ✅ preview 페이지: 3챕터 이상 완성 시 출판 CTA 자동 표시
+- ✅ InterviewChat textarea auto-grow (최대 160px)
+- ✅ DB 타입(database.ts) share_token 컬럼 동기화
 
 ### 기타 (2026-04-10~11)
 - ✅ secret/new 페이지 Midnight Archive 리디자인 (이모지 제거, Material Symbols, dark 패스프레이즈 패널)
@@ -79,10 +91,42 @@
   - 관련 파일: `src/app/(main)/publish/`
 - **파파스컴퍼니 POD API 연동** — 계약 필요 (오너 결정)
 
-### 2순위: 보류 중 (오너 결정 후)
+### 2순위: MyStory 추가 고도화 (즉시 착수 가능)
+- 자서전 → 출판 모듈 직접 연결 (완성 원고 → publish 폼 자동 채움)
+- Resend 발신자 도메인 인증 → 공유 링크 이메일 발송 신뢰도 향상
+- 질문풀 AI 프롬프트 개인화 (토픽별 맞춤 후속 질문)
+
+### 3순위: 보류 중 (오너 결정 후)
 - Phase 6 Sprint 6-2: 추모관 UI 구현 — 최후순위
 - 카카오 비즈앱 인증 후 이메일 scope 추가
 - iOS 앱스토어 제출 (Apple Dev 계정 + Mac + Xcode 필요)
 - Android Play Store 제출 (Google Play 계정 필요)
   - Capacitor 빌드 준비 완료: `npm run cap:ios`
   - 가이드: docs/appstore-deploy-guide.md
+
+---
+
+## MyStory 모듈 현황 (2026-04-11 기준)
+
+### 완성된 기능
+| 기능 | 파일 |
+|------|------|
+| AI 인터뷰 (20개 토픽) | `src/app/(main)/mystory/[topicId]/page.tsx` |
+| 음성 입력 (ko-KR) | `src/hooks/useSpeechSTT.ts` |
+| 사진 첨부 | `src/hooks/useMystoryPhoto.ts` + `src/lib/utils/compressImage.ts` |
+| 스크롤 북리더 + PDF | `src/app/(main)/mystory/preview/page.tsx` |
+| 공유 링크 | `src/app/(main)/mystory/share/[token]/page.tsx` |
+| 출판 CTA | preview 페이지 (3챕터 이상) |
+
+### Supabase 인프라
+- 테이블: `mystory_sessions` (share_token 컬럼 포함)
+- 버킷: `mystory-photos` (Public)
+- RLS: 공유 토큰 기반 공개 열람 정책
+
+### API 엔드포인트
+| 경로 | 역할 |
+|------|------|
+| `POST /api/ai/interview` | AI 다음 질문 생성 |
+| `POST /api/ai/manuscript` | 자서전 원고 생성 |
+| `POST /api/ai/suggest` | 글감 제안 |
+| `POST /api/ai/summarize` | 요약 |

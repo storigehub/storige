@@ -152,11 +152,12 @@ gh run list --repo storigehub/storige --limit 3   # 상태 확인
 ## 현재 상태
 
 ```
-Phase 1~6 완료 | Auth 보완 완료 | 결제 연동 대기
-최신 커밋: 7bfc5df (2026-04-11)
+Phase 1~6 완료 | Auth 보완 완료 | MyStory Sprint 1~2 완료 | 결제 연동 대기
+최신 커밋: 21b8780 (2026-04-11)
 ```
 
-**다음 작업:** 포트원(PortOne) API 키 + 파파스 POD 계약 → 결제 연동  
+**완료된 MyStory 기능:** AI 인터뷰(20토픽) · 음성입력 · 사진첨부 · 북리더 · PDF · 공유링크 · 출판CTA  
+**다음 작업:** 포트원(PortOne) API 키 → 결제 연동 (최우선) / MyStory 고도화 (즉시 가능)  
 **상세 이력:** `docs/STATUS.md`
 
 ---
