@@ -106,7 +106,7 @@
 ### 2순위: MyStory 추가 고도화 (즉시 착수 가능)
 - 자서전 → 출판 모듈 직접 연결 (완성 원고 → publish 폼 자동 채움)
 - Resend 발신자 도메인 인증 → 공유 링크 이메일 발송 신뢰도 향상
-- ~~질문풀 AI 프롬프트 개인화~~ ✅ Sprint-3 완료
+- ~~질문풀 AI 프롬프트 개인화~~ ✅ Sprint-3 완료 (2026-04-13)
 
 ### 3순위: 보류 중 (오너 결정 후)
 - Phase 6 Sprint 6-2: 추모관 UI 구현 — 최후순위
@@ -118,7 +118,7 @@
 
 ---
 
-## MyStory 모듈 현황 (2026-04-11 기준)
+## MyStory 모듈 현황 (2026-04-13 기준)
 
 ### 완성된 기능
 | 기능 | 파일 |
@@ -129,16 +129,22 @@
 | 스크롤 북리더 + PDF | `src/app/(main)/mystory/preview/page.tsx` |
 | 공유 링크 | `src/app/(main)/mystory/share/[token]/page.tsx` |
 | 출판 CTA | preview 페이지 (3챕터 이상) |
+| AI 개인화 — 동적 후속 질문 | `src/app/api/ai/interview/route.ts` |
+| AI 개인화 — 바이오 프로필 누적 | `src/hooks/useMystoryProfile.ts` |
+| AI 개인화 — 팩트 추출 | `src/app/api/ai/profile-extract/route.ts` |
+| AI 개인화 — 답변 깊이 감지 | `src/app/api/ai/interview/route.ts` (classifyAnswer) |
 
 ### Supabase 인프라
 - 테이블: `mystory_sessions` (share_token 컬럼 포함)
+- 테이블: `mystory_profile` (facts JSONB + completed_topics — 2026-04-13 추가)
 - 버킷: `mystory-photos` (Public)
-- RLS: 공유 토큰 기반 공개 열람 정책
+- RLS: 공유 토큰 기반 공개 열람 / 본인 프로필 읽기·쓰기
 
 ### API 엔드포인트
 | 경로 | 역할 |
 |------|------|
-| `POST /api/ai/interview` | AI 다음 질문 생성 |
+| `POST /api/ai/interview` | AI 동적 후속 질문 생성 (프로필 컨텍스트 + 깊이 감지) |
+| `POST /api/ai/profile-extract` | 완료 세션에서 전기적 사실 추출 → mystory_profile 저장 |
 | `POST /api/ai/manuscript` | 자서전 원고 생성 |
 | `POST /api/ai/suggest` | 글감 제안 |
 | `POST /api/ai/summarize` | 요약 |
