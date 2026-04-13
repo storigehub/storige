@@ -5,10 +5,10 @@
 
 ---
 
-## 최종 업데이트: 2026-04-11
+## 최종 업데이트: 2026-04-13
 
-**현재 Phase:** Phase 1~6 완료 / Auth 보완 완료 / MyStory Sprint 1~2 완료 / 결제 연동 대기  
-**빌드:** 클린 (에러 0) | 최신 커밋: `21b8780`  
+**현재 Phase:** Phase 1~6 완료 / Auth 보완 완료 / MyStory Sprint 1~3 완료 / 결제 연동 대기  
+**빌드:** 클린 (에러 0) | 최신 커밋: `58d176e`  
 **배포:** https://storige.vercel.app
 
 ---
@@ -59,6 +59,18 @@
 - ✅ MystoryMessage.photo_url 타입 추가
 - ✅ 자서전 미리보기 고도화 — 스크롤 북리더 뷰 + 아코디언 뷰 전환 + PDF 인쇄
 
+### MyStory Sprint-3 (2026-04-13) — AI 개인화
+- ✅ 1단계: 동적 후속 질문 — 답변 속 고유명사·감정·장소를 반영한 개인화 질문 생성
+  - pre-defined 질문을 방향 가이드로만 사용, 최근 10개 메시지 컨텍스트 유지
+- ✅ 2단계: mystory_profile 테이블 + 팩트 추출 API (크로스 토픽 개인화)
+  - 원고 완성 시 Claude Haiku가 전기적 사실 자동 추출 → mystory_profile JSONB 누적
+  - 다음 인터뷰 시 누적 프로필을 컨텍스트로 주입 (토픽 간 맥락 연결)
+  - DB 마이그레이션: supabase/migrations/20260413100000_mystory_profile.sql
+- ✅ 3단계: 답변 깊이 감지 — 추가 API 호출 없이 지침으로 처리
+  - short(<30자): 탐색 질문 추가 유도
+  - rich(≥200자): 공감 후 바로 다음 주제 전환
+  - emotional(힘들/눈물/후회 등): 배려 톤, 서두르지 않음
+
 ### MyStory Sprint-2 (2026-04-11)
 - ✅ categoryEmoji → categoryIcon (Material Symbols) 전면 교체 (디자인 규칙 준수)
 - ✅ 질문풀 13 → 20개 토픽 확장, 카테고리 그룹 4 → 6개
@@ -94,7 +106,7 @@
 ### 2순위: MyStory 추가 고도화 (즉시 착수 가능)
 - 자서전 → 출판 모듈 직접 연결 (완성 원고 → publish 폼 자동 채움)
 - Resend 발신자 도메인 인증 → 공유 링크 이메일 발송 신뢰도 향상
-- 질문풀 AI 프롬프트 개인화 (토픽별 맞춤 후속 질문)
+- ~~질문풀 AI 프롬프트 개인화~~ ✅ Sprint-3 완료
 
 ### 3순위: 보류 중 (오너 결정 후)
 - Phase 6 Sprint 6-2: 추모관 UI 구현 — 최후순위
