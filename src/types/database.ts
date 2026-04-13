@@ -434,6 +434,30 @@ export interface Database {
         }
         Relationships: []
       }
+      mystory_profile: {
+        Row: {
+          id: string
+          user_id: string
+          facts: Json
+          completed_topics: string[]
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          facts?: Json
+          completed_topics?: string[]
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          facts?: Json
+          completed_topics?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       memorial_pages: {
         Row: {
           id: string
@@ -539,6 +563,16 @@ export interface MystoryMessage {
   content: string
   ts: string
   photo_url?: string // 사진 첨부 URL (optional)
+}
+
+// 사용자 바이오 프로필 — 토픽 완료마다 누적되는 전기적 사실
+export interface MystoryProfile {
+  id: string
+  user_id: string
+  facts: Record<string, unknown> // 추출된 전기적 사실 (자유 구조)
+  completed_topics: string[]
+  created_at: string
+  updated_at: string
 }
 
 export interface MemorialPage {

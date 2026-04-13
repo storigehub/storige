@@ -9,6 +9,7 @@ import type {
   MystoryMessage,
 } from '@/types/database'
 import { scheduleEffectCallback } from '@/lib/utils/deferEffect'
+import { useMystoryProfile } from '@/hooks/useMystoryProfile'
 
 type MystoryRow = Database['public']['Tables']['mystory_sessions']['Row']
 
@@ -63,6 +64,7 @@ export function useMystoryInterview(topicId: string) {
   const [sending, setSending] = useState(false)
   const [generating, setGenerating] = useState(false)
   const supabase = createClient()
+  const { buildProfileContext, extractAndSave } = useMystoryProfile()
 
   // 세션 로드 또는 생성
   const loadOrCreate = useCallback(async () => {
@@ -129,15 +131,17 @@ export function useMystoryInterview(topicId: string) {
 
     const updatedMessages = [...session.messages, userMsg]
 
-    // AI 다음 질문 API 호출
+    // AI 다음 질문 API 호출 (프로필 컨텍스트 포함)
     let aiReply = ''
     try {
+      const profileContext = buildProfileContext(session.topic_id)
       const res = await fetch('/api/ai/interview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           topicId: session.topic_id,
           messages: updatedMessages,
+          ...(profileContext ? { profileContext } : {}),
         }),
       })
       const data = await res.json()
@@ -168,7 +172,7 @@ export function useMystoryInterview(topicId: string) {
 
     setSession(s => s ? { ...s, messages: finalMessages, word_count: wordCount } : s)
     setSending(false)
-  }, [session, supabase])
+  }, [session, supabase, buildProfileContext])
 
   // 자서전 원고 생성
   const generateManuscript = useCallback(async () => {
@@ -194,10 +198,13 @@ export function useMystoryInterview(topicId: string) {
         .eq('id', session.id)
 
       setSession(s => s ? { ...s, generated_text: generatedText, status: 'completed' } : s)
+
+      // 원고 완성 → 팩트 추출 (백그라운드, 실패해도 무관)
+      extractAndSave(session.topic_id, session.messages)
     } finally {
       setGenerating(false)
     }
-  }, [session, supabase])
+  }, [session, supabase, extractAndSave])
 
   return { session, loading, sending, generating, sendAnswer, generateManuscript }
 }
