@@ -5,11 +5,37 @@
 
 ---
 
-## 최종 업데이트: 2026-04-13
+## 최종 업데이트: 2026-04-19
 
 **현재 Phase:** Phase 1~6 완료 / Auth 보완 완료 / MyStory Sprint 1~3 완료 / 결제 연동 대기  
-**빌드:** 클린 (에러 0) | 최신 커밋: `58d176e`  
+**빌드:** 클린 (에러 0) | 최신 커밋: `60bbebe`  
 **배포:** https://storige.vercel.app
+
+---
+
+## 2026-04-19 코드베이스 전체 감사 결과
+
+전체 모듈 파일 존재 및 상태 점검 (단순 문서 일치 여부 확인).
+
+**완료 확인 (코드 존재):**
+- Auth: `src/app/(auth)` + `src/app/auth` (Google·카카오 OAuth 포함)
+- Diary · Dear · Secret · Album · Legacy: `src/app/(main)/*` + `(legacy)` 열람화면
+- Publish 3단계 위저드: `src/app/(main)/publish/page.tsx` + `components/publish/*` (3파일)
+- MyStory: `mystory/[topicId]`, `preview`, `share/[token]` + `InterviewChat`, `TopicCard`
+- AI API 5종: `api/ai/{interview, manuscript, profile-extract, suggest, summarize}`
+- Hooks: 18개 (mystory/album/legacy/memorial/auth/family/sss 등)
+- 마이그레이션: 4건 (mystory_sessions · dear_scheduled_send_at · mystory_share_token · mystory_profile)
+- E2E: `e2e/{auth,diary,landing}.spec.ts` · 단위 테스트 3건
+
+**미구현 확인 (빈 폴더 — 보류 상태 일치):**
+- `src/app/(main)/memorial/[slug]/` (추모관 공개 페이지)
+- `src/app/(main)/settings/memorial/` (추모관 관리)
+- `src/components/memorial/` (추모관 컴포넌트)
+
+**대기 작업 확인:**
+- `components/publish/PublishOrderForm.tsx:67` — 포트원 결제 TODO 그대로
+- `mystory/preview/page.tsx:243` — 출판 CTA가 `/publish`로 단순 이동만 (원고 자동 전달 미구현)
+- Resend 연동 없음 (공유 링크 이메일 발송 미구현)
 
 ---
 
@@ -103,10 +129,14 @@
   - 관련 파일: `src/app/(main)/publish/`
 - **파파스컴퍼니 POD API 연동** — 계약 필요 (오너 결정)
 
-### 2순위: MyStory 추가 고도화 (즉시 착수 가능)
-- 자서전 → 출판 모듈 직접 연결 (완성 원고 → publish 폼 자동 채움)
-- Resend 발신자 도메인 인증 → 공유 링크 이메일 발송 신뢰도 향상
-- ~~질문풀 AI 프롬프트 개인화~~ ✅ Sprint-3 완료 (2026-04-13)
+### 2순위: MyStory → 출판 연결 (즉시 착수 가능 · 결제 무관)
+- **자서전 원고 → Publish 폼 자동 채움**
+  - 현재: `mystory/preview/page.tsx:243`이 `/publish`로 router.push만 호출, 원고 전달 없음
+  - 할 일: publish_type에 `mystory` 추가 또는 `preview_data.manuscript_id` 경유, publish 페이지가 mystory 세션 ID를 받아 BookPreview에 원고 렌더링
+  - 영향 파일: `src/app/(main)/publish/page.tsx`, `src/components/publish/BookPreview.tsx`, `useMystory.ts`
+- **Resend 발신자 도메인 인증**
+  - 공유 링크 이메일 발송 구현 (현재 Resend 코드 자체 없음)
+  - DNS 레코드(SPF·DKIM) 등록 → `/api/share/send-email` 신설
 
 ### 3순위: 보류 중 (오너 결정 후)
 - Phase 6 Sprint 6-2: 추모관 UI 구현 — 최후순위
