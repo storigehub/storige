@@ -66,7 +66,42 @@ export default function RootLayout({
             __html: `
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').catch(function() {});
+                  navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(function(reg) {
+                      // 대기(waiting) 상태면 즉시 활성화 요청
+                      if (reg.waiting) {
+                        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                      }
+
+                      // 업데이트 발생 시: 기존 컨트롤이 있으면 1회 재로딩
+                      reg.addEventListener('updatefound', function() {
+                        const newWorker = reg.installing;
+                        if (!newWorker) return;
+
+                        newWorker.addEventListener('statechange', function() {
+                          if (newWorker.state !== 'installed') return;
+
+                          // controller가 있으면 "업데이트" 케이스
+                          if (navigator.serviceWorker.controller) {
+                            var key = 'sw_update_reload_at';
+                            var last = sessionStorage.getItem(key);
+                            var now = Date.now();
+                            var lastNum = last ? parseInt(last, 10) : NaN;
+
+                            if (!last || !Number.isFinite(lastNum) || now - lastNum > 10000) {
+                              sessionStorage.setItem(key, String(now));
+                              try { newWorker.postMessage({ type: 'SKIP_WAITING' }); } catch (e) {}
+                              window.location.reload();
+                            }
+                          }
+                        });
+                      });
+
+                      // 최신 sw.js 반영을 위해 즉시 갱신 시도
+                      reg.update().catch(function() {});
+                    })
+                    .catch(function() {});
                 });
               }
             `,

@@ -2,6 +2,7 @@
  * Storige Service Worker
  * - 정적 자산 캐시 (Cache-First)
  * - API 요청 Network-First
+ * - 문서 네비게이션 Network-First (구버전 HTML 캐시로 인한 청크 불일치 방지)
  * - 오프라인 fallback
  */
 
@@ -28,12 +29,27 @@ const PRECACHE_URLS = [
   '/manifest.json',
 ]
 
+function isNavigationDocumentRequest(request) {
+  const accept = request.headers.get('accept') ?? ''
+  return (
+    request.method === 'GET' &&
+    (request.mode === 'navigate' ||
+      request.destination === 'document' ||
+      accept.includes('text/html'))
+  )
+}
+
 // 설치 — 사전 캐시
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
   )
   self.skipWaiting()
+})
+
+// 클라이언트에서 "즉시 활성화" 메시지를 보낼 수 있게 함
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting()
 })
 
 // 활성화 — 구버전 캐시 제거
@@ -79,6 +95,30 @@ self.addEventListener('fetch', (event) => {
   // RSC Flight / 라우터 프리패치 — HTML 캐시와 동일 URL로 충돌하지 않음
   if (isNextAppRouterDataRequest(request) || url.searchParams.has('_rsc')) {
     event.respondWith(fetch(request))
+    return
+  }
+
+  // 문서 네비게이션(HTML)은 Network-First로 처리: 캐시된 구버전 HTML이 청크 404를 유발할 수 있음
+  if (isNavigationDocumentRequest(request)) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const clone = response.clone()
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+          }
+          return response
+        })
+        .catch(() =>
+          caches.match(request).then((cached) => {
+            if (cached) return cached
+            if (request.destination === 'document') {
+              return caches.match(OFFLINE_URL) ?? new Response('오프라인', { status: 503 })
+            }
+            return new Response('', { status: 503 })
+          }),
+        )
+    )
     return
   }
 
