@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { LandingPricing } from '@/components/landing/LandingPricing'
 import { LandingAppDownload } from '@/components/landing/LandingAppDownload'
 
@@ -50,11 +52,26 @@ const SERVICES = [
     desc: 'QR 코드 하나로 언제 어디서나 추모할 수 있는 아름다운 온라인 공간. 고인의 삶을 사진, 글, 방명록으로 영원히 기억합니다.',
     img: '',
     fallback: 'linear-gradient(135deg, #0a1520 0%, #0f2030 40%, #0a1a1a 100%)',
-    href: '/memorial',
+    href: '/legacy',
   },
 ]
 
+const NAV_ITEMS = [
+  { label: '읽기', href: '/diary', icon: 'auto_stories' },
+  { label: '편지', href: '/dear', icon: 'mail' },
+  { label: '비밀', href: '/secret', icon: 'lock' },
+  { label: '출판', href: '/publish', icon: 'menu_book' },
+  { label: '관리', href: '/settings', icon: 'manage_accounts' },
+]
+
+const MORE_ITEMS = [
+  { label: '포토앨범', href: '/album', icon: 'photo_library' },
+  { label: 'AI 자서전', href: '/mystory', icon: 'history_edu' },
+]
+
 export default function LandingPage() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <>
       <style>{`
@@ -90,15 +107,68 @@ export default function LandingPage() {
         {/* ── 헤더 ── */}
         <header className="sticky top-0 z-50 glass-card border-b border-white/30">
           <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
-            <Link href="/"><Image src="/logo.png" alt="Storige" width={120} height={36} className="h-[4.5rem] w-auto object-contain" priority /></Link>
-            <nav className="hidden md:flex items-center gap-8">
-              {[['아카이브','/diary'],['서신','/dear'],['AI 자서전','/mystory'],['출판','/publish']].map(([label, href]) => (
-                <Link key={label} href={href} className="text-sm font-semibold text-[#747878] hover:text-on-surface transition-colors">{label}</Link>
+            <div className="flex items-center gap-3">
+              <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+                <SheetTrigger
+                  className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low active:opacity-70 transition-colors"
+                  aria-label="메뉴 열기"
+                >
+                  <span className="material-symbols-outlined text-[22px] text-on-surface">menu</span>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-72 p-0 bg-[#f9f9f9]">
+                  <div className="p-6 bg-white border-b border-surface-container">
+                    <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-14 w-auto object-contain" />
+                    <p className="mt-2 text-xs text-[#747878]">기억을 저장하고, 내일을 준비하세요.</p>
+                  </div>
+                  <nav className="py-2">
+                    {NAV_ITEMS.map(({ label, href, icon }) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        onClick={() => setMenuOpen(false)}
+                        className="w-full flex items-center gap-3 px-6 py-3 text-sm text-on-surface hover:bg-surface-container transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px] text-outline">{icon}</span>
+                        <span>{label}</span>
+                      </Link>
+                    ))}
+                  </nav>
+                  <div className="border-t border-surface-container py-2">
+                    {MORE_ITEMS.map(({ label, href, icon }) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        onClick={() => setMenuOpen(false)}
+                        className="w-full flex items-center gap-3 px-6 py-3 text-sm text-on-surface hover:bg-surface-container transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px] text-outline">{icon}</span>
+                        <span>{label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="border-t border-surface-container p-4">
+                    <Link
+                      href="/login"
+                      onClick={() => setMenuOpen(false)}
+                      className="block w-full rounded-[0.625rem] bg-primary px-4 py-3 text-center text-sm font-bold text-white"
+                    >
+                      로그인 / 시작하기
+                    </Link>
+                  </div>
+                </SheetContent>
+              </Sheet>
+              <Link href="/" aria-label="Storige 랜딩페이지로 이동">
+                <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-[4.5rem] w-auto object-contain" />
+              </Link>
+            </div>
+            <nav className="hidden lg:flex items-center gap-8">
+              {NAV_ITEMS.map(({ label, href }) => (
+                <Link key={href} href={href} className="text-sm font-semibold text-[#747878] hover:text-on-surface transition-colors">{label}</Link>
               ))}
             </nav>
             <div className="flex items-center gap-3">
-              <Link href="/login" className="hidden md:block text-sm font-bold text-on-surface hover:text-primary transition-colors">로그인</Link>
-              <Link href="/signup" className="btn-modern px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-[0.625rem]">무료 시작</Link>
+              <Link href="/login" className="hidden sm:block text-sm font-bold text-on-surface hover:text-primary transition-colors">로그인</Link>
+              <Link href="/signup" className="btn-modern px-4 sm:px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-[0.625rem]">무료 시작</Link>
             </div>
           </div>
         </header>
@@ -117,7 +187,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/signup" className="btn-modern px-7 py-4 bg-primary text-white font-bold rounded-[0.625rem] text-sm text-center shadow-lg">무료로 시작하기</Link>
-                  <Link href="/login" className="btn-modern px-7 py-4 bg-white text-[#1A1C1C] font-bold rounded-[0.625rem] text-sm text-center soft-shadow border border-[#C4C7C7]/40">서비스 둘러보기</Link>
+                  <Link href="#services" className="btn-modern px-7 py-4 bg-white text-[#1A1C1C] font-bold rounded-[0.625rem] text-sm text-center soft-shadow border border-[#C4C7C7]/40">서비스 둘러보기</Link>
                 </div>
               </div>
               <div className="relative hidden md:block">
@@ -153,7 +223,7 @@ export default function LandingPage() {
         </section>
 
         {/* ── 서비스 카드 2×2 — 이미지 위 텍스트 오버레이 (Stitch 기준) ── */}
-        <section className="py-20 md:py-28 bg-[#F9F9F9]">
+        <section id="services" className="py-20 md:py-28 bg-[#F9F9F9]">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="mb-14">
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 font-headline">Core Services</p>
