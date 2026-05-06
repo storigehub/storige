@@ -19,6 +19,11 @@
 - ✅ **MyStory → 출판 연결**: `mystory/preview`에서 출판 신청 시 원고 자동 선택 및 미리보기 연동 완료
 - ✅ **AI 인터뷰어 전문화**: '전문 전기 작가(Heritage Biographer)' 페르소나 및 감각적/에피소드 중심 취재 지침 적용
 - ✅ **인터뷰어 전용 스킬**: `mystory-interviewer.skill` 제작 및 워크스페이스 설치 완료
+- ✅ **전역 내비게이션 SSOT 정리**: `src/lib/navigation.ts`로 랜딩/앱 헤더/모바일 탭 메뉴 정의 통합
+
+**내비게이션 유지보수 규칙:**
+- 메뉴명/순서/아이콘/경로 변경은 `src/lib/navigation.ts`에서만 수행
+- 상세 규칙: `docs/navigation-consistency.md`
 
 ---
 

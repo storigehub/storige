@@ -62,6 +62,7 @@ Deploy:     Vercel (GitHub Actions 경유) + Supabase Cloud
 7. **접근제어:** Supabase RLS 우선, 서버 로직 최소화
 8. **Over Engineering 금지:** 현재 필요한 것만 구현
 9. **네이밍:** 컴포넌트=PascalCase, 훅=camelCase, DB=snake_case
+10. **내비게이션:** 메뉴명/순서/아이콘/경로는 `src/lib/navigation.ts`만 수정 (상세: `docs/navigation-consistency.md`)
 
 ---
 
