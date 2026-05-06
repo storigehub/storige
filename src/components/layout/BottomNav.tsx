@@ -1,27 +1,20 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
+import { PRIMARY_NAV_ITEMS } from '@/lib/navigation'
 
 /**
  * 모바일 하단 5탭 네비게이션 — Midnight Archive / _5 템플릿 기준
  * breakpoint 정책: md 이상(768px+)에서 hidden (데스크탑은 Header 인라인 nav 사용)
  * 데스크탑/사이드 메뉴와 같은 5개 핵심 메뉴명을 사용
  */
-const TABS = [
-  { href: '/diary',    label: '읽기',  icon: 'auto_stories' },
-  { href: '/dear',     label: '편지',  icon: 'mail' },
-  { href: '/secret',   label: '비밀',  icon: 'lock' },
-  { href: '/publish',  label: '출판',  icon: 'menu_book' },
-  { href: '/settings', label: '관리',  icon: 'settings' },
-]
-
 export function BottomNav() {
   const pathname = usePathname()
   const router = useRouter()
 
   return (
     <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-8 pt-3 bg-white/90 backdrop-blur-xl border-t border-surface-container-high shadow-[0_-8px_32px_rgba(0,0,0,0.06)] md:hidden">
-      {TABS.map((tab) => {
+      {PRIMARY_NAV_ITEMS.map((tab) => {
         const isActive = pathname.startsWith(tab.href)
         return (
           <button

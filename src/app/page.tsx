@@ -1,13 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { LandingPricing } from '@/components/landing/LandingPricing'
 import { LandingAppDownload } from '@/components/landing/LandingAppDownload'
+import { PRIMARY_NAV_ITEMS, SECONDARY_NAV_ITEMS } from '@/lib/navigation'
 
 /* ── 로컬 이미지 경로 (public/img) ── */
 const HERO_IMG = '/img/happy-chinese-family-relaxing-on-meadow-2026-03-27-00-33-40-utc.jpg'
@@ -53,47 +52,12 @@ const SERVICES = [
     desc: 'QR 코드 하나로 언제 어디서나 추모할 수 있는 아름다운 공간. 고인의 삶을 사진과 글로 영원히 기억합니다.',
     img: '/img/997180.jpg',
     fallback: 'linear-gradient(135deg, #EFEBE9 0%, #D7CCC8 100%)',
-    href: '/memorial',
+    href: '/legacy',
   },
 ]
 
-const NAV_ITEMS = [
-  { label: '읽기', href: '/diary', icon: 'auto_stories' },
-  { label: '편지', href: '/dear', icon: 'mail' },
-  { label: '비밀', href: '/secret', icon: 'lock' },
-  { label: '출판', href: '/publish', icon: 'menu_book' },
-  { label: '관리', href: '/settings', icon: 'manage_accounts' },
-]
-
-const MORE_ITEMS = [
-  { label: '포토앨범', href: '/album', icon: 'photo_library' },
-  { label: 'AI 자서전', href: '/mystory', icon: 'history_edu' },
-]
-
 export default function LandingPage() {
-  const router = useRouter()
-  const [checking, setChecking] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) {
-        // router.replace('/diary') 
-        setChecking(false)
-      } else {
-        setChecking(false)
-      }
-    })
-  }, [router])
-
-  if (checking) {
-    return (
-      <div className="min-h-screen bg-surface-container-lowest flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-      </div>
-    )
-  }
 
   return (
     <>
@@ -140,7 +104,7 @@ export default function LandingPage() {
                     <p className="mt-2 text-xs text-[#747878]">기억을 저장하고, 내일을 준비하세요.</p>
                   </div>
                   <nav className="py-2">
-                    {NAV_ITEMS.map(({ label, href, icon }) => (
+                    {PRIMARY_NAV_ITEMS.map(({ label, href, icon }) => (
                       <Link
                         key={href}
                         href={href}
@@ -153,7 +117,7 @@ export default function LandingPage() {
                     ))}
                   </nav>
                   <div className="border-t border-surface-container py-2">
-                    {MORE_ITEMS.map(({ label, href, icon }) => (
+                    {SECONDARY_NAV_ITEMS.map(({ label, href, icon }) => (
                       <Link
                         key={href}
                         href={href}
@@ -181,8 +145,8 @@ export default function LandingPage() {
               </Link>
             </div>
             <nav className="hidden lg:flex items-center gap-10">
-              {[['아카이브','/diary'],['서신','/dear'],['AI 자서전','/mystory'],['출판','/publish']].map(([label, href]) => (
-                <Link key={label} href={href} className="text-sm font-bold text-outline hover:text-primary transition-colors">{label}</Link>
+              {PRIMARY_NAV_ITEMS.map(({ label, href }) => (
+                <Link key={href} href={href} className="text-sm font-bold text-outline hover:text-primary transition-colors">{label}</Link>
               ))}
             </nav>
             <div className="flex items-center gap-4">

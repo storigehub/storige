@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { PRIMARY_NAV_ITEMS, SECONDARY_NAV_ITEMS } from '@/lib/navigation'
 
 /**
  * 앱 헤더 — Midnight Archive / _5 템플릿 기준
@@ -13,19 +14,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
  * - 데스크탑(md+): 인라인 5링크 nav (읽기|편지|비밀|출판|관리) + hidden 햄버거
  * - 검색 버튼: /diary?search=1 으로 포커스 이동 (접근성 — href 명시)
  */
-const NAV_ITEMS = [
-  { href: '/diary',    label: '읽기',       icon: 'auto_stories' },
-  { href: '/dear',     label: '편지',       icon: 'mail' },
-  { href: '/secret',   label: '비밀',       icon: 'lock' },
-  { href: '/publish',  label: '출판',       icon: 'menu_book' },
-  { href: '/settings', label: '관리',       icon: 'manage_accounts' },
-]
-
-const MORE_ITEMS = [
-  { href: '/album',    label: '포토앨범',   icon: 'photo_library' },
-  { href: '/mystory',  label: 'AI 자서전',  icon: 'history_edu' },
-]
-
 export function Header() {
   const router = useRouter()
   const pathname = usePathname()
@@ -79,7 +67,7 @@ export function Header() {
                 </div>
               </div>
               <nav className="py-2">
-                {NAV_ITEMS.map((item) => {
+                {PRIMARY_NAV_ITEMS.map((item) => {
                   const isActive = pathname.startsWith(item.href)
                   return (
                     <button
@@ -102,7 +90,7 @@ export function Header() {
                 })}
               </nav>
               <div className="border-t border-surface-container py-2">
-                {MORE_ITEMS.map((item) => {
+                {SECONDARY_NAV_ITEMS.map((item) => {
                   const isActive = pathname.startsWith(item.href)
                   return (
                     <button
@@ -143,7 +131,7 @@ export function Header() {
 
           {/* 데스크탑 인라인 nav */}
           <nav className="hidden md:flex items-center ml-4">
-            {NAV_ITEMS.map((item) => {
+            {PRIMARY_NAV_ITEMS.map((item) => {
               const isActive = pathname.startsWith(item.href)
               return (
                 <Link
