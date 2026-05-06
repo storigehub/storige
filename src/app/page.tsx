@@ -158,63 +158,85 @@ export default function LandingPage() {
 
         {/* ── 히어로 ── */}
         <section className="hero-gradient relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 pb-24 md:pt-32 md:pb-40">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-              <div className="lg:col-span-6 z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-6 font-headline">
+          <div
+            aria-hidden
+            className="absolute -right-32 top-20 h-[34rem] w-[34rem] rounded-full bg-primary/10 blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="absolute -left-32 bottom-20 h-96 w-96 rounded-full bg-dear/10 blur-3xl"
+          />
+          <div className="relative max-w-7xl mx-auto px-6 md:px-10 pt-16 pb-12 md:pt-24 md:pb-0">
+            <div className="grid min-h-[calc(100vh-5rem)] grid-cols-1 items-center gap-12 lg:min-h-[760px] lg:grid-cols-12 lg:gap-10">
+              <div className="z-10 pb-0 lg:col-span-5 lg:pb-28">
+                <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary shadow-sm ring-1 ring-primary/10 backdrop-blur-xl font-headline">
                   Digital Heritage Platform
                 </div>
-                <h1 className="font-headline text-5xl md:text-6xl xl:text-[4.5rem] font-extrabold text-on-surface tracking-tight leading-[1.05] mb-8 text-balance">
-                  가장 소중한 기억,<br />가족에게 남기는<br /><span className="text-primary">영원한 서사</span>
+                <h1 className="font-headline text-5xl font-extrabold tracking-tight text-on-surface text-balance leading-[1.02] sm:text-6xl xl:text-[5rem]">
+                  기억을 모아<br />
+                  가족에게 건네는<br />
+                  <span className="text-primary">가장 선명한 유산</span>
                 </h1>
-                <p className="text-lg text-on-surface-variant leading-relaxed mb-12 max-w-lg">
-                  일기, 사진, 그리고 당신의 목소리까지.<br />시대를 초월해 가장 안전하고 아름답게 보관합니다.
+                <p className="mt-8 max-w-xl text-lg leading-relaxed text-on-surface-variant">
+                  일기, 편지, 사진, 그리고 당신의 목소리까지.
+                  흩어진 삶의 조각을 하나의 살아있는 아카이브로 엮어 보관합니다.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/signup" className="btn-modern px-8 py-4.5 bg-primary text-white font-bold rounded-2xl text-base text-center shadow-xl shadow-primary/20">지금 시작하기</Link>
-                  <Link href="/login" className="btn-modern px-8 py-4.5 bg-white text-on-surface font-bold rounded-2xl text-base text-center soft-shadow border border-surface-container-highest">서비스 둘러보기</Link>
+                <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                  <Link href="/signup" className="btn-modern rounded-2xl bg-primary px-8 py-4.5 text-center text-base font-bold text-white shadow-xl shadow-primary/20">지금 시작하기</Link>
+                  <Link href="#services" className="btn-modern rounded-2xl bg-white/85 px-8 py-4.5 text-center text-base font-bold text-on-surface shadow-lg shadow-surface-dim/10 ring-1 ring-surface-container-highest/60 backdrop-blur-xl">서비스 둘러보기</Link>
+                </div>
+                <div className="mt-10 flex flex-wrap gap-3 text-sm font-semibold text-outline">
+                  {['E2EE 보안', 'AI 자서전', '종이책 출판'].map((item) => (
+                    <span key={item} className="rounded-full bg-white/70 px-4 py-2 shadow-sm ring-1 ring-surface-container-highest/50 backdrop-blur-xl">
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
-              <div className="lg:col-span-6 relative">
-                <div className="relative w-full aspect-[4/3] rounded-[2.5rem] overflow-hidden soft-shadow border-8 border-white">
-                  <Image 
-                    src={HERO_IMG} 
-                    alt="가족과 함께하는 행복한 시간" 
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                {/* 플로팅 배지 */}
-                <div className="glass-card absolute -bottom-8 -right-4 md:-right-8 rounded-[2rem] px-6 py-5 flex items-center gap-4 soft-shadow">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>family_restroom</span>
+              <div className="relative lg:col-span-7">
+                <div className="absolute -right-10 -top-8 hidden h-52 w-52 rounded-[3rem] bg-primary/10 lg:block" />
+                <div className="absolute -bottom-10 left-8 hidden h-36 w-36 rounded-full bg-white/70 shadow-2xl lg:block" />
+                <div className="relative mx-auto w-full max-w-[760px] overflow-hidden rounded-[2.75rem] bg-white p-3 shadow-2xl shadow-surface-dim/20 ring-1 ring-white/70 lg:mr-[-3rem] lg:max-w-none">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2.2rem] sm:aspect-[16/11] lg:aspect-[5/4]">
+                    <Image
+                      src={HERO_IMG}
+                      alt="가족과 함께하는 행복한 시간"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10" />
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-outline uppercase tracking-wider">Family Oriented</p>
-                    <p className="text-base font-bold text-on-surface">대를 잇는 기록</p>
+                </div>
+                <div className="glass-card absolute -bottom-6 left-4 right-4 rounded-[2rem] px-5 py-4 shadow-2xl shadow-surface-dim/15 sm:left-auto sm:right-2 sm:w-[21rem] md:-bottom-8 md:right-0">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/10">
+                      <span className="material-symbols-outlined text-2xl text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>family_restroom</span>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-outline">Living Archive</p>
+                      <p className="text-base font-bold text-on-surface">오늘의 기록이 내일의 유산이 됩니다</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* ── 통계 배너 ── */}
-        <section className="bg-primary/5 py-14 border-y border-primary/10">
-          <div className="max-w-7xl mx-auto px-6 md:px-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-4 text-center">
-              {[
-                ['1,248,500+', '기록된 순간들', 'Every memory matters'],
-                ['99.9%', '서비스 가용성', 'Safe and Reliable'],
-                ['100 Years', '보존 보장', 'Beyond Generation']
-              ].map(([num, label, sub]) => (
-                <div key={label} className="flex flex-col items-center">
-                  <p className="font-headline text-4xl md:text-5xl font-extrabold text-primary tracking-tight mb-2">{num}</p>
-                  <p className="text-sm font-bold text-on-surface mb-1">{label}</p>
-                  <p className="text-[10px] text-outline uppercase tracking-widest">{sub}</p>
-                </div>
-              ))}
+            {/* ── 히어로 통계 카드 ── */}
+            <div className="relative z-10 mx-auto mt-14 max-w-6xl rounded-[2rem] bg-white/80 p-6 shadow-xl shadow-surface-dim/10 ring-1 ring-white/70 backdrop-blur-xl md:-mt-16 md:p-8">
+              <div className="grid grid-cols-1 gap-6 text-center md:grid-cols-3 md:gap-4">
+                {[
+                  ['1,248,500+', '기록된 순간들', 'Every memory matters'],
+                  ['99.9%', '서비스 가용성', 'Safe and Reliable'],
+                  ['100 Years', '보존 보장', 'Beyond Generation'],
+                ].map(([num, label, sub]) => (
+                  <div key={label} className="flex flex-col items-center">
+                    <p className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-5xl">{num}</p>
+                    <p className="mt-2 text-sm font-bold text-on-surface">{label}</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-widest text-outline">{sub}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
