@@ -240,7 +240,7 @@ export default function MystoryPreviewPage() {
                     가족에게 드리는 세상에 하나뿐인 선물입니다.
                   </p>
                   <button
-                    onClick={() => router.push('/publish')}
+                    onClick={() => router.push('/publish?type=mystory&autoSelect=true')}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#0061A5] rounded-xl font-bold text-sm hover:bg-[#F0F7FF] transition-colors"
                   >
                     <span className="material-symbols-outlined text-base">local_shipping</span>

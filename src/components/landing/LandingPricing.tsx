@@ -2,10 +2,6 @@
 
 import Link from 'next/link'
 
-/**
- * 랜딩 가격/플랜 섹션 — Midnight Archive 디자인 시스템
- * 결제 연동 전: CTA는 /signup 연결, 결제 버튼 비활성
- */
 const PLANS = [
   {
     id: 'free',
@@ -49,29 +45,31 @@ const PLANS = [
 
 export function LandingPricing() {
   return (
-    <section className="py-20 md:py-28 bg-[#F9F9F9]">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="mb-14 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 font-headline">Pricing</p>
-          <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-[#1A1C1C] tracking-tight">
+    <section className="py-24 md:py-32 bg-surface-container-low/30">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="mb-16 text-center">
+          <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-4 font-headline">
+            Pricing
+          </div>
+          <h2 className="font-headline text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-tight">
             당신의 기억에 맞는<br />플랜을 선택하세요
           </h2>
-          <p className="mt-4 text-sm text-[#747878]">언제든 변경하거나 취소할 수 있습니다</p>
+          <p className="mt-6 text-base text-on-surface-variant max-w-xl mx-auto">언제든 변경하거나 취소할 수 있습니다. 당신의 소중한 역사를 위해 가장 합리적인 방식을 선택해 보세요.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`relative rounded-2xl p-7 flex flex-col gap-5 transition-shadow ${
+              className={`relative rounded-[2.5rem] p-10 flex flex-col gap-8 transition-all duration-500 hover:scale-[1.02] ${
                 plan.highlight
-                  ? 'bg-primary text-white shadow-2xl'
-                  : 'bg-white text-[#1A1C1C] shadow-sm hover:shadow-md'
+                  ? 'bg-primary text-white shadow-2xl shadow-primary/30'
+                  : 'bg-white text-on-surface border border-surface-container-highest/50 shadow-xl shadow-surface-dim/20'
               }`}
             >
               {/* 배지 */}
               {plan.badge && (
-                <span className={`absolute -top-3 left-6 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
+                <span className={`absolute -top-4 left-10 text-[10px] font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg ${
                   plan.highlight ? 'bg-white text-primary' : 'bg-primary text-white'
                 }`}>
                   {plan.badge}
@@ -80,30 +78,30 @@ export function LandingPricing() {
 
               {/* 플랜명 */}
               <div>
-                <p className={`text-[10px] font-bold uppercase tracking-[0.25em] mb-1 ${
-                  plan.highlight ? 'text-white/60' : 'text-[#747878]'
+                <p className={`text-[10px] font-bold uppercase tracking-[0.3em] mb-2 font-headline ${
+                  plan.highlight ? 'text-white/60' : 'text-outline'
                 }`}>{plan.name}</p>
-                <p className={`text-sm font-medium ${plan.highlight ? 'text-white/80' : 'text-[#747878]'}`}>{plan.desc}</p>
+                <p className={`text-base font-semibold ${plan.highlight ? 'text-white/80' : 'text-on-surface-variant'}`}>{plan.desc}</p>
               </div>
 
               {/* 가격 */}
-              <div className="flex items-baseline gap-1">
-                <span className="font-headline text-4xl font-extrabold tracking-tight">
+              <div className="flex items-baseline gap-2">
+                <span className="font-headline text-5xl font-extrabold tracking-tight">
                   {plan.price === '0' ? '무료' : `₩${plan.price}`}
                 </span>
                 {plan.unit && (
-                  <span className={`text-sm font-medium ${plan.highlight ? 'text-white/60' : 'text-[#747878]'}`}>{plan.unit}</span>
+                  <span className={`text-sm font-bold ${plan.highlight ? 'text-white/60' : 'text-outline'}`}>{plan.unit}</span>
                 )}
               </div>
 
               {/* 기능 목록 */}
-              <ul className="space-y-2.5 flex-1">
+              <ul className="space-y-4 flex-1">
                 {plan.features.map((feat) => (
-                  <li key={feat} className="flex items-center gap-2.5 text-sm">
-                    <span className={`material-symbols-outlined text-[16px] flex-shrink-0 ${
+                  <li key={feat} className="flex items-start gap-3 text-[15px]">
+                    <span className={`material-symbols-outlined text-[18px] flex-shrink-0 mt-0.5 ${
                       plan.highlight ? 'text-white/70' : 'text-primary'
                     }`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    <span className={plan.highlight ? 'text-white/90' : 'text-[#444748]'}>{feat}</span>
+                    <span className={plan.highlight ? 'text-white/90 font-medium' : 'text-on-surface-variant font-medium'}>{feat}</span>
                   </li>
                 ))}
               </ul>
@@ -111,10 +109,10 @@ export function LandingPricing() {
               {/* CTA */}
               <Link
                 href={plan.href}
-                className={`mt-2 block text-center py-3.5 rounded-[0.625rem] text-sm font-bold transition-all ${
+                className={`mt-4 block text-center py-4.5 rounded-2xl text-base font-bold transition-all duration-300 ${
                   plan.highlight
-                    ? 'bg-white text-primary hover:bg-white/90'
-                    : 'bg-primary text-white hover:bg-primary/90'
+                    ? 'bg-white text-primary hover:bg-surface-container-lowest'
+                    : 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/20'
                 }`}
               >
                 {plan.cta}
@@ -124,19 +122,19 @@ export function LandingPricing() {
         </div>
 
         {/* 출판 단건 결제 안내 */}
-        <div className="mt-8 rounded-2xl bg-white p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="w-11 h-11 rounded-xl bg-[#1A1C1C] flex items-center justify-center flex-shrink-0">
-              <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>menu_book</span>
+        <div className="mt-12 rounded-[2.5rem] bg-white p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border border-surface-container-highest/50 shadow-lg shadow-surface-dim/10">
+          <div className="flex items-center gap-6">
+            <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center flex-shrink-0 border border-primary/10">
+              <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>menu_book</span>
             </div>
             <div>
-              <p className="font-headline font-bold text-[#1A1C1C] text-sm">종이책 출판 — 단건 결제</p>
-              <p className="text-xs text-[#747878] mt-0.5">기록을 실물 책으로. 200페이지 기준 39,000원~</p>
+              <p className="font-headline font-extrabold text-on-surface text-lg">종이책 출판 — 단건 결제 가능</p>
+              <p className="text-sm text-on-surface-variant mt-1">구독 없이도 필요한 순간에만 소중한 기록을 실물 책으로 소장할 수 있습니다.</p>
             </div>
           </div>
-          <Link href="/publish" className="text-sm font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all flex-shrink-0">
-            출판 알아보기
-            <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+          <Link href="/publish" className="px-8 py-3.5 bg-surface-container-low text-on-surface text-sm font-bold rounded-xl flex items-center gap-2 hover:bg-surface-container hover:gap-3 transition-all flex-shrink-0">
+            출판 서비스 알아보기
+            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
           </Link>
         </div>
       </div>

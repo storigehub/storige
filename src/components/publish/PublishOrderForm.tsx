@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 interface PublishOrderFormProps {
   selectedEntryIds: string[]
-  publishType: 'diary' | 'dear' | 'album'
+  publishType: 'diary' | 'dear' | 'album' | 'mystory'
   pageCount: number
   onBack: () => void
 }
@@ -15,12 +15,14 @@ const PRICE_TABLE: Record<string, number> = {
   diary: 39000,
   dear: 39000,
   album: 29000,
+  mystory: 49000,
 }
 
 const TYPE_LABEL: Record<string, string> = {
   diary: '일기 단행본',
   dear: '편지 모음집',
   album: '포토앨범',
+  mystory: 'AI 자서전',
 }
 
 // 출판 주문 폼 — 배송지 + 결제 (포트원 연동 예정)

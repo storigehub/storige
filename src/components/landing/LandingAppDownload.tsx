@@ -1,58 +1,63 @@
 'use client'
 
 /**
- * 랜딩 앱 다운로드 CTA 섹션
- * Capacitor 앱 출시 전: "준비 중" 배지 표시, 링크는 비활성
+ * 랜딩 앱 다운로드 CTA 섹션 — Midnight Archive / Bright Theme
  */
 export function LandingAppDownload() {
   return (
-    <section className="py-16 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="rounded-2xl bg-[#1A1C1C] px-8 md:px-16 py-12 md:py-14 flex flex-col md:flex-row items-center justify-between gap-8">
+    <section className="py-24 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="rounded-[3rem] bg-surface-container-low/50 px-8 md:px-20 py-16 md:py-24 flex flex-col lg:flex-row items-center justify-between gap-12 border border-surface-container-highest/30">
 
           {/* 좌측 텍스트 */}
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#D2E4FF] mb-4 font-headline">Mobile App</p>
-            <h2 className="font-headline text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-snug mb-3">
-              언제 어디서나,<br />당신의 기억과 함께
+          <div className="max-w-xl text-center lg:text-left">
+            <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-6 font-headline">
+              Mobile App
+            </div>
+            <h2 className="font-headline text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-tight mb-6">
+              언제 어디서나,<br className="hidden md:block" />당신의 기억과 함께
             </h2>
-            <p className="text-sm text-white/50 leading-relaxed max-w-sm">
-              iOS · Android 네이티브 앱으로 카메라, 위치, 생체인증을 완벽하게 활용하세요.
+            <p className="text-lg text-on-surface-variant leading-relaxed">
+              iOS와 Android 전용 앱을 통해 카메라, 위치 정보, 그리고 생체 인증 기술을 완벽하게 활용하십시오. 당신의 서사는 이제 주머니 속에서 영원히 숨 쉽니다.
             </p>
           </div>
 
           {/* 우측 다운로드 버튼 */}
-          <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row gap-6 flex-shrink-0">
             {/* App Store */}
-            <div className="relative">
+            <div className="relative group">
               <button
                 disabled
-                className="flex items-center gap-3 px-5 py-3.5 bg-white/10 rounded-[0.625rem] border border-white/20 opacity-70 cursor-not-allowed"
+                className="flex items-center gap-4 px-8 py-5 bg-white rounded-2xl border border-surface-container-highest shadow-xl shadow-surface-dim/10 opacity-70 cursor-not-allowed transition-all"
                 aria-label="App Store — 출시 준비 중"
               >
-                <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>phone_iphone</span>
+                <div className="w-12 h-12 rounded-xl bg-on-surface flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>phone_iphone</span>
+                </div>
                 <div className="text-left">
-                  <p className="text-[9px] text-white/50 uppercase tracking-wider">Download on the</p>
-                  <p className="text-sm font-bold text-white font-headline">App Store</p>
+                  <p className="text-[10px] text-outline font-bold uppercase tracking-wider">Download on the</p>
+                  <p className="text-xl font-extrabold text-on-surface font-headline leading-none mt-1">App Store</p>
                 </div>
               </button>
-              <span className="absolute -top-2.5 -right-2 text-[9px] font-bold bg-primary text-white px-2 py-0.5 rounded-full uppercase tracking-wide">준비중</span>
+              <span className="absolute -top-3 -right-3 text-[10px] font-extrabold bg-primary text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">준비중</span>
             </div>
 
             {/* Google Play */}
-            <div className="relative">
+            <div className="relative group">
               <button
                 disabled
-                className="flex items-center gap-3 px-5 py-3.5 bg-white/10 rounded-[0.625rem] border border-white/20 opacity-70 cursor-not-allowed"
+                className="flex items-center gap-4 px-8 py-5 bg-white rounded-2xl border border-surface-container-highest shadow-xl shadow-surface-dim/10 opacity-70 cursor-not-allowed transition-all"
                 aria-label="Google Play — 출시 준비 중"
               >
-                <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>android</span>
+                <div className="w-12 h-12 rounded-xl bg-on-surface flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>android</span>
+                </div>
                 <div className="text-left">
-                  <p className="text-[9px] text-white/50 uppercase tracking-wider">Get it on</p>
-                  <p className="text-sm font-bold text-white font-headline">Google Play</p>
+                  <p className="text-[10px] text-outline font-bold uppercase tracking-wider">Get it on</p>
+                  <p className="text-xl font-extrabold text-on-surface font-headline leading-none mt-1">Google Play</p>
                 </div>
               </button>
-              <span className="absolute -top-2.5 -right-2 text-[9px] font-bold bg-primary text-white px-2 py-0.5 rounded-full uppercase tracking-wide">준비중</span>
+              <span className="absolute -top-3 -right-3 text-[10px] font-extrabold bg-primary text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">준비중</span>
             </div>
           </div>
         </div>

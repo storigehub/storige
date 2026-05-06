@@ -2,7 +2,7 @@
 
 import { useDiaryList } from '@/hooks/useDiaryList'
 
-type PublishType = 'diary' | 'dear' | 'album'
+type PublishType = 'diary' | 'dear' | 'album' | 'mystory'
 
 interface PublishSelectStepProps {
   publishType: PublishType
@@ -17,6 +17,7 @@ interface PublishSelectStepProps {
 const PUBLISH_TYPES: { value: PublishType; label: string; icon: string; desc: string }[] = [
   { value: 'diary', label: '일기 단행본', icon: '📓', desc: '일기를 모아 한 권의 책으로' },
   { value: 'dear', label: '편지 모음집', icon: '✉️', desc: '소중한 편지를 책으로 엮어' },
+  { value: 'mystory', label: 'AI 자서전', icon: '📖', desc: '내 삶의 이야기를 담은 자서전' },
   { value: 'album', label: '포토앨범', icon: '📸', desc: '사진 중심의 추억 앨범' },
 ]
 

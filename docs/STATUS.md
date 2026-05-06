@@ -5,146 +5,53 @@
 
 ---
 
-## 최종 업데이트: 2026-04-19
+## 최종 업데이트: 2026-05-06
 
-**현재 Phase:** Phase 1~6 완료 / Auth 보완 완료 / MyStory Sprint 1~3 완료 / 결제 연동 대기  
-**빌드:** 클린 (에러 0) | 최신 커밋: `60bbebe`  
+**현재 Phase:** Phase 1~6 완료 / MyStory-출판 연결 완료 / AI 인터뷰어 전문화 완료 / 결제 연동 대기  
+**빌드:** 클린 (에러 0)  
 **배포:** https://storige.vercel.app
 
 ---
 
-## 2026-04-19 코드베이스 전체 감사 결과
+## 2026-05-06 코드베이스 업데이트 내역
 
-전체 모듈 파일 존재 및 상태 점검 (단순 문서 일치 여부 확인).
-
-**완료 확인 (코드 존재):**
-- Auth: `src/app/(auth)` + `src/app/auth` (Google·카카오 OAuth 포함)
-- Diary · Dear · Secret · Album · Legacy: `src/app/(main)/*` + `(legacy)` 열람화면
-- Publish 3단계 위저드: `src/app/(main)/publish/page.tsx` + `components/publish/*` (3파일)
-- MyStory: `mystory/[topicId]`, `preview`, `share/[token]` + `InterviewChat`, `TopicCard`
-- AI API 5종: `api/ai/{interview, manuscript, profile-extract, suggest, summarize}`
-- Hooks: 18개 (mystory/album/legacy/memorial/auth/family/sss 등)
-- 마이그레이션: 4건 (mystory_sessions · dear_scheduled_send_at · mystory_share_token · mystory_profile)
-- E2E: `e2e/{auth,diary,landing}.spec.ts` · 단위 테스트 3건
-
-**미구현 확인 (빈 폴더 — 보류 상태 일치):**
-- `src/app/(main)/memorial/[slug]/` (추모관 공개 페이지)
-- `src/app/(main)/settings/memorial/` (추모관 관리)
-- `src/components/memorial/` (추모관 컴포넌트)
-
-**대기 작업 확인:**
-- `components/publish/PublishOrderForm.tsx:67` — 포트원 결제 TODO 그대로
-- `mystory/preview/page.tsx:243` — 출판 CTA가 `/publish`로 단순 이동만 (원고 자동 전달 미구현)
-- Resend 연동 없음 (공유 링크 이메일 발송 미구현)
+**신규 완료 항목:**
+- ✅ **MyStory → 출판 연결**: `mystory/preview`에서 출판 신청 시 원고 자동 선택 및 미리보기 연동 완료
+- ✅ **AI 인터뷰어 전문화**: '전문 전기 작가(Heritage Biographer)' 페르소나 및 감각적/에피소드 중심 취재 지침 적용
+- ✅ **인터뷰어 전용 스킬**: `mystory-interviewer.skill` 제작 및 워크스페이스 설치 완료
 
 ---
 
-## 완료된 작업
+## 완료된 작업 (누적)
 
-### Phase 1~3 (전체 완료)
-- Auth (로그인/회원가입/2FA)
-- Diary CRUD, 아코디언 목록, 5개 뷰, 미디어
-- Dear My Son 편지
-- Secret Code E2EE (AES-256-GCM + SSS — 23개 암호화 테스트 Green)
-- 가족 구성원 CRUD + 원형 뱃지 UI
-- SSS 복구 키 배분 (useSSSKeyManager + SSSKeySetup)
-- 출판 미리보기 + 주문 폼
-- Midnight Archive 디자인 마이그레이션 (38파일)
+### Phase 1~5 (전체 완료)
+- Auth (Email, Social OAuth, 2FA)
+- Diary Core (CRUD, 5개 뷰, 미디어, 지도, 캘린더)
+- Secret Code (E2EE 암호화 + SSS 키 복구)
+- 가족 구성원 관리 (CRUD, 인증 플로우, 권한 설정)
+- AI 기능 (Claude 연동, 요약, 글감 제안)
+- PWA & 모바일 최적화 (Capacitor 설정 완료)
 
-### Phase 4 (전체 완료)
-- Sprint 4-1: 포토앨범 (useAlbum + AlbumLightbox + album_photos Supabase 테이블)
-- Sprint 4-2: Legacy Access (/legacy 열람화면 + /settings/legacy 관리)
-- Sprint 4-3: Capacitor 설정 (capacitor.config.ts + camera.ts + 빌드 스크립트)
-- Sprint 4-4: 앱스토어 배포 가이드 (docs/appstore-deploy-guide.md)
-
-### Phase 5 (전체 완료)
-- Sprint 5-1: AI 기능 (Claude Haiku API, 일기 요약 + 글감 제안, /api/ai/*)
-- Sprint 5-2: 알림 시스템 (FCM/WebPush, Supabase Edge Function send-reminder)
-- Sprint 5-3: PWA (manifest.json + sw.js Service Worker)
-- Sprint 5-4: E2E 테스트 (Playwright, e2e/*.spec.ts)
-- Sprint 5-5: 성능 최적화 (AVIF/WebP, 보안헤더, optimizePackageImports)
-
-### Phase 6 (완료 / 일부 보류)
-- Sprint 6-1: AI 자서전(MyStory) ✅ — 코어 완성, BottomNav 5번째 탭, Header 사이드메뉴
-- Sprint 6-2: 디지털 추모관 25% — DB + useMemorial 훅 완성, UI 미구현
-  - ⏸ 마일스톤 최후순위 보류 | 기획서: docs/sprint6-memorial-plan.md
-- Sprint 6-3: 랜딩 리뉴얼 ✅ — 6개 서비스카드, 가격/플랜, 앱 다운로드 CTA
-
-### Auth 보완 (2026-04-10)
-- ✅ middleware.ts → (main)/layout.tsx 서버사이드 인증으로 대체 (Turbopack nft.json 버그 우회)
-- ✅ 비밀번호 찾기 (/forgot-password) + 재설정 (/reset-password)
-- ✅ Google OAuth 연동 완료
-- ✅ 카카오 OAuth 연동 완료 (scope: profile_nickname + profile_image, 이메일 제외)
-  - 카카오 비즈앱 미인증 상태. 인증 후 account_email scope 추가 가능
-- ✅ 로고 교체 (storige_logo2.png → public/logo.png), 헤더 h-16 → h-20
-
-### MyStory Sprint-1 (2026-04-11)
-- ✅ InterviewChat 한글 IME composingRef 버그 수정
-- ✅ 음성 입력(Web Speech API, ko-KR) — useSpeechSTT 훅 + 마이크 버튼
-- ✅ 사진 첨부 — useMystoryPhoto + compressImage(Canvas 3MB) + Supabase Storage 'mystory-photos' 버킷
-- ✅ MystoryMessage.photo_url 타입 추가
-- ✅ 자서전 미리보기 고도화 — 스크롤 북리더 뷰 + 아코디언 뷰 전환 + PDF 인쇄
-
-### MyStory Sprint-3 (2026-04-13) — AI 개인화
-- ✅ 1단계: 동적 후속 질문 — 답변 속 고유명사·감정·장소를 반영한 개인화 질문 생성
-  - pre-defined 질문을 방향 가이드로만 사용, 최근 10개 메시지 컨텍스트 유지
-- ✅ 2단계: mystory_profile 테이블 + 팩트 추출 API (크로스 토픽 개인화)
-  - 원고 완성 시 Claude Haiku가 전기적 사실 자동 추출 → mystory_profile JSONB 누적
-  - 다음 인터뷰 시 누적 프로필을 컨텍스트로 주입 (토픽 간 맥락 연결)
-  - DB 마이그레이션: supabase/migrations/20260413100000_mystory_profile.sql
-- ✅ 3단계: 답변 깊이 감지 — 추가 API 호출 없이 지침으로 처리
-  - short(<30자): 탐색 질문 추가 유도
-  - rich(≥200자): 공감 후 바로 다음 주제 전환
-  - emotional(힘들/눈물/후회 등): 배려 톤, 서두르지 않음
-
-### MyStory Sprint-2 (2026-04-11)
-- ✅ categoryEmoji → categoryIcon (Material Symbols) 전면 교체 (디자인 규칙 준수)
-- ✅ 질문풀 13 → 20개 토픽 확장, 카테고리 그룹 4 → 6개
-  - 신규: 음식/맛, 건강, 롤모델, 인생전환점, 사람인연, 나의보물, 신앙·영성
-- ✅ DB: mystory_sessions.share_token (uuid) 컬럼 + RLS 공개 정책
-  - 마이그레이션: supabase/migrations/20260411130000_mystory_share_token.sql
-- ✅ useMystoryShare 훅 — 공유 토큰 생성/취소
-- ✅ /mystory/share/[token] — 비인증 공개 열람 서버 컴포넌트 신규
-- ✅ preview 페이지: 공유 버튼 + URL 패널 + 복사/해제 기능
-- ✅ preview 페이지: 3챕터 이상 완성 시 출판 CTA 자동 표시
-- ✅ InterviewChat textarea auto-grow (최대 160px)
-- ✅ DB 타입(database.ts) share_token 컬럼 동기화
-
-### 기타 (2026-04-10~11)
-- ✅ secret/new 페이지 Midnight Archive 리디자인 (이모지 제거, Material Symbols, dark 패스프레이즈 패널)
-- ✅ ChunkLoadError 자동 새로고침 처리 (error.tsx + global-error.tsx + layout.tsx 스크립트)
-- ✅ (main) 페이지 클라이언트 중복 인증 체크 제거 (layout.tsx 서버사이드로 통합)
-- ✅ GEMINI.md 추가, supabase/.temp gitignore 등록
+### Phase 6 & MyStory (완료)
+- AI 자서전(MyStory): 20개 토픽 인터뷰, 음성 입력, 사진 첨부
+- MyStory 개인화: 동적 후속 질문, 바이오 프로필 누적, 답변 깊이 감지
+- MyStory 공유: 공유 링크 생성 및 비인증 열람 페이지
+- **MyStory 출판 연동**: 원고 데이터를 출판 모듈(`/publish`)로 자동 전달 및 미리보기 지원
 
 ---
 
 ## 다음 작업 (우선순위 순)
 
-### 1순위: 결제 연동 (블로커 있음)
-- **포트원(PortOne) 구독 결제** — API 키 필요 (오너 제공)
-  - 구독: 월 9,900원 / 연 99,000원
-  - 관련 파일: `src/app/(main)/settings/`
-- **포트원 출판 단건 결제** — API 키 필요
-  - 출판: 39,000원~
-  - 관련 파일: `src/app/(main)/publish/`
-- **파파스컴퍼니 POD API 연동** — 계약 필요 (오너 결정)
+### 1순위: 결제 연동 (블로커: API 키 제공 필요)
+- **포트원(PortOne) 구독 결제** — 월/연 단위 프리미엄 플랜
+- **포트원 출판 단건 결제** — 자서전 및 일기 출판 결제
+- **파파스컴퍼니 POD API 연동** — 실제 도서 제작 주문 전송
 
-### 2순위: MyStory → 출판 연결 (즉시 착수 가능 · 결제 무관)
-- **자서전 원고 → Publish 폼 자동 채움**
-  - 현재: `mystory/preview/page.tsx:243`이 `/publish`로 router.push만 호출, 원고 전달 없음
-  - 할 일: publish_type에 `mystory` 추가 또는 `preview_data.manuscript_id` 경유, publish 페이지가 mystory 세션 ID를 받아 BookPreview에 원고 렌더링
-  - 영향 파일: `src/app/(main)/publish/page.tsx`, `src/components/publish/BookPreview.tsx`, `useMystory.ts`
-- **Resend 발신자 도메인 인증**
-  - 공유 링크 이메일 발송 구현 (현재 Resend 코드 자체 없음)
-  - DNS 레코드(SPF·DKIM) 등록 → `/api/share/send-email` 신설
+### 2순위: 보류 및 추가 고도화
+- **디지털 추모관(Memorial) UI 구현**: 현재 DB 및 훅(useMemorial)만 존재, UI 컴포넌트 미구현
+- **Resend 도메인 인증**: 공유 링크 이메일 발송 신뢰도 향상
+- **앱스토어 출시**: iOS/Android 최종 빌드 및 심사 제출 (가이드: `docs/appstore-deploy-guide.md`)
 
-### 3순위: 보류 중 (오너 결정 후)
-- Phase 6 Sprint 6-2: 추모관 UI 구현 — 최후순위
-- 카카오 비즈앱 인증 후 이메일 scope 추가
-- iOS 앱스토어 제출 (Apple Dev 계정 + Mac + Xcode 필요)
-- Android Play Store 제출 (Google Play 계정 필요)
-  - Capacitor 빌드 준비 완료: `npm run cap:ios`
-  - 가이드: docs/appstore-deploy-guide.md
 
 ---
 
