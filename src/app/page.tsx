@@ -1,8 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { LandingPricing } from '@/components/landing/LandingPricing'
@@ -58,25 +55,6 @@ const SERVICES = [
 ]
 
 export default function LandingPage() {
-  const router = useRouter()
-  const [checking, setChecking] = useState(true)
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) router.replace('/diary')
-      else setChecking(false)
-    })
-  }, [router])
-
-  if (checking) {
-    return (
-      <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-      </div>
-    )
-  }
-
   return (
     <>
       <style>{`
@@ -194,12 +172,14 @@ export default function LandingPage() {
                   style={{ aspectRatio: '4/3', background: fallback }}
                 >
                   {/* 풀블리드 이미지 — 로드 실패 시 fallback 그라디언트 노출 */}
-                  <img
-                    src={img}
-                    alt={title}
-                    className="service-card-img absolute inset-0 w-full h-full object-cover"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
+                  {img && (
+                    <img
+                      src={img}
+                      alt={title}
+                      className="service-card-img absolute inset-0 w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                    />
+                  )}
                   {/* 다크 그라디언트 오버레이 */}
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%)' }} />
 

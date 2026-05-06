@@ -66,7 +66,42 @@ export default function RootLayout({
             __html: `
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').catch(function() {});
+                  navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(function(reg) {
+                      // 대기(waiting) 상태면 즉시 활성화 요청
+                      if (reg.waiting) {
+                        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                      }
+
+                      // 업데이트 발생 시: 기존 컨트롤이 있으면 1회 재로딩
+                      reg.addEventListener('updatefound', function() {
+                        const newWorker = reg.installing;
+                        if (!newWorker) return;
+
+                        newWorker.addEventListener('statechange', function() {
+                          if (newWorker.state !== 'installed') return;
+
+                          // controller가 있으면 "업데이트" 케이스
+                          if (navigator.serviceWorker.controller) {
+                            var key = 'sw_update_reload_at';
+                            var last = sessionStorage.getItem(key);
+                            var now = Date.now();
+                            var lastNum = last ? parseInt(last, 10) : NaN;
+
+                            if (!last || !Number.isFinite(lastNum) || now - lastNum > 10000) {
+                              sessionStorage.setItem(key, String(now));
+                              try { newWorker.postMessage({ type: 'SKIP_WAITING' }); } catch (e) {}
+                              window.location.reload();
+                            }
+                          }
+                        });
+                      });
+
+                      // 최신 sw.js 반영을 위해 즉시 갱신 시도
+                      reg.update().catch(function() {});
+                    })
+                    .catch(function() {});
                 });
               }
             `,
@@ -76,18 +111,49 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              function isChunkLoadMessage(msg) {
+                return (
+                  msg.indexOf('Loading chunk') !== -1 ||
+                  msg.indexOf('ChunkLoadError') !== -1 ||
+                  msg.indexOf('Failed to fetch dynamically imported module') !== -1 ||
+                  msg.indexOf('/_next/static/chunks/') !== -1
+                );
+              }
+
+              function reloadOnceForChunkFailure() {
+                var key = 'chunkReloadAt';
+                var last = sessionStorage.getItem(key);
+                var now = Date.now();
+                var lastNum = last ? parseInt(last, 10) : NaN;
+
+                if (!last || !Number.isFinite(lastNum) || now - lastNum > 10000) {
+                  sessionStorage.setItem(key, now.toString());
+                  window.location.reload();
+                }
+              }
+
               window.addEventListener('error', function(e) {
                 var msg = e.message || '';
-                if (msg.indexOf('Loading chunk') !== -1 || msg.indexOf('ChunkLoadError') !== -1) {
-                  var key = 'chunkReloadAt';
-                  var last = sessionStorage.getItem(key);
-                  var now = Date.now();
-                  if (!last || now - parseInt(last) > 10000) {
-                    sessionStorage.setItem(key, now.toString());
-                    window.location.reload();
-                  }
+                var source = e.filename || '';
+                if (isChunkLoadMessage(msg) || isChunkLoadMessage(source)) {
+                  reloadOnceForChunkFailure();
                 }
               }, true);
+
+              window.addEventListener('unhandledrejection', function(e) {
+                var reason = e.reason;
+                var msg = '';
+
+                if (typeof reason === 'string') {
+                  msg = reason;
+                } else if (reason) {
+                  msg = (reason.message || '') + ' ' + (reason.stack || '');
+                }
+
+                if (isChunkLoadMessage(msg)) {
+                  reloadOnceForChunkFailure();
+                }
+              });
             `,
           }}
         />

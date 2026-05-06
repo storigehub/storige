@@ -3,30 +3,27 @@
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 /**
  * 앱 헤더 — Midnight Archive / _5 템플릿 기준
  * - 모바일: 햄버거 + Storige + 검색/아바타
- * - 데스크탑(md+): 인라인 4링크 nav (일기|편지|비밀|관리) + hidden 햄버거
+ * - 데스크탑(md+): 인라인 5링크 nav (읽기|편지|비밀|출판|관리) + hidden 햄버거
  * - 검색 버튼: /diary?search=1 으로 포커스 이동 (접근성 — href 명시)
  */
 const NAV_ITEMS = [
-  { href: '/diary',    label: '일기' },
-  { href: '/dear',     label: '편지' },
-  { href: '/secret',   label: '비밀' },
-  { href: '/settings', label: '관리' },
+  { href: '/diary',    label: '읽기',       icon: 'auto_stories' },
+  { href: '/dear',     label: '편지',       icon: 'mail' },
+  { href: '/secret',   label: '비밀',       icon: 'lock' },
+  { href: '/publish',  label: '출판',       icon: 'menu_book' },
+  { href: '/settings', label: '관리',       icon: 'manage_accounts' },
 ]
 
-const SIDE_ITEMS = [
-  { href: '/diary',    label: '일기',       icon: 'auto_stories' },
-  { href: '/dear',     label: '편지',       icon: 'mail' },
-  { href: '/secret',   label: '비밀 코드',  icon: 'lock' },
+const MORE_ITEMS = [
   { href: '/album',    label: '포토앨범',   icon: 'photo_library' },
   { href: '/mystory',  label: 'AI 자서전',  icon: 'history_edu' },
-  { href: '/publish',  label: '출판하기',   icon: 'menu_book' },
-  { href: '/settings', label: '관리',       icon: 'manage_accounts' },
 ]
 
 export function Header() {
@@ -82,7 +79,7 @@ export function Header() {
                 </div>
               </div>
               <nav className="py-2">
-                {SIDE_ITEMS.map((item) => {
+                {NAV_ITEMS.map((item) => {
                   const isActive = pathname.startsWith(item.href)
                   return (
                     <button
@@ -105,6 +102,29 @@ export function Header() {
                 })}
               </nav>
               <div className="border-t border-surface-container py-2">
+                {MORE_ITEMS.map((item) => {
+                  const isActive = pathname.startsWith(item.href)
+                  return (
+                    <button
+                      key={item.href}
+                      onClick={() => handleNav(item.href)}
+                      className={`w-full flex items-center gap-3 px-6 py-3 text-sm transition-colors ${
+                        isActive
+                          ? 'text-primary bg-primary-container/30 font-bold'
+                          : 'text-on-surface hover:bg-surface-container'
+                      }`}
+                    >
+                      <span className={`material-symbols-outlined text-[20px] ${isActive ? 'text-primary' : 'text-outline'}`}
+                        style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}>
+                        {item.icon}
+                      </span>
+                      <span>{item.label}</span>
+                      {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />}
+                    </button>
+                  )
+                })}
+              </div>
+              <div className="border-t border-surface-container py-2">
                 <button
                   onClick={handleSignOut}
                   className="w-full flex items-center gap-3 px-6 py-3 text-sm text-outline hover:bg-surface-container transition-colors"
@@ -117,16 +137,16 @@ export function Header() {
           </Sheet>
 
           {/* 브랜드 */}
-          <button onClick={() => router.push('/diary')} aria-label="홈으로">
-            <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-[4.5rem] w-auto object-contain" priority />
-          </button>
+          <Link href="/" aria-label="Storige 랜딩페이지로 이동">
+            <Image src="/logo.png" alt="Storige" width={120} height={36} className="h-[4.5rem] w-auto object-contain" />
+          </Link>
 
           {/* 데스크탑 인라인 nav */}
           <nav className="hidden md:flex items-center ml-4">
             {NAV_ITEMS.map((item) => {
               const isActive = pathname.startsWith(item.href)
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   className={`relative px-4 py-5 font-headline text-sm transition-colors ${
@@ -139,7 +159,7 @@ export function Header() {
                   {isActive && (
                     <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary rounded-full" />
                   )}
-                </a>
+                </Link>
               )
             })}
           </nav>
