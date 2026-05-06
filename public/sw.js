@@ -6,7 +6,7 @@
  * - 오프라인 fallback
  */
 
-const CACHE_NAME = 'storige-v2'
+const CACHE_NAME = 'storige-v3'
 const OFFLINE_URL = '/offline'
 
 /** Next.js App Router RSC/프리패치 요청은 캐시하면 HTML과 섞여 네비게이션이 완료되지 않음 */
@@ -22,11 +22,9 @@ function isNextAppRouterDataRequest(request) {
 
 // 사전 캐시할 자산
 const PRECACHE_URLS = [
-  '/',
-  '/diary',
-  '/dear',
-  '/secret',
   '/manifest.json',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
 ]
 
 function isNavigationDocumentRequest(request) {
